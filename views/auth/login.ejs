@@ -1,0 +1,40 @@
+<%- include('../include/header'); %>
+    </head>
+
+    <body>
+        <%- include('../include/navbar'); %>
+
+            <div class="col-md-6 col-xs-12 col-md-offset-3 login-blocks" style="background-color: #f8f8f8;">
+                <h2>Login : </h2>
+                <%if(errorMessage){%>
+                    <div class="alert alert-danger ">
+                        <%=errorMessage%>
+                    </div>
+                    <%}%>
+                        <form id="loginForm" action="/login" method="post">
+                            <div class="form-group">
+                                <label for="mobile">Mobile no</label>
+                                <input type="text" name="mobile" class="form-control" id="mobile"
+                                    value="<%=oldInput?oldInput.mobile:''%>">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control" id="password"
+                                    value="<%=oldInput?oldInput.password:''%>"/>
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-default"> Log in</button>
+                            </div>
+                        </form>
+                        <br>
+                        <h2>Social login : </h2>
+                        <p>
+                            <a class="login-social" href="#"><i class="fa fa-facebook"></i>&nbsp;Facebook</a>
+                            <a class="login-social" href="#"><i class="fa fa-google-plus"></i>&nbsp;Gmail</a>
+                        </p>
+            </div>
+            <%- include('../include/footer'); %>
+    </body>
+
+    </html>

@@ -1,0 +1,30 @@
+<%- include('../include/header'); %>
+    </head>
+
+    <body>
+        <%- include('../include/navbar'); %>
+            <div class="bg-dark">
+                <div class="col-md-6 col-xs-12 col-md-offset-3 login-blocks" style="background-color: #f8f8f8;">
+                    <h2>Mobile Verification : </h2>
+                    <%if(errorMessage){%>
+                        <div class="alert alert-danger">
+                            <%=errorMessage%>
+                        </div>
+                        <%}%>
+                            <form method="post" action="/reset">
+                                <div class="form-group">
+                                    <label for="mobile">Enter your 10 digit Mobile no</label>
+                                    <input type="text" name="mobile" class="form-control" id="otp" required>
+                                </div>
+                                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                <div class="text-center">
+                                    <button type="submit" class="btn btn-default"> Submit</button>
+                                </div>
+                            </form>
+                            <br>
+                </div>
+            </div>
+            <%- include('../include/footer'); %>
+    </body>
+
+    </html>

@@ -1,0 +1,93 @@
+<%- include('../include/header'); %>
+    <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LcmmboeAAAAAAJD-hO8uGvjyVCo1oLxR6pYZT1J"></script>
+    <style>
+        /* .d-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            place-items: center stretch;
+        } */
+        .mt-5 {
+            margin-top: 1rem;
+        }
+    </style>
+    </head>
+
+    <body>
+        <%- include('../include/navbar'); %>
+            <div class="d-grid">
+                <div class="bg-dark mt-5">
+                    <div class="col-md-6 col-xs-12 col-md-offset-3 login-blocks" style="background-color: #f8f8f8;">
+                        <h2>Sign Up : </h2>
+                        <div class="alert alert-danger hide"></div>
+                        <form id="registerationForm">
+                            <div class="row">
+                                <div class="form-group col-md-6">
+                                    <label for="fname">First Name</label>
+                                    <input type="text" name="fname" class="form-control" id="fname">
+                                </div>
+                                <div class="form-group col-md-6">
+                                    <label for="lname">Last Name</label>
+                                    <input type="text" name="lname" class="form-control" id="lname">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="mobile">Mobile</label>
+                                <input type="text" name="mobile" class="form-control" id="mobile">
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email</label>
+                                <input type="text" name="email" class="form-control" id="email">
+                            </div>
+                            <div class="form-group">
+                                <label for="password">Password</label>
+                                <input type="password" name="password" class="form-control" id="password">
+                            </div>
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-default"> Sign Up</button>
+                            </div>
+                        </form>
+                        <br>
+                        <h2>Social login : </h2>
+                        <p>
+                            <a class="login-social" href="#"><i class="fa fa-facebook"></i>&nbsp;Facebook</a>
+                            <a class="login-social" href="#"><i class="fa fa-google-plus"></i>&nbsp;Gmail</a>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <%- include('../include/footer'); %>
+                <script>
+                    const errorMsg = document.querySelector('.alert.alert-danger')
+                    document.getElementById('registerationForm').addEventListener('submit', (e) => {
+                        e.preventDefault();
+                        grecaptcha.ready(async () => {
+                            const captcha = await grecaptcha.execute('6LcmmboeAAAAAAJD-hO8uGvjyVCo1oLxR6pYZT1J', { action: 'submit' })
+                            const fname = document.querySelector('#fname').value.trim();
+                            const lname = document.querySelector('#lname').value.trim();
+                            const email = document.querySelector('#email').value.trim();
+                            const password = document.querySelector('#password').value.trim();
+                            const mobile = document.querySelector('#mobile').value.trim();
+                            const _csrf = document.querySelector('input[name="_csrf"]').value.trim();
+                            const data = await fetch('/signup', {
+                                method: 'POST',
+                                headers: { 'Content-type': 'application/json' },
+                                body: JSON.stringify({ fname, lname, email, password, captcha, mobile, _csrf })
+                            }).then(res => res.json())
+                            if (data.success && !data.dataEntered) {
+                                errorMsg.classList.remove('hide');
+                                errorMsg.textContent = data.errorMessage;
+                            }
+                            else if (!data.success) {
+                                errorMsg.classList.remove('hide');
+                                errorMsg.textContent = data.msg;
+                            } else {
+                                return location = data.url
+                            }
+                        });
+                    });
+                </script>
+    </body>
+
+    </html>

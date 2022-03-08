@@ -1,0 +1,87 @@
+<%- include('../include/header'); %>
+    </head>
+
+    <body>
+        <%- include('../include/navbar'); %>
+            <div class="bg-dark">
+                <div class="col-md-6 col-xs-12 col-md-offset-3 login-blocks" style="background-color: #f8f8f8;">
+                    <h2>Mobile Verification : </h2>
+                    <div class="alert alert-danger hide"></div>
+                    <div class="alert alert-success hide"></div>
+                    <form id="verifyOTP">
+                        <div class="form-group">
+                            <label for="mobile">Enter OTP send to mobile ending with ******<%=mobile%></label>
+                            <input type="text" name="otp" class="form-control" id="otp" required min="6" max="6">
+                        </div>
+                        <!-- <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                <input type="hidden" name="userId" value="<%=userId%>"> -->
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-default"> Submit</button>
+                        </div>
+                        <a href="#" id="resendOTP" class="">Resend OTP?</a>
+                    </form>
+                    <br>
+                </div>
+            </div>
+            <%- include('../include/footer'); %>
+                <script>
+                    const errorAlert = document.querySelector('.alert.alert-danger');
+                    const successAlert = document.querySelector('.alert.alert-success');
+                    const userId = "<%=userId%>";
+                    const _csrf = "<%=csrfToken%>";
+
+                    const displayElem = (elem, msg) => {
+                        elem.classList.remove('hide');
+                        elem.textContent = msg;
+                    }
+
+                    const hideElem = (elem) => {
+                        elem.classList.add('hide');
+                        elem.textContent = '';
+                    }
+
+                    // Verifying Entered OTP
+                    document.getElementById('verifyOTP').addEventListener('submit', async (event) => {
+                        event.preventDefault();
+                        const otp = document.getElementById('otp').value.trim();
+
+                        if (otp.length != 6)
+                            return displayElem(errorAlert, 'OTP Must Be 6 digits');
+
+                        const data = await fetch('/verify', {
+                            method: 'POST',
+                            headers: { 'Content-type': 'application/json' },
+                            body: JSON.stringify({ _csrf, userId, otp })
+                        }).then(res => res.json())
+
+                        console.log(data);
+
+                        if (data.errorMessage) displayElem(errorAlert, data.errorMessage)
+                        else location = data.url;
+                    })
+
+
+
+
+                    // For Resend OTP
+                    const resendOtp = document.getElementById('resendOTP');
+                    setTimeout(() => {
+                        resendOtp.classList.remove('hide');
+                    }, 30000);
+
+                    resendOtp.addEventListener('click', async (event) => {
+                        event.preventDefault();
+                        resendOtp.classList.add('hide');
+                        console.log(userId);
+                        const data = await fetch('/resend-otp/' + userId).then(res => res.json());
+                        if (data) {
+                            displayElem(successAlert, 'New OTP Send')
+                            setTimeout(() => {
+                                hideElem(successAlert);
+                            }, 2000)
+                        }
+                    })
+                </script>
+    </body>
+
+    </html>
