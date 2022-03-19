@@ -5,6 +5,8 @@ const flash = require('connect-flash');
 
 // ---------------   Routes Import  ---------------
 const authRoutes = require('../routes/auth');
+const propertyRoutes = require('../routes/property');
+const homeRoutes = require('../routes/home');
 const errorController = require('../controllers/error');
 
 module.exports = (app) => {
@@ -40,7 +42,8 @@ module.exports = (app) => {
   });
 
   // Routes Set
-  app.use(authRoutes);
+  // app.use('/property', propertyRoutes);
+  app.use(homeRoutes, authRoutes, propertyRoutes);
 
   // Error Routes
   app.get('/500', errorController.get500);
@@ -48,7 +51,7 @@ module.exports = (app) => {
 
   // Error Controller
   app.use((err, req, res) => {
-    console.error(err.stack);
+    // console.error(err.stack);
     res.status(500).render('500', {
       pageTitle: 'Error!',
       path: '/500',

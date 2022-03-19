@@ -1,19 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('./include/header'); %>
+    </head>
 
-<head>
-    <!-- Title -->
-    <title>Error 404</title>
+    <body>
+        <%- include('./include/navbar'); %>
+            <div class="content-area error-page" style="background-color: #FCFCFC; padding-bottom: 55px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+                            <h2 class="error-title">404</h2>
+                            <p>Sorry, the page you requested may have been moved or deleted</p>
+                            <a href="/" class="btn btn-default">Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-    <!-- Required Meta Tags Always Come First -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-</head>
+            <%- include('./include/footer'); %>
+    </body>
 
-<body>
-    404 error
-
-</body>
-
-</html>
+    </html>

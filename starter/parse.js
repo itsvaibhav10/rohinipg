@@ -37,24 +37,11 @@ module.exports = (app, dir) => {
   // Parsing Content
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
-  // app.use(
-  //   multer({ storage: storage, fileFilter: fileFilter }).fields([
-  //     { name: 'book_pdf', maxCount: 100 },
-  //     { name: 'book_coverPage', maxCount: 1 },
-  //     { name: 'book_sample', maxCount: 1 },
-  //     { name: 'changeProfileImg', maxCount: 1 },
-  //     { name: 'book_answer', maxCount: 1 },
-  //     { name: 'book_question', maxCount: 1 },
-  //     { name: 'book_video', maxCount: 1 },
-  //     { name: 'book_mindMap', maxCount: 1 },
-  //     { name: 'book_ansKey', maxCount: 1 },
-  //     { name: 'book_quizQues', maxCount: 1 },
-  //     { name: 'book_quizAns', maxCount: 1 },
-  //     { name: 'book_quizOption1', maxCount: 1 },
-  //     { name: 'book_quizOption2', maxCount: 1 },
-  //     { name: 'book_quizOption3', maxCount: 1 },
-  //   ])
-  // );
+  app.use(
+    multer({ storage: storage, fileFilter: fileFilter }).fields([
+      { name: 'pg_images', maxCount: 10 },
+    ])
+  );
 
   // Static Files Folder
   app.use(express.static(path.join(dir, 'public')));

@@ -49,10 +49,17 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse yamm" id="navigation">
             <div class="button navbar-right">
-                <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('register.html')"
-                    data-wow-delay="0.4s">Login</button>
-                <button class="navbar-btn nav-button wow fadeInRight" onclick=" window.open('submit-property.html')"
-                    data-wow-delay="0.5s">Submit</button>
+                <%if(!isAuthenticated){%>
+                    <button class="navbar-btn nav-button wow bounceInRight login" onclick=" window.open('/login')"
+                        data-wow-delay="0.4s">Login</button>
+                    <button class="navbar-btn nav-button wow fadeInRight" onclick=" window.open('/signup')"
+                        data-wow-delay="0.5s">Signup</button>
+                    <%}else{%>                        
+                        <form action="/logout" method="post">
+                            <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                            <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.4s">Logout</button>
+                        </form>
+                        <%}%>
             </div>
             <ul class="main-nav nav navbar-nav navbar-right">
                 <li class="dropdown ymm-sw " data-wow-delay="0.1s">

@@ -1,120 +1,22 @@
-<!DOCTYPE html>
-<html lang="en">
+<%- include('./include/header'); %>
+    </head>
 
-<head>
-    <!-- Title -->
-    <title>Error 500</title>
-
-    <!-- Required Meta Tags Always Come First -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Favicon -->
-    <link rel="shortcut icon" href="/frontEnd/assets/img/favicon.png">
-
-    <!-- Font -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap" rel="stylesheet">
-
-    <!-- CSS Implementing Plugins -->
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/font-awesome/css/fontawesome-all.min.css">
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/flaticon/font/flaticon.css">
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/animate.css/animate.css">
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css">
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/slick-carousel/slick/slick.css" />
-    <link rel="stylesheet" href="/frontEnd/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css">
-
-    <!-- CSS Bookworm Template -->
-    <link rel="stylesheet" href="/frontEnd/assets/css/theme.css">
-</head>
-
-<body>
-
-    <!-- ====== MAIN CONTENT ===== -->
-    <main id="content">
-        <div class="container">
-            <div class="space-bottom-1 space-top-xl-2 space-bottom-xl-4">
-                <div class="d-flex flex-column align-items-center pt-lg-7 pb-lg-4 pb-lg-6">
-                    <div class="font-weight-medium font-size-200 font-size-xs-170 text-lh-sm mt-xl-1">500</div>
-                    <h6 class="font-size-4 font-weight-medium mb-2">Uh-Ah, Internal Server Error ! </h6>
-                    <span class="font-size-2 mb-6">You could either go back or go to homepage</span>
-                    <a href="/home" class="btn btn-dark rounded-0 btn-wide font-weight-medium">Go Back
-                    </a>
+    <body>
+        <%- include('./include/navbar'); %>
+            <div class="content-area error-page" style="background-color: #FCFCFC; padding-bottom: 55px;">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-10 col-md-offset-1 col-sm-12 text-center page-title">
+                            <h2 class="error-title">500</h2>
+                            <p>Uh-Ah, Internal Server Error !</p>
+                            <a href="/" class="btn btn-default">Home</a>
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </main>
-    <!-- ====== END MAIN CONTENT ===== -->
-    
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="/frontEnd/assets/vendor/jquery/dist/jquery.min.js"></script>
-    <script src="/frontEnd/assets/vendor/jquery-migrate/dist/jquery-migrate.min.js"></script>
-    <script src="/frontEnd/assets/vendor/popper.js/dist/umd/popper.min.js"></script>
-    <script src="/frontEnd/assets/vendor/bootstrap/bootstrap.min.js"></script>
-    <script src="/frontEnd/assets/vendor/bootstrap-select/dist/js/bootstrap-select.min.js"></script>
-    <script src="/frontEnd/assets/vendor/slick-carousel/slick/slick.min.js"></script>
-    <script src="/frontEnd/assets/vendor/multilevel-sliding-mobile-menu/dist/jquery.zeynep.js"></script>
-    <script src="/frontEnd/assets/vendor/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script>
 
 
-    <!-- JS HS Components -->
-    <script src="/frontEnd/assets/js/hs.core.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.unfold.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.malihu-scrollbar.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.header.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.slick-carousel.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.selectpicker.js"></script>
-    <script src="/frontEnd/assets/js/components/hs.show-animation.js"></script>
+            <%- include('./include/footer'); %>
+    </body>
 
-    <!-- JS Bookworm -->
-    <!-- <script src="/frontEnd/assets/js/bookworm.js"></script> -->
-    <script>
-        $(document).on('ready', function () {
-            // initialization of unfold component
-            $.HSCore.components.HSUnfold.init($('[data-unfold-target]'));
-
-            // initialization of slick carousel
-            $.HSCore.components.HSSlickCarousel.init('.js-slick-carousel');
-
-            // initialization of header
-            $.HSCore.components.HSHeader.init($('#header'));
-
-            // initialization of malihu scrollbar
-            $.HSCore.components.HSMalihuScrollBar.init($('.js-scrollbar'));
-
-            // initialization of show animations
-            $.HSCore.components.HSShowAnimation.init('.js-animation-link');
-
-            // init zeynepjs
-            var zeynep = $('.zeynep').zeynep({
-                onClosed: function () {
-                    // enable main wrapper element clicks on any its children element
-                    $("body main").attr("style", "");
-
-                    console.log('the side menu is closed.');
-                },
-                onOpened: function () {
-                    // disable main wrapper element clicks on any its children element
-                    $("body main").attr("style", "pointer-events: none;");
-
-                    console.log('the side menu is opened.');
-                }
-            });
-
-            // handle zeynep overlay click
-            $(".zeynep-overlay").click(function () {
-                zeynep.close();
-            });
-
-            // open side menu if the button is clicked
-            $(".cat-menu").click(function () {
-                if ($("html").hasClass("zeynep-opened")) {
-                    zeynep.close();
-                } else {
-                    zeynep.open();
-                }
-            });
-        });
-    </script>
-</body>
-
-</html>
+    </html>
