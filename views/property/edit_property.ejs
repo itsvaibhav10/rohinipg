@@ -11,7 +11,7 @@
                     <div class="clearfix">
                         <div class="wizard-container">
                             <div class="wizard-card ct-wizard-orange" id="wizardProperty">
-                                <form action="/add-property" method="post" enctype="multipart/form-data">
+                                <form action="/edit-property" method="post" enctype="multipart/form-data">
                                     <div class="wizard-header">
                                         <h3>
                                             <b>Submit</b> YOUR PROPERTY <br>
@@ -35,14 +35,16 @@
                                                         <label for="propertyTitle">Property Title
                                                             <small>(required)</small></label>
                                                         <input name="propertyTitle" id="propertyTitle" type="text"
-                                                            class="form-control" placeholder="Super villa ..." required>
+                                                            class="form-control" placeholder="Super villa ..."
+                                                            value="<%=property.title%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-12">
                                                     <div class="form-group">
                                                         <label for="propertyDesc">Property Description :</label>
                                                         <textarea name="propertyDesc" id="propertyDesc" rows="5"
-                                                            class="form-control" required></textarea>
+                                                            class="form-control" value=""
+                                                            required><%=property.description%></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -50,7 +52,8 @@
                                                         <label for="propertyAddress1">House no
                                                             <small>(required)</small></label>
                                                         <input name="propertyAddress1" id="propertyAddress1" type="text"
-                                                            class="form-control" placeholder="1234 main st" required>
+                                                            class="form-control" placeholder="1234 main st"
+                                                            value="<%=property.houseNo%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-8">
@@ -58,7 +61,7 @@
                                                         <label for="propertyAddress2">Street,locality </label>
                                                         <input name="propertyAddress2" id="propertyAddress2" type="text"
                                                             class="form-control" placeholder="Aparment, Studio or Floor"
-                                                            required>
+                                                            value="<%=property.street%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -66,7 +69,8 @@
                                                         <label for="propertyCity">City
                                                             <small>(required)</small></label>
                                                         <input name="propertyCity" id="propertyCity" type="text"
-                                                            class="form-control" placeholder="City" required>
+                                                            class="form-control" value="<%=property.city%>"
+                                                            placeholder="City" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-4">
@@ -77,7 +81,8 @@
                                                             placeholder="near land mark" class="selectpicker"
                                                             data-live-search="true" data-live-search-style="begins"
                                                             required>
-                                                            <option selected disabled value="">Choose...
+                                                            <option selected value="<%=property.state%>">
+                                                                <%=property.state%>
                                                             </option>
                                                             <option>Andhra Pradesh</option>
                                                             <option>Arunachal Pradesh</option>
@@ -124,7 +129,8 @@
                                                         <label for="propertyPincode">Pincode
                                                             <small>(required)</small></label>
                                                         <input name="propertyPincode" id="propertyPincode" type="number"
-                                                            class="form-control" placeholder="Pincode" required>
+                                                            class="form-control" value="<%=property.pincode%>"
+                                                            placeholder="Pincode" required>
                                                     </div>
                                                 </div>
 
@@ -133,49 +139,45 @@
                                         <!--  End step 1 -->
 
                                         <div class="tab-pane" id="step2">
-                                            <h4 class="info-text">Give us somme images and videos ? </h4>
+                                            <h4 class="info-text">Give us some images and videos ? </h4>
                                             <div class="row">
                                                 <div class="col-sm-3">
                                                     <div class="picture-container">
                                                         <div class="picture">
-                                                            <img src="assets/img/default-property.jpg"
-                                                                class="picture-src" id="wizardPicturePreview"
-                                                                title="" />
+                                                            <img src="/<%=property.pgImages[0]%>" class="picture-src"
+                                                                id="wizardPicturePreview" title="" />
                                                             <input type="file" class="wizard-picture"
-                                                                id="wizard-picture1" name="pg_image1" required>
+                                                                id="wizard-picture1" name="pg_image1">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="picture-container">
                                                         <div class="picture">
-                                                            <img src="assets/img/default-property.jpg"
-                                                                class="picture-src" id="wizardPicturePreview"
-                                                                title="" />
+                                                            <img src="/<%=property.pgImages[1]%>" class="picture-src"
+                                                                id="wizardPicturePreview" title="" />
                                                             <input type="file" class="wizard-picture"
-                                                                id="wizard-picture2" name="pg_image2" required>
+                                                                id="wizard-picture2" name="pg_image2">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="picture-container">
                                                         <div class="picture">
-                                                            <img src="assets/img/default-property.jpg"
-                                                                class="picture-src" id="wizardPicturePreview"
-                                                                title="" />
+                                                            <img src="/<%=property.pgImages[2]%>" class="picture-src"
+                                                                id="wizardPicturePreview" title="" />
                                                             <input type="file" class="wizard-picture"
-                                                                id="wizard-picture3" name="pg_image3" required>
+                                                                id="wizard-picture3" name="pg_image3">
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-sm-3">
                                                     <div class="picture-container">
                                                         <div class="picture">
-                                                            <img src="assets/img/default-property.jpg"
-                                                                class="picture-src" id="wizardPicturePreview"
-                                                                title="" />
+                                                            <img src="/<%=property.pgImages[3]%>" class="picture-src"
+                                                                id="wizardPicturePreview" title="" />
                                                             <input type="file" class="wizard-picture"
-                                                                id="wizard-picture4" name="pg_image4" required>
+                                                                id="wizard-picture4" name="pg_image4">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -184,7 +186,8 @@
                                                         <label for="property-video">Property video :</label>
                                                         <input class="form-control" value=""
                                                             placeholder="http://www.youtube.com, http://vimeo.com"
-                                                            name="property_video" type="text" id="property_video">
+                                                            name="property_video" value="<%=property.video%>"
+                                                            type="text" id="property_video">
                                                     </div>
                                                 </div>
                                             </div>
@@ -201,7 +204,9 @@
                                                             <select id="propertyProviderType"
                                                                 name="propertyProviderType"
                                                                 class="selectpicker form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['provider type']%>">
+                                                                    <%=property['provider type']%>
+                                                                </option>
                                                                 <% for(const v of master['provider type']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -217,7 +222,9 @@
                                                                 name="propertyAvailableFor"
                                                                 class="selectpicker selectpicker show-tick form-control"
                                                                 required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['availability']%>">
+                                                                    <%=property['availability']%>
+                                                                </option>
                                                                 <% for(const v of master['availability']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -231,7 +238,9 @@
                                                             <label for="propertyOccupancy">Occupancy :</label>
                                                             <select id="propertyOccupancy" name="propertyOccupancy"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['occupancy']%>">
+                                                                    <%=property['occupancy']%>
+                                                                </option>
                                                                 <% for(const v of master['occupancy']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -246,7 +255,9 @@
                                                             <label for="propertyFood">Food/Meals :</label>
                                                             <select id="propertyFood" name="propertyFood"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['meals']%>">
+                                                                    <%=property['meals']%>
+                                                                </option>
                                                                 <% for(const v of master['meals']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -260,7 +271,9 @@
                                                             <label for="propertyElectricity">Electricity :</label>
                                                             <select id="propertyElectricity" name="propertyElectricity"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['electricity']%>">
+                                                                    <%=property['electricity']%>
+                                                                </option>
                                                                 <% for(const v of master['electricity']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -275,7 +288,9 @@
                                                             <label for="propertyRoomCooling">Room Cooling :</label>
                                                             <select id="propertyRoomCooling" name="propertyRoomCooling"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['room cooling']%>">
+                                                                    <%=property['room cooling']%>
+                                                                </option>
                                                                 <% for(const v of master['room cooling']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -290,7 +305,9 @@
                                                             <label for="propertyDeposit">Deposit :</label>
                                                             <select id="propertyDeposit" name="propertyDeposit"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['deposit']%>">
+                                                                    <%=property['deposit']%>
+                                                                </option>
                                                                 <% for(const v of master['deposit']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -305,7 +322,9 @@
                                                             <label for="propertyWaterSupply">Water Supply :</label>
                                                             <select id="propertyWaterSupply" name="propertyWaterSupply"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['water supply']%>">
+                                                                    <%=property['water supply']%>
+                                                                </option>
                                                                 <% for(const v of master['water supply']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -320,7 +339,9 @@
                                                             <label for="propertyHotWater">Hot Water :</label>
                                                             <select id="propertyHotWater" name="propertyHotWater"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['hot water']%>">
+                                                                    <%=property['hot water']%>
+                                                                </option>
                                                                 <% for(const v of master['hot water']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -337,7 +358,9 @@
                                                             <select id="propertyDrinkingWaterType"
                                                                 name="propertyDrinkingWaterType"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['water type']%>">
+                                                                    <%=property['water type']%>
+                                                                </option>
                                                                 <% for(const v of master['water type']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -353,7 +376,9 @@
                                                                 :</label>
                                                             <select id="propertySafety" name="propertySafety"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['safety']%>">
+                                                                    <%=property['safety']%>
+                                                                </option>
                                                                 <% for(const v of master['safety']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -369,7 +394,9 @@
                                                                 :</label>
                                                             <select id="propertyBedType" name="propertyBedType"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['bed type']%>">
+                                                                    <%=property['bed type']%>
+                                                                </option>
                                                                 <% for(const v of master['bed type']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -385,7 +412,9 @@
                                                                 :</label>
                                                             <select id="propertyTimings" name="propertyTimings"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['door timings']%>">
+                                                                    <%=property['door timings']%>
+                                                                </option>
                                                                 <% for(const v of master['door timings']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -401,7 +430,9 @@
                                                                 :</label>
                                                             <select id="propertyParking" name="propertyParking"
                                                                 class="selectpicker show-tick form-control">
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['parking']%>">
+                                                                    <%=property['parking']%>
+                                                                </option>
                                                                 <% for(const v of master['parking']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -417,7 +448,9 @@
                                                                 :</label>
                                                             <select id="propertyLocker" name="propertyLocker"
                                                                 class="selectpicker show-tick form-control">
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['locker']%>">
+                                                                    <%=property['locker']%>
+                                                                </option>
                                                                 <% for(const v of master['locker']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -433,7 +466,9 @@
                                                                 :</label>
                                                             <select id="propertyTable" name="propertyTable"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['table chair']%>">
+                                                                    <%=property['table chair']%>
+                                                                </option>
                                                                 <% for(const v of master['table chair']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -449,7 +484,9 @@
                                                                 :</label>
                                                             <select id="propertyCable" name="propertyCable"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['cable tv']%>">
+                                                                    <%=property['cable tv']%>
+                                                                </option>
                                                                 <% for(const v of master['cable tv']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -465,7 +502,9 @@
                                                                 :</label>
                                                             <select id="propertyLaundry" name="propertyLaundry"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['laundry']%>">
+                                                                    <%=property['laundry']%>
+                                                                </option>
                                                                 <% for(const v of master['laundry']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -481,7 +520,9 @@
                                                                 :</label>
                                                             <select id="propertyInternet" name="propertyInternet"
                                                                 class="selectpicker show-tick form-control" required>
-                                                                <option selected disabled value="">Choose...</option>
+                                                                <option selected value="<%=property['internet']%>">
+                                                                    <%=property['internet']%>
+                                                                </option>
                                                                 <% for(const v of master['internet']){%>
                                                                     <option value="<%=v%>">
                                                                         <%=v%>
@@ -497,7 +538,7 @@
                                                                 <small>(required)</small></label>
                                                             <input name="propertySeats" id="propertySeats" type="text"
                                                                 class="form-control" placeholder="Seats Available"
-                                                                required>
+                                                                value="<%=property.seats%>" required>
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
@@ -505,16 +546,17 @@
                                                             <label for="propertyRent">Rent Per Month/Bed in (INR)
                                                                 <small>(required)</small></label>
                                                             <input name="propertyRent" id="propertyRent" type="text"
-                                                                class="form-control" placeholder="Desired Rent"
-                                                                required>
+                                                                class="form-control" placeholder="Desired Rent" required
+                                                                value="<%=property.rent%>">
                                                         </div>
                                                     </div>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
                                                             <label for="propertyArea">Area in (sq Feet)
                                                                 <small>(required)</small></label>
-                                                            <input name="propertyArea" id="propertyArea" type="text" class="form-control" placeholder="Property Area"
-                                                                required>
+                                                            <input name="propertyArea" id="propertyArea" type="number"
+                                                                class="form-control" placeholder="Property Area"
+                                                                value="<%=property.area%>" required>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -540,7 +582,7 @@
                                                         <div class="checkbox">
                                                             <label>
                                                                 <input type="checkbox" checked id="term" name="terms" />
-                                                                <strong>Accept termes and
+                                                                <strong>Accept terms and
                                                                     conditions.</strong>
                                                             </label>
                                                         </div>
@@ -553,10 +595,13 @@
 
                                     </div>
                                     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                    <input type="hidden" name="propId" value="<%=property._id%>">
                                     <div class="wizard-footer">
                                         <div class="pull-right">
-                                            <input type='button' class='btn btn-next btn-primary' name='next'
-                                                value='Next' />
+                                            <button type="button" class="btn btn-next btn-primary"
+                                                name="next">Next</button>
+                                            <!-- <input type='button' class='btn btn-next btn-primary' name='next'
+                                                value='Next' /> -->
                                             <button type="submit" class='btn btn-finish btn-primary '>Finish</button>
                                         </div>
 
@@ -598,7 +643,6 @@
                 const readUrl = (input) => {
                     const reader = new FileReader();
                     const img = input.previousElementSibling;
-                    console.log(img.id);
                     reader.onload = (e) => {
                         img.src = e.target.result;
                     };

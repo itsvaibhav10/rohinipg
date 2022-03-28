@@ -4,6 +4,7 @@ const csrf = require('csurf');
 const flash = require('connect-flash');
 
 // ---------------   Routes Import  ---------------
+const adminRoutes = require('../routes/admin');
 const authRoutes = require('../routes/auth');
 const propertyRoutes = require('../routes/property');
 const homeRoutes = require('../routes/home');
@@ -43,6 +44,7 @@ module.exports = (app) => {
 
   // Routes Set
   // app.use('/property', propertyRoutes);
+  app.use('/admin',adminRoutes);
   app.use(homeRoutes, authRoutes, propertyRoutes);
 
   // Error Routes

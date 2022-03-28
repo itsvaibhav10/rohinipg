@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <title>
+        <%=pageTitle%>
+    </title>
+    <link rel="icon" href="/admin/images/favicon.ico">
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Data Table-->
+    <link rel="stylesheet" type="text/css" href="/admin/assets/vendor_components/datatable/datatables.min.css" />
+
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="/admin/css/bootstrap-extend.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/admin/css/master_style.css">
+
+    <!-- Superieur Admin skins -->
+    <link rel="stylesheet" href="/admin/css/skins/_all-skins.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/admin/css/additionalCss.css">
+</head>
+
+<%- include('./include/header.ejs')%>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Properties Table</h3>
+            <div class="text-center"><a href="/add-property" class="btn btn-primary"><i class="far fa-plus-square"></i>
+                    Add New
+                    Property</a></div>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <div class="table-responsive">
+                <table id="example" class="table table-bordered table-hover display nowrap margin-top-10 w-p100">
+                    <thead>
+                        <tr>
+                            <th>Actions</th>
+                            <th>Title</th>
+                            <th>Address</th>
+                            <th>State</th>
+                            <th>Pincode</th>
+                            <th>Provider</th>
+                            <th>Verified</th>
+                            <th>Active</th>
+                            <th>Area (SQ Feet)</th>
+                            <th>Deposit</th>
+                            <th>Rent</th>
+                            <th>Seats Available</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <%properties.forEach((p)=>{%>
+                            <tr>
+                                <td class="text-center">
+                                    <div class="btn-group">
+                                        <a href="/property/<%=p._id%>" class="btn btn-purple btn-sm mb-1"
+                                            title="View Details"><i class="far fa-eye"></i></a>
+                                        <a href="/edit-property/<%=p._id%>" class="btn btn-yellow btn-sm mb-1"
+                                            title="Edit Details"><i class="far fa-edit"></i></a>
+                                        <%if(p.isVerified){%>
+                                            <a href="/admin/verify-property/<%=p._id%>" class="btn btn-danger btn-sm mb-1"
+                                                title="Verify Property"><i class="fas fa-check-double"></i></a>
+                                            <%}else{%>
+                                                <a href="/admin/verify-property/<%=p._id%>"
+                                                    class="btn btn-success btn-sm mb-1" title="Verify Property"><i
+                                                        class="fas fa-check-double"></i></a>
+                                                <%}%>
+                                                    <%if(p.isActive){%>
+                                                        <a href="/admin/activate-property/<%=p._id%>"
+                                                            class="btn btn-danger btn-sm mb-1"
+                                                            title="Activate Property"><i class="fas fa-chart-line"></i></a>
+                                                        <%}else{%>
+                                                            <a href="/admin/activate-property/<%=p._id%>"
+                                                                class="btn btn-success btn-sm mb-1"
+                                                                title="Activate Property"><i class="fas fa-chart-line"></i></a>
+                                                            <%}%>
+
+
+                                    </div>
+                                </td>
+                                <td>
+                                    <%=p.title%>
+                                </td>
+                                <td>
+                                    <%=`${p.houseNo} ${p.street}`%>
+                                </td>
+                                <td>
+                                    <%=p.state%>
+                                </td>
+                                <td>
+                                    <%=p.pincode%>
+                                </td>
+
+                                <td>
+                                    <%=p['provider type']%>
+                                </td>
+                                <td>
+                                    <%=p.isVerified?'Yes':'No'%>
+                                </td>
+                                <td>
+                                    <%=p.isActive?'Yes':'No'%>
+                                </td>
+                                <td>
+                                    <%=p.area%>
+                                </td>
+                                <td>
+                                    <%=p.deposit%>
+                                </td>
+                                <td>
+                                    <%=p.rent%>
+                                </td>
+                                <td>
+                                    <%=p.seats%>
+                                </td>
+                            </tr>
+                            <%})%>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <!-- /.box-body -->
+    </div>
+
+
+
+
+
+    <%- include('./include/footer.ejs')%>
+        <!-- jQuery 3 -->
+        <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- popper -->
+        <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- SlimScroll -->
+        <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- FastClick -->
+        <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+        <!-- Superieur Admin App -->
+        <script src="/admin/js/template.js"></script>
+
+        <!-- Superieur Admin for demo purposes -->
+        <script src="/admin/js/demo.js"></script>
+
+        <!-- This is data table -->
+        <script src="/admin/assets/vendor_components/datatable/datatables.min.js"></script>
+
+        <!-- Superieur Admin for Data Table -->
+        <script src="/admin/js/pages/data-table.js"></script>
+
+        <script src="/admin/js/utility.js"></script>
+        </body>
+
+</html>

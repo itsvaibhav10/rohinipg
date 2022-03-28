@@ -62,6 +62,7 @@ exports.postLogin = async (req, res, next) => {
           req.session.isLoggedIn = true;
           req.session.user = user;
           return req.session.save((err) => {
+            if (req.session.user.isAdmin) return res.redirect('/admin');
             return res.redirect('/home');
           });
         }

@@ -23,7 +23,7 @@ const {
   postNewPassword,
   postReset,
 } = require('../controllers/auth/reset');
-const { isNotAuth } = require('../middleware/is-auth');
+const { isNotAuth, isAuth } = require('../middleware/is-auth');
 
 // passportConfig
 const googleStrategy = require('../middleware/passport');
@@ -115,8 +115,8 @@ router.post(
 );
 
 // ---------------  Logout  ---------------
-router.post('/logout', logout);
-router.get('/logout', logout);
+router.post('/logout', isAuth, logout);
+router.get('/logout', isAuth, logout);
 
 // ---------------  Reset Password  ---------------
 router.get('/reset', isNotAuth, getReset);

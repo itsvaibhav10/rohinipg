@@ -6,6 +6,7 @@ sgMail.setApiKey(process.env.sendgridApi);
 
 const sessionModel = require('../models/sessions');
 const User = require('../models/user');
+const { Session } = require('inspector');
 
 // Generate OTP
 const generateOTP = () => {
@@ -58,6 +59,7 @@ exports.deleteFile = (filepath = '') => {
     if (err) {
       throw err;
     }
+    console.log(filepath);
   });
 };
 
@@ -73,11 +75,11 @@ exports.deleteFiles = (filesPathArray = []) => {
 };
 
 /* Delete Previous Session */
-exports.delSession = async (email) => {
+exports.delSession = async (userId) => {
   await sessionModel.deleteMany({
     $and: [
       { 'session.user': { $exists: true } },
-      { 'session.user.email': email },
+      { 'session.user._id': userId },
     ],
   });
 };

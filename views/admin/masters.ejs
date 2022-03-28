@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/admin/images/favicon.ico">
+
+    <title style="text-transform: capitalize;">
+        <%=pageTitle%>
+    </title>
+    <link rel="icon" href="/admin/images/favicon.ico">
+
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="/admin/css/bootstrap-extend.css">
+
+    <!-- bootstrap slider -->
+    <link rel="stylesheet" href="/admin/assets/vendor_plugins/bootstrap-slider/slider.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/admin/css/master_style.css">
+
+    <!-- Superieur Admin skins -->
+    <link rel="stylesheet" href="/admin/css/skins/_all-skins.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+<style>
+    .example-modal .modal {
+        position: relative;
+        top: auto;
+        bottom: auto;
+        right: auto;
+        left: auto;
+        display: block;
+        z-index: 1;
+    }
+
+    .example-modal .modal {
+        background: transparent !important;
+    }
+</style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"/>
+</head>
+
+<%- include('./include/header.ejs')%>
+
+    <main>
+        <div class="row">
+            <!-- <div class="col-sm-12 col-md-3 mb-2">
+                <a href="" class="btn btn-block btn-primary text-capitalize" data-toggle="modal"
+            data-target="#modal-default"><i class="fas fa-plus-circle"></i> Add New Master </a>
+            </div> -->
+            <%for (const key in master){%>                
+                <div class="col-sm-12 col-md-3 mb-2">
+                    <a href="/admin/master?category=<%=key%>" class="btn btn-block btn-primary text-capitalize"><%=key%></a>                                                        
+                    
+                </div>
+            <%}%>
+        </div>
+    </main>
+
+    <%- include('./include/footer.ejs')%>
+    <div class="modal fade" id="modal-default">
+        <form role="form" class="form-element" action="/admin/add-masters" method="post">
+    
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title text-capitalize">Add New Master
+                        </h4>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span></button>
+                    </div>
+                    <div class="modal-body">
+    
+                        <div class="form-group">
+                            <label for="item">New Master</label>
+                            <input type="text" class="form-control" id="newMaster" name="newMaster"
+                                placeholder="Enter New Item">
+                        </div>
+                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                        <button type="submit" class="btn btn-primary float-right">Save changes</button>
+                    </div>
+                </div>
+                <!-- /.modal-content -->
+            </div>
+        </form>
+        <!-- /.modal-dialog -->
+    </div>
+        <!-- jQuery 3 -->
+        <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- popper -->
+        <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- SlimScroll -->
+        <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- FastClick -->
+        <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+        <!-- Superieur Admin App -->
+        <script src="/admin/js/template.js"></script>
+
+        <!-- Superieur Admin for demo purposes -->
+        <script src="/admin/js/demo.js"></script>
+
+        <!-- Bootstrap slider -->
+        <script src="/admin/assets/vendor_plugins/bootstrap-slider/bootstrap-slider.js"></script>
+
+        <!-- owlcarousel -->
+        <script src="/admin/assets/vendor_components/OwlCarousel2/dist/owl.carousel.js"></script>
+
+        <!-- flexslider -->
+        <script src="/admin/assets/vendor_components/flexslider/jquery.flexslider.js"></script>
+        <script src="/admin/js/pages/slider.js"></script>
+
+        <!-- steps  -->
+        <script src="/admin/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
+
+        <!-- validate  -->
+        <script src="/admin/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+
+        <!-- Sweet-Alert  -->
+        <script src="/admin/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
+
+        <!-- wizard  -->
+        <script src="/admin/js/pages/steps.js"></script>
+        </body>
+
+</html>

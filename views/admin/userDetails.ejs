@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/admin/images/favicon.ico">
+
+    <title>
+        <%=pageTitle%>
+    </title>
+    <link rel="icon" href="/admin/images/favicon.ico">
+
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="/admin/css/bootstrap-extend.css">
+
+    <!-- bootstrap slider -->
+    <link rel="stylesheet" href="/admin/assets/vendor_plugins/bootstrap-slider/slider.css">
+
+    <!-- owlcarousel-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/OwlCarousel2/dist/assets/owl.carousel.css">
+    <link rel="stylesheet" href="/admin/assets/vendor_components/OwlCarousel2/dist/assets/owl.theme.default.css">
+
+    <!-- flexslider-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/flexslider/flexslider.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/admin/css/master_style.css">
+
+    <!-- Superieur Admin skins -->
+    <link rel="stylesheet" href="/admin/css/skins/_all-skins.css">
+
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/admin/css/additionalCss.css">
+</head>
+<%- include('./include/header.ejs')%>
+    <main class="container">
+        <h3 class="text-center text-capitalize">
+            <%=`${user.firstName} ${user.lastName}`%> Details
+        </h3>
+        <div class="divider"></div>
+        <div class="p-3">
+            <%for(const key in user){%>
+                <h4 class="mb-1">
+                    <span class="text-capitalize"><%=key%>:-</span> <%=user[key]%>
+                </h4>
+                <%}%>
+
+        </div>
+
+        <div class="divider"></div>
+        <%if(property.length==0){%>
+            <div class="jumbotron text-center p-5  bg-info">
+                <h1>No Property Listed!</h1>
+            </div>
+            <%}else{%>
+                <h3 class="text-center p-2 bg-info mb-2">User Properties</h3>
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Actions</th>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Address</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <%property.forEach((i)=>{%>
+                                <tr>
+                                    <td>
+                                        <a href="/property/<%=i._id%>" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>
+                                    </td>
+                                    <td><a href="">
+                                            <%=i.title%>
+                                        </a></td>
+                                    <td>
+                                        <%=i.description %>
+                                    </td>
+                                    <td>
+                                        <%=`${i.houseNo}, ${i.street}, ${i.city}, ${i.state}, ${i.pincode}`%>
+                                    </td>
+                                </tr>
+                                <%})%>
+                        </tbody>
+                    </table>
+                </div>
+
+                <%}%>
+
+    </main>
+    <%- include('./include/footer.ejs')%>
+
+        <!-- jQuery 3 -->
+        <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- popper -->
+        <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- SlimScroll -->
+        <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- FastClick -->
+        <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+        <!-- Superieur Admin App -->
+        <script src="/admin/js/template.js"></script>
+
+        <!-- Superieur Admin for demo purposes -->
+        <script src="/admin/js/demo.js"></script>
+
+        <!-- Bootstrap slider -->
+        <script src="/admin/assets/vendor_plugins/bootstrap-slider/bootstrap-slider.js"></script>
+
+        <!-- owlcarousel -->
+        <script src="/admin/assets/vendor_components/OwlCarousel2/dist/owl.carousel.js"></script>
+
+        <!-- flexslider -->
+        <script src="/admin/assets/vendor_components/flexslider/jquery.flexslider.js"></script>
+        <script src="/admin/js/pages/slider.js"></script>
+
+        <!-- steps  -->
+        <script src="/admin/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
+
+        <!-- validate  -->
+        <script src="/admin/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+
+        <!-- Sweet-Alert  -->
+        <script src="/admin/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
+
+        <!-- wizard  -->
+        <script src="/admin/js/pages/steps.js"></script>
+
+
+        <script src="/admin/js/utility.js"></script>
+        </body>
+
+</html>

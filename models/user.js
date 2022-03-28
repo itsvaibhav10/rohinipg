@@ -34,9 +34,15 @@ const userSchema = new Schema(
     occupation: String,
     googleId: String,
     profileComplete: { type: Boolean, required: true, default: false },
+    notification: {
+      title: String,
+      description: String,
+      link: String,
+      activeDate: Date,
+      expiry: Date,
+    },
   },
   { timestamps: true }
 );
-
 
 module.exports = mongoose.model('User', userSchema);
