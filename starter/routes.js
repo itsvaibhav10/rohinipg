@@ -7,6 +7,7 @@ const flash = require('connect-flash');
 const adminRoutes = require('../routes/admin');
 const authRoutes = require('../routes/auth');
 const propertyRoutes = require('../routes/property');
+const userRoutes = require('../routes/user');
 const homeRoutes = require('../routes/home');
 const errorController = require('../controllers/error');
 
@@ -44,8 +45,8 @@ module.exports = (app) => {
 
   // Routes Set
   // app.use('/property', propertyRoutes);
-  app.use('/admin',adminRoutes);
-  app.use(homeRoutes, authRoutes, propertyRoutes);
+  app.use('/admin', adminRoutes);
+  app.use(homeRoutes, authRoutes, propertyRoutes, userRoutes);
 
   // Error Routes
   app.get('/500', errorController.get500);

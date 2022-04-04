@@ -44,6 +44,7 @@ const propertySchema = new Schema(
     visits: { type: Number, default: 0 },
     isActive: { type: Boolean, default: false },
     area: { type: String, required: true },
+    // search: { type: String, required: true },
   },
   { timestamps: true }
 );

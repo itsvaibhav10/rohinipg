@@ -8,7 +8,7 @@ exports.getAddProperty = async (req, res, next) => {
 };
 
 exports.postAddProperty = async (req, res, next) => {
-  try {    
+  try {
     const pgImageUrls = [];
     pgImageUrls.push(req.files['pg_image1'][0].path);
     pgImageUrls.push(req.files['pg_image2'][0].path);
@@ -49,7 +49,13 @@ exports.postAddProperty = async (req, res, next) => {
       area: req.body['propertyArea'],
       pgImages: pgImageUrls,
     };
-    
+
+    // let search = '';
+    // for (const key in newProperty) {
+    //   search +=
+    //   console.log(key);
+    // }
+
     const result = await Property.create(newProperty);
     res.redirect(`/property/${result._id}`);
   } catch (err) {
@@ -90,12 +96,12 @@ exports.postEditProperty = async (req, res, next) => {
       oldproperty.pgImages[1] = req.files['pg_image2'][0].path;
     }
     if (req.files['pg_image3']) {
-     deleteFile(oldproperty.pgImages[2]);
-     oldproperty.pgImages[2] = req.files['pg_image3'][0].path;
+      deleteFile(oldproperty.pgImages[2]);
+      oldproperty.pgImages[2] = req.files['pg_image3'][0].path;
     }
     if (req.files['pg_image4']) {
-     deleteFile(oldproperty.pgImages[3]);
-     oldproperty.pgImages[3] = req.files['pg_image4'][0].path;
+      deleteFile(oldproperty.pgImages[3]);
+      oldproperty.pgImages[3] = req.files['pg_image4'][0].path;
     }
 
     oldproperty['title'] = req.body['propertyTitle'];
@@ -167,4 +173,3 @@ exports.manageProperty = async (req, res, next) => {
     properties,
   });
 };
-

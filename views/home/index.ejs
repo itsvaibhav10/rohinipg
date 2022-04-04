@@ -29,7 +29,7 @@
                                         <input type="text" class="form-control" placeholder="Key word">
                                     </div>
                                     <div class="form-group">
-                                        <select id="lunchBegins" class="selectpicker" data-live-search="true"
+                                        <!-- <select id="lunchBegins" class="selectpicker" data-live-search="true"
                                             data-live-search-style="begins" title="Select your city">
 
                                             <option>New york, CA</option>
@@ -38,14 +38,60 @@
                                             <option>Tokyo</option>
                                             <option>Marraekch</option>
                                             <option>kyoto , shibua</option>
+                                        </select> -->
+                                        <select name="propertyState" id="propertyState" placeholder="near land mark"
+                                            class="selectpicker" data-live-search="true" data-live-search-style="begins"
+                                            required>
+                                            <option selected disabled value="">Choose...
+                                            </option>
+                                            <option>Andhra Pradesh</option>
+                                            <option>Arunachal Pradesh</option>
+                                            <option>Assam</option>
+                                            <option>Andaman and Nicobar Islands</option>
+                                            <option>Bihar</option>
+                                            <option>Chandigarh</option>
+                                            <option>Chhattisgarh</option>
+                                            <option>Dadra and Nagar Haveli and Daman and Diu
+                                            </option>
+                                            <option>Delhi</option>
+                                            <option>Goa</option>
+                                            <option>Gujrat</option>
+                                            <option>Haryana</option>
+                                            <option>Himachal Pradesh</option>
+                                            <option>Jharkhand</option>
+                                            <option>kerela</option>
+                                            <option>Madhya pradesh</option>
+                                            <option>Maharastra</option>
+                                            <option>Manipur</option>
+                                            <option>Meghalaya</option>
+                                            <option>Mizoram</option>
+                                            <option>Nagaland</option>
+                                            <option>Odisha</option>
+                                            <option>Punjab</option>
+                                            <option>Rajasthan</option>
+                                            <option>Sikkim</option>
+                                            <option>Tamil Nadu</option>
+                                            <option>Telangana</option>
+                                            <option>Tripura</option>
+                                            <option>Uttar Pradesh</option>
+                                            <option>Uttarakhand</option>
+                                            <option>West Bengal</option>
+                                            <option>Jammu and Kashmir</option>
+                                            <option>Ladakh</option>
+                                            <option>Lakshadweep</option>
+                                            <option>Puducherry</option>
+
                                         </select>
                                     </div>
                                     <div class="form-group">
                                         <select id="basic" class="selectpicker show-tick form-control">
-                                            <option> -Status- </option>
-                                            <option>Rent </option>
-                                            <option>Boy</option>
-                                            <option>used</option>
+                                            <option selected disabled value="">Choose...
+                                            </option>
+                                            <%master.availability.forEach(a=>{%>
+                                                <option value="<%=a%>">
+                                                    <%=a%>
+                                                </option>
+                                                <%})%>
 
                                         </select>
                                     </div>
@@ -226,9 +272,13 @@
                                                     src="/<%=property.pgImages[0]%>"></a>
                                         </div>
                                         <div class="item-entry overflow">
-                                            <h5><a href="/property/<%=property._id%>"><%=property.title%> </a></h5>
+                                            <h5><a href="/property/<%=property._id%>">
+                                                    <%=property.title%>
+                                                </a></h5>
                                             <div class="dot-hr"></div>
-                                            <span class="pull-left"><b>Area :</b> <%=property.area%> in (Sq Feet) </span>
+                                            <span class="pull-left"><b>Area :</b>
+                                                <%=property.area%> in (Sq Feet)
+                                            </span>
                                             <span class="proerty-price pull-right">₹<%=property.rent%></span>
                                         </div>
                                     </div>

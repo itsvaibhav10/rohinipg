@@ -5,6 +5,7 @@ const User = require('../../models/user');
 // ---------------  Admin Home Routes  ---------------
 exports.adminHome = async (req, res) => {
   try {
+    return res.redirect('/admin/enquiries');
     res.render('admin/index', {
       path: '/admin/index',
       pageTitle: 'Admin Panel',
