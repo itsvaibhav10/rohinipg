@@ -39,10 +39,7 @@ module.exports = (app, dir) => {
   app.use(express.json());
   app.use(
     multer({ storage: storage, fileFilter: fileFilter }).fields([
-      { name: 'pg_image1', maxCount: 1 },
-      { name: 'pg_image2', maxCount: 1 },
-      { name: 'pg_image3', maxCount: 1 },
-      { name: 'pg_image4', maxCount: 1 },
+      { name: 'pg_images', maxCount: 8 },
     ])
   );
 

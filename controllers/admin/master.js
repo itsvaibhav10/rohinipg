@@ -11,10 +11,8 @@ exports.getMasters = async (req, res, next) => {
 exports.addMaster = async (req, res, next) => {
   const newMaster = req.body.newMaster;
   let master = await Master.findOne();
-  console.log(master);
   master = { ...master, [newMaster]: [] }
   const result = await master.save();
-  console.log(result);
   res.redirect('/admin/masters');
 };
 

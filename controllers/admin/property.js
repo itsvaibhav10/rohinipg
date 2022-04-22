@@ -24,7 +24,6 @@ exports.getProperties = async (req, res, next) => {
 exports.delProperty = async (req, res, next) => {
   try {
     const propId = req.params.propId;
-    console.log(propId);
     const property = await Property.findById(propId).lean();
     if (!property) throw new Error('User Not Found');
     await Property.deleteOne({ _id: propId });
@@ -39,14 +38,23 @@ exports.delProperty = async (req, res, next) => {
 exports.verifyProperty = async (req, res, next) => {
   try {
     const propId = req.params.propId;
-    const property = await Property.findById(propId);
+    const property = await Property.findById(propId, {
+      isVerified: true,
+      userId: true,
+    });
     if (!property) throw new Error('Property Not Found');
-    if (property.isVerified === false) property.isVerified = true;
-    else {
+    const user = await User.findById(property.userId, { typeOfUser: true });
+    if (user.typeOfUser !== 'provider') {
+      user.typeOfUser = 'provider';
+    }
+    if (property.isVerified === false) {
+      property.isVerified = true;
+    } else {
       property.isVerified = false;
       property.isActive = false;
     }
     await property.save();
+    await user.save();
     return res.redirect(`/admin/properties`);
   } catch (err) {
     const error = new Error(err);

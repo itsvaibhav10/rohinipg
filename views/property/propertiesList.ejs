@@ -1,12 +1,4 @@
 <%- include('../include/header'); %>
-    <style>
-        .d-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            place-content: center center;
-        }
-    </style>
     </head>
 
 
@@ -16,7 +8,7 @@
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
-                            <h1 class="page-title">Manage Property</h1>
+                            <h1 class="page-title">List Layout With Sidebar</h1>
                         </div>
                     </div>
                 </div>
@@ -24,34 +16,153 @@
             <!-- End page header -->
 
             <!-- property area -->
-            <div class="content-area " style="background-color: #FFF;">
+            <div class="content-area recent-property" style="background-color: #FFF;">
                 <div class="container">
-                    <div class="d-grid" style="margin-top: 5rem;">
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                PG Details
+                    <div class="row">
+
+                        <div class="col-md-12 pr-30 padding-top-40 properties-page user-properties">
+
+                            <div class="section">
+                                <div class="page-subheader sorting pl0 pr-10">
+                                    <!-- <ul class="sort-by-list pull-left">
+                                        <li class="active">
+                                            <a href="javascript:void(0);" class="order_by_date"
+                                                data-orderby="property_date" data-order="ASC">
+                                                Property Date <i class="fa fa-sort-amount-asc"></i>
+                                            </a>
+                                        </li>
+                                        <li class="">
+                                            <a href="javascript:void(0);" class="order_by_price"
+                                                data-orderby="property_price" data-order="DESC">
+                                                Property Price <i class="fa fa-sort-numeric-desc"></i>
+                                            </a>
+                                        </li>
+                                    </ul> -->
+                                    <!--/ .sort-by-list-->
+
+                                    <!-- <div class="items-per-page pull-right">
+                                        <label for="items_per_page"><b>Property per page :</b></label>
+                                        <div class="sel">
+                                            <select id="items_per_page" name="per_page">
+                                                <option value="3">3</option>
+                                                <option value="6">6</option>
+                                                <option value="9">9</option>
+                                                <option selected="selected" value="12">12</option>
+                                                <option value="15">15</option>
+                                                <option value="30">30</option>
+                                                <option value="45">45</option>
+                                                <option value="60">60</option>
+                                            </select>
+                                        </div>
+                                        
+                                    </div> -->
+                                    <!--/ .items-per-page-->
+                                </div>
+
                             </div>
-                            <div class="bg-light text-center" style="height: 50px; width: 100%;">
-                                <a href="/edit-property/<%=propId%>" class="btn btn-primary">Change Details</a>
+
+                            <div class="section">
+                                <div id="list-type" class="proerty-th-list">
+                                    <% for (const property of properties){%>
+                                        <div class="col-md-4 p0">
+                                            <div class="box-two proerty-item">
+                                                <div class="item-thumb text-center w-100 h-100">
+                                                    <%if(property.progress>50){%>
+                                                        <a href="/property/<%=property['_id']%>"><img
+                                                                src="/<%=property['pgImages'].defaults[0]%>"></a>
+                                                        <%}else{%>
+                                                            <a href="/property-images/<%=property['_id']%>"
+                                                                class="btn btn-danger">Add Pictures</a>
+
+                                                            <%}%>
+                                                </div>
+
+                                                <div class="item-entry overflow">
+                                                    <h5><a href="/property/<%=property['_id']%>">
+                                                            <%=property['title']%>
+                                                        </a></h5>
+                                                    <div class="dot-hr"></div>
+                                                    <span class="pull-left"><b> Area :</b>
+                                                        <%=property.area%> (Sq Feet)
+                                                    </span>
+                                                    <span class="proerty-price pull-right"> ₹
+                                                        <%=`${property.rent[0]}-${property.rent[1]}`%>
+                                                    </span>
+                                                    <p style="display: none;">
+                                                        <%=property['description']%>>
+                                                    </p>
+                                                    <div class="property-icon">
+                                                        <img src="assets/img/icon/bed.png">(<%=property['seats']%>)|
+                                                            <img src="assets/img/icon/shawer.png">(2)|
+                                                            <img src="assets/img/icon/cars.png">(1)
+
+                                                            <div class="dealer-action pull-right">
+                                                                <a href="/manage-property/<%=property['_id']%>"
+                                                                    class="button">Manage</a>
+                                                                <a href="#"
+                                                                    class="button delete_user_car">Deactivate</a>
+                                                                <a href="property/<%=property['_id']%>"
+                                                                    class="button">View</a>
+                                                            </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+                                        </div>
+                                        <%}%>
+                                </div>
                             </div>
+
+                            <!-- <div class="section">
+                                <div class="pull-right">
+                                    <div class="pagination">
+                                        <ul>
+                                            <li><a href="#">Prev</a></li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+
                         </div>
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                PG Images
+
+                        <!-- <div class="col-md-3 p0 padding-top-40">
+                            <div class="blog-asside-right">
+                                <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Hello Kimaro</h3>
+                                    </div>
+                                    <div class="panel-body search-widget">
+
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Recommended</h3>
+                                    </div>
+                                    <div class="panel-body recent-property-widget">
+
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center" style="height: 50px; width: 100%;">
-                                <a href="/property-images/<%=propId%>" class="btn btn-primary">Add Images</a>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
 
             <!-- Footer area-->
             <div class="footer-area">
+
                 <div class=" footer">
                     <div class="container">
                         <div class="row">
+
                             <div class="col-md-3 col-sm-6 wow fadeInRight animated">
                                 <div class="single-footer">
                                     <h4>About us </h4>

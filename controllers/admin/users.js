@@ -45,7 +45,6 @@ exports.getUser = async (req, res, next) => {
 exports.delUser = async (req, res, next) => {
   try {
     const userId = req.params.userId;
-    console.log(userId);
     const user = await User.findById(userId).lean();
     if (!user) throw new Error('User Not Found');
     await delSession(userId);
@@ -78,7 +77,6 @@ exports.postAddNewUser = async (req, res, next) => {
 
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      console.log(errors.array());
       return res.status(404).render('admin/manage_user', {
         pageTitle: 'Add New User',
         oldInput: req.body,

@@ -3,36 +3,37 @@ const Property = require('../models/property');
 
 // ---------------   Module Imports  ---------------
 const express = require('express');
-const {
-  getAddProperty,
-  postAddProperty,
-  getEditProperty,
-  viewProperty,
-  manageProperty,
-  deleteProperty,
-  postEditProperty
-} = require('../controllers/property');
+const property = require('../controllers/property');
 
 const { isAuth } = require('../middleware/is-auth');
 
 // Initializing Router
 const router = express.Router();
 
-// ----------  Add Property Routes  ----------
-router.get('/add-property', isAuth, getAddProperty);
-router.post('/add-property', isAuth, postAddProperty);
+// ----------  Property Details Routes  ----------
+router.get('/add-property', isAuth, property.getAddPropertyDetails);
+router.post('/add-property', isAuth, property.postAddPropertyDetails);
+router.get('/edit-property/:propId', isAuth, property.getEditPropertyDetails);
+router.post('/edit-property', isAuth, property.postEditPropertyDetails);
 
-// ----------  Edit Property Routes  ----------
-router.get('/edit-property/:propId', isAuth, getEditProperty);
-router.post('/edit-property', isAuth, postEditProperty);
+// ----------  Property Images Routes  ----------
+router.get('/property-images/:propId', isAuth, property.getPropertyImages);
+router.get(
+  '/add-property-images/:propId',
+  isAuth,
+  property.getAddPropertyImagesCategory
+);
+router.post('/add-property-images', isAuth, property.postAddPropertyImagesCategory);
+router.get('/delete-property-image/:propId', isAuth,property.deletePropertyImages);
 
 // ----------  Delete Property Routes  ----------
-router.post('/delete-property', isAuth, deleteProperty);
+router.post('/delete-property', isAuth, property.deleteProperty);
 
 // ----------  Manage Property Routes  ----------
-router.get('/manage-property', isAuth, manageProperty);
+router.get('/manage-properties', isAuth, property.getProperties);
+router.get('/manage-property/:propId', isAuth, property.manageProperty);
 
 // ----------  View Property Routes  ----------
-router.get('/property/:propId', isAuth, viewProperty);
+router.get('/property/:propId', isAuth, property.viewProperty);
 
 module.exports = router;

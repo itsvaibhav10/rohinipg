@@ -18,6 +18,7 @@ const userSchema = new Schema(
     mobileVerify: { type: Boolean, required: true, default: false },
     typeOfUser: { type: String, default: 'tenant' },
     subscriptionType: { type: String, required: true, default: 'free' },
+    wishlist: { type: Array },
     activationToken: String,
     otp: String,
     otpExpiry: String,

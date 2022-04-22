@@ -2,9 +2,16 @@
     <style>
         .d-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            place-content: center center;
+            grid-template-columns: repeat(auto-fit, 250px);
+            gap: 1rem;
+            place-items: center center;
+        }
+
+        .box {
+            height: 200px;
+            width: 200px;
+            font-size: 3rem;
+            text-transform: capitalize;
         }
     </style>
     </head>
@@ -16,7 +23,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
-                            <h1 class="page-title">Manage Property</h1>
+                            <h1 class="page-title">
+                                <%=category%> Images List
+                            </h1>
                         </div>
                     </div>
                 </div>
@@ -24,34 +33,98 @@
             <!-- End page header -->
 
             <!-- property area -->
-            <div class="content-area " style="background-color: #FFF;">
+            <div class="content-area recent-property" style="background-color: #FFF;">
                 <div class="container">
-                    <div class="d-grid" style="margin-top: 5rem;">
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                PG Details
+                    <div class="row">
+
+                        <div class="col-md-12 pr-30 padding-top-40 properties-page user-properties">
+
+                            <div class="section">
+                                <form action="/add-property-images" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                    <input type="hidden" name="category" value="<%=category%>">
+                                    <input type="hidden" name="propId" value="<%=propId%>">
+                                    <div class="picture-container">
+                                        <div class="picture">
+                                            <div class="row">
+                                                <div class="col-md-3"><input type="file" class="wizard-picture" multiple
+                                                        name="pg_images"></div>
+                                                <div class="col-md-3"><button type="submit">Add Images</button></div>
+
+                                            </div>
+                                            <div class="pb-3"></div>
+                                            <div class="d-grid">
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="divider"></div>
+                                <div class="p-5"></div>
+                                <div class="d-grid pt-5">
+                                    <%pgImages.forEach((i,idx)=>{%>
+                                        <div class="text-center">
+                                            <img src="/<%=i%>" alt="" class="box">
+                                            <br>
+                                            <%if(pgImages.length>1){%>
+                                                <a
+                                                    href="/delete-property-image/<%=propId%>?category=<%=category%>&idx=<%=idx%>"><i
+                                                        class="fa fa-times-circle-o fa-3x text-danger"></i></a>
+                                                <%}%>
+                                        </div>
+                                        <%})%>
+                                </div>
                             </div>
-                            <div class="bg-light text-center" style="height: 50px; width: 100%;">
-                                <a href="/edit-property/<%=propId%>" class="btn btn-primary">Change Details</a>
-                            </div>
+
+                            <!-- <div class="section">
+                                <div class="pull-right">
+                                    <div class="pagination">
+                                        <ul>
+                                            <li><a href="#">Prev</a></li>
+                                            <li><a href="#">1</a></li>
+                                            <li><a href="#">2</a></li>
+                                            <li><a href="#">3</a></li>
+                                            <li><a href="#">4</a></li>
+                                            <li><a href="#">Next</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div> -->
+
                         </div>
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                PG Images
+
+                        <!-- <div class="col-md-3 p0 padding-top-40">
+                            <div class="blog-asside-right">
+                                <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Hello Kimaro</h3>
+                                    </div>
+                                    <div class="panel-body search-widget">
+
+                                    </div>
+                                </div>
+
+                                <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Recommended</h3>
+                                    </div>
+                                    <div class="panel-body recent-property-widget">
+
+                                    </div>
+                                </div>
                             </div>
-                            <div class="text-center" style="height: 50px; width: 100%;">
-                                <a href="/property-images/<%=propId%>" class="btn btn-primary">Add Images</a>
-                            </div>
-                        </div>
+                        </div> -->
                     </div>
                 </div>
             </div>
 
             <!-- Footer area-->
             <div class="footer-area">
+
                 <div class=" footer">
                     <div class="container">
                         <div class="row">
+
                             <div class="col-md-3 col-sm-6 wow fadeInRight animated">
                                 <div class="single-footer">
                                     <h4>About us </h4>
@@ -220,6 +293,35 @@
             <script src="/assets/js/wizard.js"></script>
 
             <script src="/assets/js/main.js"></script>
+            <script>
+                const fileInput = document.querySelector('.wizard-picture');
+                const imgGallery = document.querySelector('.picture .d-grid')
+                const imgElem = () => {
+                    const img = document.createElement('img')
+                    imgGallery.appendChild(img)
+                    img.classList.add('box')
+                    return img
+                }
+
+                const readUrl = (files) => {
+                    for (const file of files) {
+                        console.log(file);
+                        const reader = new FileReader();
+                        const img = imgElem();
+                        reader.onload = (e) => {
+                            img.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                }
+
+                fileInput.addEventListener('change', (e) => {
+                    imgGallery.textContent = ''
+                    readUrl(e.target.files)
+                })
+
+
+            </script>
 
     </body>
 
