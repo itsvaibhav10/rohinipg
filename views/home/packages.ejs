@@ -1,0 +1,23 @@
+<%- include('../include/header'); %>
+    </head>
+
+    <body>
+        <%- include('../include/navbar'); %>
+            <div class="page-head">
+                <div class="container">
+                    <div class="row">
+                        <div class="page-head-content">
+                            <h1 class="page-title">
+                                Pricing
+                            </h1>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <%packages.forEach(p=>{%>
+                <%=p%>
+                    <%})%>
+                        <%- include('../include/footer'); %>
+    </body>
+
+    </html>
