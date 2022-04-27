@@ -9,7 +9,7 @@ const propertySchema = new Schema(
       ref: 'User',
       required: true,
     },
-
+    views: [{ type: Schema.Types.ObjectId, ref: 'User', required: true }],
     pgImages: {
       room: { type: Array, default: [] },
       kitchen: { type: Array, default: [] },

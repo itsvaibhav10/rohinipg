@@ -6,6 +6,7 @@ const express = require('express');
 const admin = require('../controllers/admin/admin');
 const master = require('../controllers/admin/master');
 const user = require('../controllers/admin/users');
+const package = require('../controllers/admin/package');
 const property = require('../controllers/admin/property');
 const enquiry = require('../controllers/admin/enquiry');
 const { isAuthAdmin } = require('../middleware/is-auth');
@@ -86,6 +87,52 @@ router.get(
   '/activate-property/:propId',
   isAuthAdmin,
   property.activateProperty
+);
+
+// ----------  Manage Packages Routes  ----------
+router.get('/packages', isAuthAdmin, package.getPackages);
+router.get('/package/:packageId', isAuthAdmin, package.getPackage);
+router.get('/add-package', isAuthAdmin, package.getAddNewPackage);
+router.post(
+  '/add-package',
+  isAuthAdmin,
+  [
+    body('name', 'Name Cant be Empty').not().isEmpty().trim(),
+    body('validity', 'Please Select Validity Period').not().isEmpty().trim(),
+    body('price', 'Please enter a Valid MRP for Package.')
+      .not()
+      .isEmpty()
+      .trim(),
+    body('propertyLimit', 'Please Enter Valid Limit for the Package')
+      .not()
+      .isEmpty()
+      .trim(),
+  ],
+  package.postAddNewPackage
+);
+router.get('/edit-package/:packageId', isAuthAdmin, package.getEditPackage);
+router.post(
+  '/edit-package',
+  isAuthAdmin,
+  [
+    body('name', 'Name Cant be Empty').not().isEmpty().trim(),
+    body('validity', 'Please Select Validity Period').not().isEmpty().trim(),
+    body('price', 'Please enter a Valid MRP for Package.')
+      .not()
+      .isEmpty()
+      .trim(),
+    body('propertyLimit', 'Please Enter Valid Limit for the Package')
+      .not()
+      .isEmpty()
+      .trim(),
+  ],
+  package.postEditPackage
+);
+router.get('/delete-package/:packageId', isAuthAdmin, package.delPackage);
+router.get(
+  '/activate-package/:packageId',
+  isAuthAdmin,
+  package.activatePackage
 );
 
 // ----------  Manage Enquries Routes  ----------

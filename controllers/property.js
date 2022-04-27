@@ -1,11 +1,34 @@
 // ----------  Modules Import  ----------
 const Property = require('../models/property');
+const User = require('../models/user');
 const Master = require('../models/master');
 const { deleteFile } = require('./utility');
 
 const getPropertyInfo = async (propId, user) => {
   if (user.isAdmin) return await Property.findById(propId).lean();
   else return await Property.findOne({ _id: propId, userId: user._id }).lean();
+};
+
+const getContact = async (propId) => {
+  const property = await Property.findById(propId, {
+    userId: true,
+    'provider type': true,
+  }).lean();
+  const provider = await User.findById(property.userId).lean();
+  if (provider.subscriptionType === 'paid')
+    return {
+      firstName: provider.firstName,
+      lastName: provider.lastName,
+      mobile: provider.mobile,
+      'provider type': property['provider type'],
+    };
+  else
+    return {
+      firstName: 'Vishal',
+      lastName: 'Bansal',
+      mobile: '9999999999',
+      'provider type': 'Agent',
+    };
 };
 
 // ----------  Property Details  ----------
@@ -218,10 +241,28 @@ exports.deleteProperty = async (req, res, next) => {
 exports.viewProperty = async (req, res, next) => {
   try {
     const propId = req.params.propId;
-    const property = await Property.findById(propId).lean();
+    const property = await Property.findById(propId);
+    if (!property) throw new Error('Property Not Found');
+
+    // Adding to response if current user is neither Admin nor Owner
+    if (
+      !req.user.isAdmin &&
+      property.userId.toString() !== req.user._id.toString()
+    ) {
+      // Find If Already Added To Response
+      const userIndex = property.views.findIndex(
+        (userId) => userId.toString() === req.user._id.toString()
+      );
+      if (userIndex === -1) {
+        property.views.push(req.user._id);
+        await property.save();
+      }
+    }
+
     res.render('property/view_property', {
       pageTitle: property['title'],
       property,
+      contact: await getContact(propId),
     });
   } catch (err) {
     return next(new Error(err));

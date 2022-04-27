@@ -4,8 +4,7 @@ const User = require('../../models/user');
 // ---------------   Module Imports  ---------------
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
-
-// ---------------   Global Functions  ---------------
+const { urltracker } = require('../utility');
 
 // ---------------   User Login Operations  ---------------
 exports.getLogin = (req, res, next) => {
@@ -62,8 +61,9 @@ exports.postLogin = async (req, res, next) => {
           req.session.isLoggedIn = true;
           req.session.user = user;
           return req.session.save((err) => {
-            if (req.session.user.isAdmin) return res.redirect('/admin');
-            return res.redirect('/home');
+            const url =
+              req.session && req.session.url ? req.session.url : '/home';
+            return res.redirect(url);
           });
         }
         return res.status(422).render('auth/login', {
@@ -96,6 +96,8 @@ exports.googleLogin = (req, res, next) => {
 exports.logout = async (req, res, next) => {
   try {
     req.session.destroy((err) => {
+      const url = req.session && req.session.url ? req.session.url : '/home';
+      return res.redirect(url);
       res.redirect('/home');
     });
   } catch (err) {

@@ -37,7 +37,12 @@ exports.postVerifyUser = async (req, res, next) => {
       user.otpExpiry = undefined;
       user.mobileVerify = true;
       await user.save();
-      return res.send({ url: '/login' });
+      req.session.isLoggedIn = true;
+      req.session.user = user;
+      return req.session.save((err) => {
+        const url = req.session && req.session.url ? req.session.url : '/home';
+        return res.send({ url: url });
+      });
     }
   } catch (err) {
     const error = new Error(err);

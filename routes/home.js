@@ -11,7 +11,8 @@ const router = express.Router();
 
 router.get('/', home.index);
 router.get('/home', home.home);
-router.get('/properties', home.getProperties);
+router.get('/search', home.getProperties);
 router.post('/enquiry', isAuth, home.enquiry);
+router.post('/search', home.postProperties);
 
 module.exports = router;

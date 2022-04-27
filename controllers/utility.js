@@ -6,7 +6,6 @@ sgMail.setApiKey(process.env.sendgridApi);
 
 const sessionModel = require('../models/sessions');
 const User = require('../models/user');
-const { Session } = require('inspector');
 
 // Generate OTP
 const generateOTP = () => {
@@ -93,4 +92,8 @@ exports.delSession = async (userId) => {
       { 'session.user._id': userId },
     ],
   });
+};
+
+exports.urltracker = (session = {}) => {
+  return session && session.url ? session.url : '/';
 };

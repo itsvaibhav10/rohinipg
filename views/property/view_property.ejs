@@ -109,7 +109,7 @@
 
                                 <div class="section additional-details">
 
-                                    <h4 class="s-property-title">Additional Details</h4>
+                                    <h4 class="s-property-title">Amenities</h4>
 
                                     <ul class="additional-details-list clearfix">
                                         <li>
@@ -250,37 +250,21 @@
                                                 </div>
                                                 <div class="col-xs-8 col-sm-8 ">
                                                     <h3 class="dealer-name">
-                                                        <a href="">Nathan James</a>
-                                                        <span>Real Estate Agent</span>
+                                                        <a href="">
+                                                            <%=`${contact.firstName} ${contact.lastName}`%>
+                                                        </a>
+                                                        <span>Real Estate <%=contact['provider type']%></span>
                                                     </h3>
                                                     <div class="dealer-social-media">
-                                                        <a class="twitter" target="_blank" href="">
-                                                            <i class="fa fa-twitter"></i>
-                                                        </a>
-                                                        <a class="facebook" target="_blank" href="">
-                                                            <i class="fa fa-facebook"></i>
-                                                        </a>
-                                                        <a class="gplus" target="_blank" href="">
-                                                            <i class="fa fa-google-plus"></i>
-                                                        </a>
-                                                        <a class="linkedin" target="_blank" href="">
-                                                            <i class="fa fa-linkedin"></i>
-                                                        </a>
-                                                        <a class="instagram" target="_blank" href="">
-                                                            <i class="fa fa-instagram"></i>
-                                                        </a>
+                                                        <p><i class="pe-7s-call strong"> </i>
+                                                            +91 <%=contact.mobile%>
+                                                        </p>
+
                                                     </div>
 
                                                 </div>
                                             </div>
-
                                             <div class="clear">
-                                                <ul class="dealer-contacts">
-                                                    <li><i class="pe-7s-map-marker strong"> </i> 9089 your adress her
-                                                    </li>
-                                                    <li><i class="pe-7s-mail strong"> </i> email@yourcompany.com</li>
-                                                    <li><i class="pe-7s-call strong"> </i> +1 908 967 5906</li>
-                                                </ul>
                                                 <div class="alert alert-danger hide">Already Send!</div>
                                                 <div class="alert alert-success hide">Enquiry Send!</div>
                                                 <button type="button" class="btn btn-default" id="enquiry">Send

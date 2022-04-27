@@ -22,19 +22,17 @@
                     <div class="row  pr0 padding-top-40 properties-page">
                         <div class="col-md-12 padding-bottom-40 large-search">
                             <div class="search-form wow pulse">
-                                <form action="" class=" form-inline">
+                                <form action="/search" method="post" class=" form-inline">
                                     <div class="col-md-12">
-                                        <div class="col-md-4">
-                                            <input type="text" class="form-control" placeholder="Key word">
+                                        <div class="col-md-3">
+                                            <label for="">Keywords</label>
+                                            <input type="text" class="form-control" name="keywords"
+                                                placeholder="Key word">
                                         </div>
-                                        <div class="col-md-4">
-
-
-                                            <select name="propertyState" id="propertyState" placeholder="near land mark"
-                                                class="selectpicker" data-live-search="true"
-                                                data-live-search-style="begins" required>
-                                                <option selected disabled value="">Choose...
-                                                </option>
+                                        <div class="col-md-3">
+                                            <label for="">State:</label>
+                                            <select name="propertyState" class="selectpicker" data-live-search="true"
+                                                data-live-search-style="begins" title="Select your city">
                                                 <option>Andhra Pradesh</option>
                                                 <option>Arunachal Pradesh</option>
                                                 <option>Assam</option>
@@ -71,150 +69,82 @@
                                                 <option>Ladakh</option>
                                                 <option>Lakshadweep</option>
                                                 <option>Puducherry</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-3">
+                                            <label for="">Available for:</label>
+                                            <select id="propertyAvailableFor" name="propertyAvailableFor"
+                                                class="selectpicker show-tick form-control">
+                                                <%master.availability.forEach(m=>{%>
+                                                    <option value="<%=m%>">
+                                                        <%=m%>
+                                                    </option>
+                                                    <%})%>
+
 
                                             </select>
                                         </div>
-                                        <div class="col-md-4">
-                                            <select id="basic" class="selectpicker show-tick form-control">
-                                                <option selected disabled value="">Choose...
-                                                </option>
-                                                <%master.availability.forEach(a=>{%>
-                                                    <option value="<%=a%>">
-                                                        <%=a%>
+                                        <div class="col-md-3">
+                                            <label for="">Occupancy:</label>
+                                            <select id="propertyOccupancy" name="propertyOccupancy"
+                                                class="selectpicker show-tick form-control">
+                                                <%master.occupancy.forEach(m=>{%>
+                                                    <option value="<%=m%>">
+                                                        <%=m%>
                                                     </option>
                                                     <%})%>
-                                            
+
+
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 ">
+                                    <div class="col-md-12 text-center">
                                         <div class="search-row">
-
-                                            <div class="col-sm-3">
-                                                <label for="price-range">Price range ($):</label>
-                                                <input type="text" class="span2" value="" data-slider-min="0"
-                                                    data-slider-max="600" data-slider-step="5"
-                                                    data-slider-value="[0,450]" id="price-range"><br />
-                                                <b class="pull-left color">2000$</b>
-                                                <b class="pull-right color">100000$</b>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <label for="property-geo">Property geo (m2) :</label>
-                                                <input type="text" class="span2" value="" data-slider-min="0"
-                                                    data-slider-max="600" data-slider-step="5"
-                                                    data-slider-value="[50,450]" id="property-geo"><br />
-                                                <b class="pull-left color">40m</b>
-                                                <b class="pull-right color">12000m</b>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <label for="price-range">Min baths :</label>
-                                                <input type="text" class="span2" value="" data-slider-min="0"
-                                                    data-slider-max="600" data-slider-step="5"
-                                                    data-slider-value="[250,450]" id="min-baths"><br />
-                                                <b class="pull-left color">1</b>
-                                                <b class="pull-right color">120</b>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <label for="property-geo">Min bed :</label>
-                                                <input type="text" class="span2" value="" data-slider-min="0"
-                                                    data-slider-max="600" data-slider-step="5"
-                                                    data-slider-value="[250,450]" id="min-bed"><br />
-                                                <b class="pull-left color">1</b>
-                                                <b class="pull-right color">120</b>
-                                            </div>
-                                            <!-- End of  -->
-
-                                        </div>
-
-                                        <div class="search-row">
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Fire Place(3100)
-                                                    </label>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="propertyRent">Rent Per Month/Bed in (INR)
+                                                        :</label>
+                                                    <input type="text" class="span2" data-slider-min="500"
+                                                        data-slider-max="10000" data-slider-step="10"
+                                                        data-slider-value="[<%='1000,5000'%>]" id="min-baths"
+                                                        name="propertyRent" value="<%='1000,5000'%>"><br />
+                                                    <b class="pull-left color">500</b>
+                                                    <b class="pull-right color">10000</b>
                                                 </div>
                                             </div>
                                             <!-- End of  -->
 
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Dual Sinks(500)
-                                                    </label>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="propertySeats">No Of Seats Available
+                                                        :</label>
+                                                    <input type="text" class="span2" data-slider-min="1"
+                                                        data-slider-max="50" data-slider-step="1"
+                                                        data-slider-value="<%='15'%>" id="price-range"
+                                                        name="propertySeats" value="<%='15'%>"><br />
+                                                    <b class="pull-left color">1</b>
+                                                    <b class="pull-right color">50</b>
                                                 </div>
                                             </div>
                                             <!-- End of  -->
 
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Hurricane Shutters(99)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Swimming Pool(1190)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> 2 Stories(4600)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Emergency Exit(200)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Laundry Room(10073)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> Jog Path(1503)
-                                                    </label>
-                                                </div>
-                                            </div>
-                                            <!-- End of  -->
-
-                                            <div class="col-sm-3">
-                                                <div class="checkbox">
-                                                    <label>
-                                                        <input type="checkbox"> 26' Ceilings(1200)
-                                                    </label>
+                                            <div class="col-sm-4">
+                                                <div class="form-group">
+                                                    <label for="propertyArea">Area in (sq Feet) :</label>
+                                                    <input type="text" class="span2" value="<%='500,2500'%>"
+                                                        data-slider-min="100" data-slider-max="5000"
+                                                        data-slider-step="10" data-slider-value="[<%='500,2500'%>]"
+                                                        id="property-geo" name="propertyArea"><br />
+                                                    <b class="pull-left color">100 (sq feet)</b>
+                                                    <b class="pull-right color">5000 (sq feet)</b>
                                                 </div>
                                             </div>
                                             <!-- End of  -->
                                         </div>
+                                    </div>
+                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                    <div class="center">
+                                        <button type="submit" class="btn btn-default btn-lg-sheach"><i class="fas fa-house-damage"></i> Find</button>
                                     </div>
                                 </form>
                             </div>
@@ -267,7 +197,8 @@
                                     <div class="col-sm-6 col-md-3 p0">
                                         <div class="box-two proerty-item">
                                             <div class="item-thumb">
-                                                <a href="/property/<%=property._id%>"><img src="/<%=property.pgImages.defaults[0]%>"></a>
+                                                <a href="/property/<%=property._id%>"><img
+                                                        src="/<%=property.pgImages.defaults[0]%>"></a>
                                             </div>
                                             <div class="item-entry overflow">
                                                 <h5><a href="/property/<%=property._id%>">

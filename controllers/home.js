@@ -60,3 +60,27 @@ exports.getProperties = async (req, res, next) => {
     lastPage: Math.ceil(totalItems / ITEM_PER_PAGE),
   });
 };
+
+exports.postProperties = async (req, res, next) => {
+  const keywords = req.body.keywords;
+  const propertyState = req.body.propertyState;
+  const propertyAvailableFor = req.body.propertyAvailableFor;
+  const propertyOccupancy = req.body.propertyOccupancy;
+  const propertyRent = req.body.propertyRent;
+  const propertySeats = req.body.propertySeats;
+  const areaMax = req.body.propertyArea.split(',')[1];
+  const areaMin = req.body.propertyArea.split(',')[0];
+
+  const properties = await Property.find({
+    state: propertyState,
+    seats: { $gte: propertySeats },
+    availability: propertyAvailableFor,
+    occupancy: propertyOccupancy,
+    area: { $lte: areaMax },
+    area: { $gte: areaMin },
+    title: { $regex: '.*' + keywords + '.*' },
+    description: { $regex: '.*' + keywords + '.*' },
+  });
+  
+  return res.send(properties);
+};

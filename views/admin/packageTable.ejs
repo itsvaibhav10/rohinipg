@@ -43,11 +43,11 @@
 <%- include('./include/header.ejs')%>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Users Data Table</h3>
-            <div class="text-center"><a href="/admin/add-user" class="btn btn-primary"><i
+            <h3 class="box-title">Packages Data Table</h3>
+            <div class="text-center"><a href="/admin/add-package" class="btn btn-primary"><i
                         class="far fa-plus-square"></i>
                     Create New
-                    User</a></div>
+                    Package</a></div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -56,45 +56,58 @@
                     <thead>
                         <tr>
                             <th>Actions</th>
+                            <th>Active</th>
                             <th>Name</th>
-                            <th>Mobile</th>
-                            <th>Admin</th>
-                            <th>Type</th>
-                            <th>Verified</th>
-                            <th>DOJ</th>
+                            <th>Validity</th>
+                            <th>Price</th>
+                            <th>Enrolled</th>
+                            <th>Created At</th>
+                            <th>Updated At</th>
                         </tr>
                     </thead>
                     <tbody>
-                        <%users.forEach((u)=>{%>
+                        <%packages.forEach((u)=>{%>
                             <tr>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <a href="/admin/user/<%=u._id%>" class="btn btn-purple btn-sm mb-1"
+                                        <a href="/admin/package/<%=u._id%>" class="btn btn-purple btn-sm mb-1"
                                             title="View Details"><i class="far fa-eye"></i></a>
-                                        <a href="/admin/edit-user/<%=u._id%>" class="btn btn-yellow btn-sm mb-1"
+                                        <a href="/admin/edit-package/<%=u._id%>" class="btn btn-yellow btn-sm mb-1"
                                             title="Edit Details"><i class="far fa-edit"></i></a>
-                                        <a href="/admin/delete-user/<%=u._id%>" class="btn btn-danger btn-sm mb-1"
+                                        <a href="/admin/delete-package/<%=u._id%>" class="btn btn-danger btn-sm mb-1"
                                             title="Delete User"><i class="fas fa-trash"></i></a>
+                                        <%if(u.isActive){%>
+                                            <a href="/admin/activate-package/<%=u._id%>"
+                                                class="btn btn-danger btn-sm mb-1" title="Activate Package"><i
+                                                    class="fas fa-chart-line"></i></a>
+                                            <%}else{%>
+                                                <a href="/admin/activate-package/<%=u._id%>"
+                                                    class="btn btn-success btn-sm mb-1" title="Activate Package"><i
+                                                        class="fas fa-chart-line"></i></a>
+                                                <%}%>
                                     </div>
                                 </td>
-                                <td>
-                                    <%=`${u.firstName} ${u.lastName}`%>
+                                <td class="<%=u.isActive?'bg-danger':''%>">
+                                    <%=u.isActive?'Active':'Not Active'%>
                                 </td>
                                 <td>
-                                    <%=u.mobile%>
+                                    <%=u.name%>
                                 </td>
                                 <td>
-                                    <%=u.isAdmin?'Yes':'No'%>
+                                    <%=u.validity%> months
                                 </td>
                                 <td>
-                                    <%=u.typeOfUser%>
+                                    <%=u.price%>
                                 </td>
 
                                 <td>
-                                    <%=u.mobileVerify%>
+                                    <%=u.enrolled%>
                                 </td>
                                 <td>
                                     <%=`${u.createdAt.getDay()}-${u.createdAt.getMonth()+1}-${u.createdAt.getFullYear()}`%>
+                                </td>
+                                <td>
+                                    <%=`${u.updatedAt.getDay()}-${u.updatedAt.getMonth()+1}-${u.updatedAt.getFullYear()}`%>
                                 </td>
                             </tr>
                             <%})%>

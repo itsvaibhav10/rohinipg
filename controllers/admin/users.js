@@ -92,6 +92,7 @@ exports.postAddNewUser = async (req, res, next) => {
         email: email,
         password: hashedPassword,
         isAdmin: isAdmin,
+        mobileVerify: true,
       });
       res.redirect('/admin/users');
     }
