@@ -27,59 +27,70 @@
                                         <div class="col-md-3">
                                             <label for="">Keywords</label>
                                             <input type="text" class="form-control" name="keywords"
-                                                placeholder="Key word">
+                                                placeholder="Key word"
+                                                value="<%=oldInput.keywords?oldInput.keywords:''%>">
                                         </div>
                                         <div class="col-md-3">
                                             <label for="">State:</label>
                                             <select name="propertyState" class="selectpicker" data-live-search="true"
                                                 data-live-search-style="begins" title="Select your city">
-                                                <option>Andhra Pradesh</option>
-                                                <option>Arunachal Pradesh</option>
-                                                <option>Assam</option>
-                                                <option>Andaman and Nicobar Islands</option>
-                                                <option>Bihar</option>
-                                                <option>Chandigarh</option>
-                                                <option>Chhattisgarh</option>
-                                                <option>Dadra and Nagar Haveli and Daman and Diu
-                                                </option>
-                                                <option>Delhi</option>
-                                                <option>Goa</option>
-                                                <option>Gujrat</option>
-                                                <option>Haryana</option>
-                                                <option>Himachal Pradesh</option>
-                                                <option>Jharkhand</option>
-                                                <option>kerela</option>
-                                                <option>Madhya pradesh</option>
-                                                <option>Maharastra</option>
-                                                <option>Manipur</option>
-                                                <option>Meghalaya</option>
-                                                <option>Mizoram</option>
-                                                <option>Nagaland</option>
-                                                <option>Odisha</option>
-                                                <option>Punjab</option>
-                                                <option>Rajasthan</option>
-                                                <option>Sikkim</option>
-                                                <option>Tamil Nadu</option>
-                                                <option>Telangana</option>
-                                                <option>Tripura</option>
-                                                <option>Uttar Pradesh</option>
-                                                <option>Uttarakhand</option>
-                                                <option>West Bengal</option>
-                                                <option>Jammu and Kashmir</option>
-                                                <option>Ladakh</option>
-                                                <option>Lakshadweep</option>
-                                                <option>Puducherry</option>
+                                                <%if(oldInput.propertyState){%>
+                                                    <option value="<%=oldInput.propertyState%>" selected>
+                                                        <%=oldInput.propertyState%>
+                                                    </option>
+                                                    <%}%>
+                                                        <option>Andhra Pradesh</option>
+                                                        <option>Arunachal Pradesh</option>
+                                                        <option>Assam</option>
+                                                        <option>Andaman and Nicobar Islands</option>
+                                                        <option>Bihar</option>
+                                                        <option>Chandigarh</option>
+                                                        <option>Chhattisgarh</option>
+                                                        <option>Dadra and Nagar Haveli and Daman and Diu
+                                                        </option>
+                                                        <option>Delhi</option>
+                                                        <option>Goa</option>
+                                                        <option>Gujrat</option>
+                                                        <option>Haryana</option>
+                                                        <option>Himachal Pradesh</option>
+                                                        <option>Jharkhand</option>
+                                                        <option>kerela</option>
+                                                        <option>Madhya pradesh</option>
+                                                        <option>Maharastra</option>
+                                                        <option>Manipur</option>
+                                                        <option>Meghalaya</option>
+                                                        <option>Mizoram</option>
+                                                        <option>Nagaland</option>
+                                                        <option>Odisha</option>
+                                                        <option>Punjab</option>
+                                                        <option>Rajasthan</option>
+                                                        <option>Sikkim</option>
+                                                        <option>Tamil Nadu</option>
+                                                        <option>Telangana</option>
+                                                        <option>Tripura</option>
+                                                        <option>Uttar Pradesh</option>
+                                                        <option>Uttarakhand</option>
+                                                        <option>West Bengal</option>
+                                                        <option>Jammu and Kashmir</option>
+                                                        <option>Ladakh</option>
+                                                        <option>Lakshadweep</option>
+                                                        <option>Puducherry</option>
                                             </select>
                                         </div>
                                         <div class="col-md-3">
                                             <label for="">Available for:</label>
                                             <select id="propertyAvailableFor" name="propertyAvailableFor"
                                                 class="selectpicker show-tick form-control">
-                                                <%master.availability.forEach(m=>{%>
-                                                    <option value="<%=m%>">
-                                                        <%=m%>
+                                                <%if(oldInput.propertyAvailableFor){%>
+                                                    <option value="<%=oldInput.propertyAvailableFor%>">
+                                                        <%=oldInput.propertyAvailableFor%>
                                                     </option>
-                                                    <%})%>
+                                                    <%}%>
+                                                        <%master.availability.forEach(m=>{%>
+                                                            <option value="<%=m%>">
+                                                                <%=m%>
+                                                            </option>
+                                                            <%})%>
 
 
                                             </select>
@@ -88,70 +99,81 @@
                                             <label for="">Occupancy:</label>
                                             <select id="propertyOccupancy" name="propertyOccupancy"
                                                 class="selectpicker show-tick form-control">
-                                                <%master.occupancy.forEach(m=>{%>
-                                                    <option value="<%=m%>">
-                                                        <%=m%>
+                                                <%if(oldInput.propertyOccupancy){%>
+                                                    <option value="<%=oldInput.propertyOccupancy%>">
+                                                        <%=oldInput.propertyOccupancy%>
                                                     </option>
-                                                    <%})%>
+                                                    <%}%>
+                                                        <%master.occupancy.forEach(m=>{%>
+                                                            <option value="<%=m%>">
+                                                                <%=m%>
+                                                            </option>
+                                                            <%})%>
 
 
                                             </select>
                                         </div>
                                     </div>
-                                    <div class="col-md-12 text-center">
-                                        <div class="search-row">
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="propertyRent">Rent Per Month/Bed in (INR)
-                                                        :</label>
-                                                    <input type="text" class="span2" data-slider-min="500"
-                                                        data-slider-max="10000" data-slider-step="10"
-                                                        data-slider-value="[<%='1000,5000'%>]" id="min-baths"
-                                                        name="propertyRent" value="<%='1000,5000'%>"><br />
-                                                    <b class="pull-left color">500</b>
-                                                    <b class="pull-right color">10000</b>
+                                    <%=console.log(oldInput)%>
+                                        <div class="col-md-12 text-center">
+                                            <div class="search-row">
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="propertyRent">Rent Per Month/Bed in (INR)
+                                                            :</label>
+                                                        <input type="text" class="span2" data-slider-min="500"
+                                                            data-slider-max="10000" data-slider-step="10"
+                                                            data-slider-value="[<%=oldInput.propertyRent?oldInput.propertyRent:'1000,5000'%>]"
+                                                            id="min-baths" name="propertyRent"
+                                                            value="<%=oldInput.propertyRent?oldInput.propertyRent:'1000,5000'%>"><br />
+                                                        <b class="pull-left color">500</b>
+                                                        <b class="pull-right color">10000</b>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- End of  -->
+                                                <!-- End of  -->
 
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="propertySeats">No Of Seats Available
-                                                        :</label>
-                                                    <input type="text" class="span2" data-slider-min="1"
-                                                        data-slider-max="50" data-slider-step="1"
-                                                        data-slider-value="<%='15'%>" id="price-range"
-                                                        name="propertySeats" value="<%='15'%>"><br />
-                                                    <b class="pull-left color">1</b>
-                                                    <b class="pull-right color">50</b>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="propertySeats">No Of Seats Available
+                                                            :</label>
+                                                        <input type="text" class="span2" data-slider-min="1"
+                                                            data-slider-max="50" data-slider-step="1"
+                                                            data-slider-value="<%=oldInput.propertySeats?oldInput.propertySeats:'15'%>"
+                                                            id="price-range" name="propertySeats"
+                                                            value="<%=oldInput.propertySeats?oldInput.propertySeats:'15'%>"><br />
+                                                        <b class="pull-left color">1</b>
+                                                        <b class="pull-right color">50</b>
+                                                    </div>
                                                 </div>
-                                            </div>
-                                            <!-- End of  -->
+                                                <!-- End of  -->
 
-                                            <div class="col-sm-4">
-                                                <div class="form-group">
-                                                    <label for="propertyArea">Area in (sq Feet) :</label>
-                                                    <input type="text" class="span2" value="<%='500,2500'%>"
-                                                        data-slider-min="100" data-slider-max="5000"
-                                                        data-slider-step="10" data-slider-value="[<%='500,2500'%>]"
-                                                        id="property-geo" name="propertyArea"><br />
-                                                    <b class="pull-left color">100 (sq feet)</b>
-                                                    <b class="pull-right color">5000 (sq feet)</b>
+                                                <div class="col-sm-4">
+                                                    <div class="form-group">
+                                                        <label for="propertyArea">Area in (sq Feet) :</label>
+                                                        <input type="text" class="span2"
+                                                            value="<%=oldInput.propertyArea?oldInput.propertyArea:'500,2500'%>"
+                                                            data-slider-min="100" data-slider-max="5000"
+                                                            data-slider-step="10"
+                                                            data-slider-value="[<%=oldInput.propertyArea?oldInput.propertyArea:'500,2500'%>]"
+                                                            id="property-geo" name="propertyArea"><br />
+                                                        <b class="pull-left color">100 (sq feet)</b>
+                                                        <b class="pull-right color">5000 (sq feet)</b>
+                                                    </div>
                                                 </div>
+                                                <!-- End of  -->
                                             </div>
-                                            <!-- End of  -->
                                         </div>
-                                    </div>
-                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                                    <div class="center">
-                                        <button type="submit" class="btn btn-default btn-lg-sheach"><i class="fas fa-house-damage"></i> Find</button>
-                                    </div>
+                                        <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                        <div class="center">
+                                            <button type="submit" class="btn btn-default btn-lg-sheach"><i
+                                                    class="fas fa-house-damage"></i> Find</button>
+                                        </div>
                                 </form>
                             </div>
                         </div>
-
-                        <div class="col-md-12 clear">
-                            <!-- <div class="col-xs-10 page-subheader sorting pl0">
+                        <%if(properties && properties.length> 0){%>
+                            <div class="col-md-12 clear">
+                                <!-- <div class="col-xs-10 page-subheader sorting pl0">
                                 <ul class="sort-by-list">
                                     <li class="active">
                                         <a href="javascript:void(0);" class="order_by_date" data-orderby="property_date"
@@ -184,52 +206,41 @@
                                 </div>
                             </div> -->
 
-                            <div class=" layout-switcher">
-                                <a class="layout-list" href="javascript:void(0);"> <i class="fa fa-th-list"></i> </a>
-                                <a class="layout-grid active" href="javascript:void(0);"> <i class="fa fa-th"></i> </a>
+                                <div class=" layout-switcher">
+                                    <a class="layout-list" href="javascript:void(0);"> <i class="fa fa-th-list"></i>
+                                    </a>
+                                    <a class="layout-grid active" href="javascript:void(0);"> <i class="fa fa-th"></i>
+                                    </a>
+                                </div>
+                                <!--/ .layout-switcher-->
                             </div>
-                            <!--/ .layout-switcher-->
-                        </div>
 
-                        <div class="col-md-12 clear ">
-                            <div id="list-type" class="proerty-th">
-                                <%properties.forEach(property=>{%>
-                                    <div class="col-sm-6 col-md-3 p0">
-                                        <div class="box-two proerty-item">
-                                            <div class="item-thumb">
-                                                <a href="/property/<%=property._id%>"><img
-                                                        src="/<%=property.pgImages.defaults[0]%>"></a>
-                                            </div>
-                                            <div class="item-entry overflow">
-                                                <h5><a href="/property/<%=property._id%>">
-                                                        <%=property.title%>
-                                                    </a></h5>
-                                                <div class="dot-hr"></div>
-                                                <span class="pull-left"><b>Area :</b>
-                                                    <%=property.area%> in (Sq Feet)
-                                                </span>
-                                                <span class="proerty-price pull-right">₹<%=property.rent%></span>
+
+                            <div class="col-md-12 clear ">
+                                <div id="list-type" class="proerty-th">
+                                    <%properties.forEach(property=>{%>
+                                        <div class="col-sm-6 col-md-3 p0">
+                                            <div class="box-two proerty-item">
+                                                <div class="item-thumb">
+                                                    <a href="/property/<%=property._id%>"><img
+                                                            src="/<%=property.pgImages.defaults[0]%>"></a>
+                                                </div>
+                                                <div class="item-entry overflow">
+                                                    <h5><a href="/property/<%=property._id%>">
+                                                            <%=property.title%>
+                                                        </a></h5>
+                                                    <div class="dot-hr"></div>
+                                                    <span class="pull-left"><b>Area :</b>
+                                                        <%=property.area%> in (Sq Feet)
+                                                    </span>
+                                                    <span class="proerty-price pull-right">₹<%=property.rent%></span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <%})%>
-                            </div>
-                        </div>
-
-                        <!-- <div class="col-md-12 clear">
-                            <div class="pull-right">
-                                <div class="pagination">
-                                    <ul>
-                                        <li><a href="#">Prev</a></li>
-                                        <li><a href="#">1</a></li>
-                                        <li><a href="#">2</a></li>
-                                        <li><a href="#">3</a></li>
-                                        <li><a href="#">4</a></li>
-                                        <li><a href="#">Next</a></li>
-                                    </ul>
+                                        <%})%>
                                 </div>
                             </div>
-                        </div> -->
+                            <%}%>
                     </div>
                 </div>
             </div>

@@ -29,35 +29,12 @@ exports.enquiry = async (req, res, next) => {
 };
 
 exports.getProperties = async (req, res, next) => {
-  const ITEM_PER_PAGE = 10;
-  const page = +req.query.page || 1;
-
-  const totalItems = await Property.find({
-    isActive: true,
-    isVerified: true,
-  })
-    .countDocuments()
-    .lean();
-
-  const properties = await Property.find({
-    isActive: true,
-    isVerified: true,
-  })
-    .skip((page - 1) * ITEM_PER_PAGE)
-    .limit(ITEM_PER_PAGE)
-    .lean();
-
   const master = await Master.findOne().lean();
   res.render('property/properties', {
     pageTitle: 'Properties',
-    properties,
     master,
-    currentPage: page,
-    hasNextPage: ITEM_PER_PAGE * page < totalItems,
-    hasPreviousPage: page > 1,
-    nextPage: page + 1,
-    previousPage: page - 1,
-    lastPage: Math.ceil(totalItems / ITEM_PER_PAGE),
+    oldInput: '',
+    properties: [],
   });
 };
 
@@ -70,8 +47,12 @@ exports.postProperties = async (req, res, next) => {
   const propertySeats = req.body.propertySeats;
   const areaMax = req.body.propertyArea.split(',')[1];
   const areaMin = req.body.propertyArea.split(',')[0];
+  const ITEM_PER_PAGE = 10;
+  const page = +req.query.page || 1;
 
   const properties = await Property.find({
+    isActive: true,
+    isVerified: true,
     state: propertyState,
     seats: { $gte: propertySeats },
     availability: propertyAvailableFor,
@@ -79,8 +60,24 @@ exports.postProperties = async (req, res, next) => {
     area: { $lte: areaMax },
     area: { $gte: areaMin },
     title: { $regex: '.*' + keywords + '.*' },
-    description: { $regex: '.*' + keywords + '.*' },
+  })
+    .skip((page - 1) * ITEM_PER_PAGE)
+    .limit(ITEM_PER_PAGE)
+    .lean();
+
+  const totalItems = properties.length;
+
+  const master = await Master.findOne().lean();
+  res.render('property/properties', {
+    pageTitle: 'Properties',
+    properties,
+    master,
+    currentPage: page,
+    hasNextPage: ITEM_PER_PAGE * page < totalItems,
+    hasPreviousPage: page > 1,
+    nextPage: page + 1,
+    previousPage: page - 1,
+    lastPage: Math.ceil(totalItems / ITEM_PER_PAGE),
+    oldInput: req.body,
   });
-  
-  return res.send(properties);
 };
