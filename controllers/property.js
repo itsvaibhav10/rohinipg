@@ -43,7 +43,7 @@ exports.getAddPropertyDetails = async (req, res, next) => {
 };
 
 exports.postAddPropertyDetails = async (req, res, next) => {
-  // return res.send
+  // return res.send(req.body);
   try {
     const newProperty = {
       userId: req.user['_id'],
@@ -83,7 +83,7 @@ exports.postAddPropertyDetails = async (req, res, next) => {
       furnished: req.body['propertyFurnished'],
     };
     const result = await Property.create(newProperty);
-    res.redirect(`/manage-property/${result._id}`);
+    res.redirect(`/property-images/${result._id}`);
   } catch (err) {
     return next(new Error(err));
   }
@@ -228,6 +228,7 @@ exports.deletePropertyImages = async (req, res, next) => {
   return res.redirect(`/add-property-images/${propId}?category=${category}`);
 };
 
+// ----------  Delete Property  ----------
 exports.deleteProperty = async (req, res, next) => {
   const propId = req.body.propId;
   const property = await Property.findById(propId).lean();
@@ -238,6 +239,7 @@ exports.deleteProperty = async (req, res, next) => {
   res.redirect('/manage-property');
 };
 
+// ----------  View Property  ----------
 exports.viewProperty = async (req, res, next) => {
   try {
     const propId = req.params.propId;
@@ -269,6 +271,7 @@ exports.viewProperty = async (req, res, next) => {
   }
 };
 
+// ----------  User Properties Management  ----------
 exports.getProperties = async (req, res, next) => {
   const properties = await Property.find({ userId: req.user._id });
   res.render('property/propertiesList', {

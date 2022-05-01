@@ -49,7 +49,8 @@
                                             <div class="row">
                                                 <div class="col-md-3"><input type="file" class="wizard-picture" multiple
                                                         name="pg_images"></div>
-                                                <div class="col-md-3"><button type="submit">Add Images</button></div>
+                                                <div class="col-md-3"><button type="submit" class="btn btn-default">Add
+                                                        Images</button></div>
 
                                             </div>
                                             <div class="pb-3"></div>
@@ -61,7 +62,7 @@
                                 </form>
                                 <div class="divider"></div>
                                 <div class="p-5"></div>
-                                <div class="d-grid pt-5">
+                                <div class="d-grid mt-50">
                                     <%pgImages.forEach((i,idx)=>{%>
                                         <div class="text-center">
                                             <img src="/<%=i%>" alt="" class="box">
@@ -74,6 +75,10 @@
                                         </div>
                                         <%})%>
                                 </div>
+                            </div>
+                            <div class="text-center mt-5">
+
+                                <a href="/property-images/<%=propId%>" class="btn btn-default">Go Back</a>
                             </div>
 
                             <!-- <div class="section">

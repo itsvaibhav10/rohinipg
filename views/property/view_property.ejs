@@ -243,12 +243,16 @@
                                 <div class="dealer-widget">
                                     <div class="dealer-content">
                                         <div class="inner-wrapper">
-
                                             <div class="clear">
-                                                <div class="col-xs-4 col-sm-4 dealer-face">
-                                                    <a href="">
-                                                        <img src="/assets/img/client-face1.png" class="img-circle">
-                                                    </a>
+                                                <div class="col-xs-4 col-sm-4">
+                                                    <%if(property.isVerified){%>
+                                                        <i class="fa-regular fa-circle-check fa-4x"
+                                                            style="color: #00B6A9;"></i> <br>
+                                                        <span>Verified</span>
+                                                        <%}else{%>
+                                                            <i class="fa-solid fa-circle-exclamation fa-4x" style="color: #CF224F;"></i> <br>
+                                                            <span>Not Verified</span>
+                                                            <%}%>
                                                 </div>
                                                 <div class="col-xs-8 col-sm-8 ">
                                                     <h3 class="dealer-name">
