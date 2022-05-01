@@ -47,6 +47,8 @@ exports.postProperties = async (req, res, next) => {
   const propertySeats = req.body.propertySeats;
   const areaMax = req.body.propertyArea.split(',')[1];
   const areaMin = req.body.propertyArea.split(',')[0];
+
+  // Pagintion per Page 10 Items 
   const ITEM_PER_PAGE = 10;
   const page = +req.query.page || 1;
 
