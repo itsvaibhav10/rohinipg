@@ -57,7 +57,10 @@
         <div class="p-3">
             <%for(const key in user){%>
                 <h4 class="mb-1">
-                    <span class="text-capitalize"><%=key%>:-</span> <%=user[key]%>
+                    <span class="text-capitalize">
+                        <%=key%>:-
+                    </span>
+                    <%=user[key]%>
                 </h4>
                 <%}%>
 
@@ -76,7 +79,7 @@
                             <tr>
                                 <th>Actions</th>
                                 <th>Title</th>
-                                <th>Description</th>
+                                <th>Rent</th>
                                 <th>Address</th>
                             </tr>
                         </thead>
@@ -84,25 +87,28 @@
                             <%property.forEach((i)=>{%>
                                 <tr>
                                     <td>
-                                        <a href="/property/<%=i._id%>" class="btn btn-sm btn-primary"><i class="far fa-eye"></i> View</a>
+                                        <a href="/property/<%=i._id%>" class="btn btn-sm btn-primary"><i
+                                                class="far fa-eye"></i> View</a>
                                     </td>
-                                    <td><a href="">
-                                            <%=i.title%>
+                                    <td><a href="/property/<%=i._id%>">
+                                            <%=i.pgDetails.title%>
                                         </a></td>
                                     <td>
-                                        <%=i.description %>
+                                        <a href="/property/<%=i._id%>">Rent - <%=i.pgDetails.rent %>
+                                        </a>
                                     </td>
                                     <td>
-                                        <%=`${i.houseNo}, ${i.street}, ${i.city}, ${i.state}, ${i.pincode}`%>
+                                        <a href="/property/<%=i._id%>">
+                                            <%=`${i.pgDetails.houseNo}, ${i.pgDetails.street}, ${i.pgDetails.city},
+                                                ${i.pgDetails.state}, ${i.pgDetails.pincode}`%>
+                                        </a>
                                     </td>
                                 </tr>
                                 <%})%>
                         </tbody>
                     </table>
                 </div>
-
                 <%}%>
-
     </main>
     <%- include('./include/footer.ejs')%>
 

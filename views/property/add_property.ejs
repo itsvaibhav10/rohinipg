@@ -3,10 +3,10 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     </head>
 
-    <body>
+    <body class="">
         <%- include('../include/navbar'); %>
 
-            <div class="content-area submit-property" style="background-color: #FCFCFC;">&nbsp;
+            <div class="content-area submit-property">
                 <div class="container">
                     <div class="clearfix">
                         <div class="wizard-container">
@@ -16,14 +16,12 @@
                                     <div class="wizard-header">
                                         <h3>
                                             <b>Submit</b> YOUR PROPERTY <br>
-                                            <small>Lorem ipsum dolor sit amet, consectetur adipisicing.</small>
                                         </h3>
                                     </div>
 
                                     <ul>
-                                        <li><a href="#step1" data-toggle="tab">Step 1 </a></li>
-                                        <li><a href="#step2" data-toggle="tab">Step 2 </a></li>
-                                        <li><a href="#step3" data-toggle="tab">Finished </a></li>
+                                        <li><a href="#step1" data-toggle="tab">Property Details </a></li>
+                                        <li><a href="#step2" data-toggle="tab">Property Amenities </a></li>
                                     </ul>
 
                                     <div class="tab-content">
@@ -32,56 +30,54 @@
                                             <div class="row ">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="propertyTitle">Property Title
+                                                        <label for="title">Title
                                                             <small>(required)</small></label>
-                                                        <input name="propertyTitle" id="propertyTitle" type="text"
-                                                            class="form-control" placeholder="Super villa ..."
-                                                            value="<%=property.title%>" required>
+                                                        <input name="title" id="title" type="text" class="form-control"
+                                                            placeholder="Super villa ..." value="<%=property.title%>"
+                                                            required>
                                                     </div>
                                                 </div>
 
                                                 <div class="col-md-12">
                                                     <div class="form-group">
-                                                        <label for="propertyDesc">Property Description :</label>
-                                                        <textarea name="propertyDesc" id="propertyDesc" rows="5"
+                                                        <label for="description">Description :</label>
+                                                        <textarea name="description" id="description" rows="5"
                                                             class="form-control" value=""
                                                             required><%=property.description%></textarea>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="propertyAddress1">House no
+                                                        <label for="houseNo">House no
                                                             <small>(required)</small></label>
-                                                        <input name="propertyAddress1" id="propertyAddress1" type="text"
+                                                        <input name="houseNo" id="houseNo" type="text"
                                                             class="form-control" placeholder="1234 main st"
                                                             value="<%=property.houseNo%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-8">
                                                     <div class="form-group">
-                                                        <label for="propertyAddress2">Street,locality </label>
-                                                        <input name="propertyAddress2" id="propertyAddress2" type="text"
+                                                        <label for="street">Street,locality </label>
+                                                        <input name="street" id="street" type="text"
                                                             class="form-control" placeholder="Aparment, Studio or Floor"
                                                             value="<%=property.street%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="propertyCity">City
+                                                        <label for="city">City
                                                             <small>(required)</small></label>
-                                                        <input name="propertyCity" id="propertyCity" type="text"
-                                                            class="form-control" placeholder="City"
-                                                            value="<%=property.city%>" required>
+                                                        <input name="city" id="city" type="text" class="form-control"
+                                                            placeholder="City" value="<%=property.city%>" required>
                                                     </div>
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="propertyState">State
+                                                        <label for="state">State
                                                             <small>(required)</small></label>
-                                                        <select name="propertyState" id="propertyState"
-                                                            placeholder="near land mark" class="selectpicker"
-                                                            data-live-search="true" data-live-search-style="begins"
-                                                            required>
+                                                        <select name="state" id="state" placeholder="near land mark"
+                                                            class="selectpicker" data-live-search="true"
+                                                            data-live-search-style="begins" required>
                                                             <%if(editing){%>
                                                                 <option selected value="<%=property.state%>">
                                                                     <%=property.state%>
@@ -133,9 +129,9 @@
                                                 </div>
                                                 <div class="col-md-4">
                                                     <div class="form-group">
-                                                        <label for="propertyPincode">Pincode
+                                                        <label for="pincode">Pincode
                                                             <small>(required)</small></label>
-                                                        <input name="propertyPincode" id="propertyPincode" type="number"
+                                                        <input name="pincode" id="pincode" type="number"
                                                             class="form-control" placeholder="Pincode"
                                                             value="<%=property.pincode%>" required>
                                                     </div>
@@ -148,524 +144,83 @@
                                         <div class="tab-pane" id="step2">
                                             <h4 class="info-text"> How much your Property is Beautiful ? </h4>
                                             <div class="row">
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyProviderType">Provider Type :</label>
-                                                        <select id="propertyProviderType" name="propertyProviderType"
-                                                            class="selectpicker form-control" required>
-                                                            <% if(editing){%>
-                                                                <option selected value="<%=property['provider type']%>">
-                                                                    <%=property['provider type']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['provider type']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyAvailableFor">Available For :</label>
-                                                        <select id="propertyAvailableFor" name="propertyAvailableFor"
-                                                            class="selectpicker selectpicker show-tick form-control"
-                                                            required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['availability']%>">
-                                                                    <%=property['availability']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['availability']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyLiftFacility">Lift Facility :</label>
-                                                        <select id="propertyLiftFacility" name="propertyLiftFacility"
-                                                            class="selectpicker selectpicker show-tick form-control"
-                                                            required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['lift facility']%>">
-                                                                    <%=property['lift facility']%>
-                                                                </option>
-
-
-                                                                <%}%>
-                                                                    <% for(const v of master['lift facility']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyFacing">Facing :</label>
-                                                        <select id="propertyFacing" name="propertyFacing"
-                                                            class="selectpicker selectpicker show-tick form-control"
-                                                            required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['facing']%>">
-                                                                    <%=property['facing']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['facing']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyFurnished">Furnished :</label>
-                                                        <select id="propertyFurnished" name="propertyFurnished"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['furnished']%>">
-                                                                    <%=property['furnished']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['furnished']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyOccupancy">Occupancy :</label>
-                                                        <select id="propertyOccupancy" name="propertyOccupancy"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['occupancy']%>">
-                                                                    <%=property['occupancy']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['occupancy']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyFood">Food/Meals :</label>
-                                                        <select id="propertyFood" name="propertyFood"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['meals']%>">
-                                                                    <%=property['meals']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['meals']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyElectricity">Electricity :</label>
-                                                        <select id="propertyElectricity" name="propertyElectricity"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['electricity']%>">
-                                                                    <%=property['electricity']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['electricity']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyRoomCooling">Room Cooling :</label>
-                                                        <select id="propertyRoomCooling" name="propertyRoomCooling"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['room cooling']%>">
-                                                                    <%=property['room cooling']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['room cooling']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyDeposit">Deposit :</label>
-                                                        <select id="propertyDeposit" name="propertyDeposit"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['deposit']%>">
-                                                                    <%=property['deposit']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['deposit']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyWaterSupply">Water Supply :</label>
-                                                        <select id="propertyWaterSupply" name="propertyWaterSupply"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['water supply']%>">
-                                                                    <%=property['water supply']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['water supply']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyHotWater">Hot Water :</label>
-                                                        <select id="propertyHotWater" name="propertyHotWater"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['hot water']%>">
-                                                                    <%=property['hot water']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['hot water']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyDrinkingWaterType">Drinking Water Type
-                                                            :</label>
-                                                        <select id="propertyDrinkingWaterType"
-                                                            name="propertyDrinkingWaterType"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['water type']%>">
-                                                                    <%=property['water type']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['water type']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertySafety">Safety
-                                                            :</label>
-                                                        <select id="propertySafety" name="propertySafety"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['safety']%>">
-                                                                    <%=property['safety']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['safety']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyBedType">Bed Type
-                                                            :</label>
-                                                        <select id="propertyBedType" name="propertyBedType"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['bed type']%>">
-                                                                    <%=property['bed type']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['bed type']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyTimings">Door Opening Timings
-                                                            :</label>
-                                                        <select id="propertyTimings" name="propertyTimings"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['door timings']%>">
-                                                                    <%=property['door timings']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['door timings']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyParking">Parking
-                                                            :</label>
-                                                        <select id="propertyParking" name="propertyParking"
-                                                            class="selectpicker show-tick form-control">
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['parking']%>">
-                                                                    <%=property['parking']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['parking']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyLocker">Locker
-                                                            :</label>
-                                                        <select id="propertyLocker" name="propertyLocker"
-                                                            class="selectpicker show-tick form-control">
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['locker']%>">
-                                                                    <%=property['locker']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['locker']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyTable">Table/Chair
-                                                            :</label>
-                                                        <select id="propertyTable" name="propertyTable"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['table chair']%>">
-                                                                    <%=property['table chair']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['table chair']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyCable">cable tv
-                                                            :</label>
-                                                        <select id="propertyCable" name="propertyCable"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['cable tv']%>">
-                                                                    <%=property['cable tv']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['cable tv']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyLaundry">Laundry
-                                                            :</label>
-                                                        <select id="propertyLaundry" name="propertyLaundry"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['laundry']%>">
-                                                                    <%=property['laundry']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['laundry']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-3">
-                                                    <div class="form-group">
-                                                        <label for="propertyInternet">Internet
-                                                            :</label>
-                                                        <select id="propertyInternet" name="propertyInternet"
-                                                            class="selectpicker show-tick form-control" required>
-                                                            <%if(editing){%>
-                                                                <option selected value="<%=property['internet']%>">
-                                                                    <%=property['internet']%>
-                                                                </option>
-                                                                <%}%>
-                                                                    <% for(const v of master['internet']){%>
-                                                                        <option value="<%=v%>">
-                                                                            <%=v%>
-                                                                        </option>
-                                                                        <%}%>
-
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                                <div class="col-sm-12 padding-top-15">
+                                                <% master.forEach(m=> { %>
                                                     <div class="col-sm-3">
                                                         <div class="form-group">
-                                                            <label for="propertySeats">No Of Seats Available
-                                                                :</label>
-                                                            <input type="text" class="span2" data-slider-min="1"
-                                                                data-slider-max="50" data-slider-step="1"
-                                                                data-slider-value="<%=editing?property.seats:'15'%>"
-                                                                id="price-range" name="propertySeats"
-                                                                value="<%=editing?property.seats:'15'%>"><br />
-                                                            <b class="pull-left color">1</b>
-                                                            <b class="pull-right color">50</b>
+                                                            <label for="<%=m.name%>" class="text-capitalize">
+                                                                <%=m.name%> :
+                                                            </label>
+                                                            <select id="<%=m.name%>" name="<%=m.name%>"
+                                                                class="selectpicker form-control" required
+                                                                style="color:#000;">
+                                                                <% if(editing){%>
+                                                                    <% const value=m.name %>
+                                                                        <option selected value="<%=property[value]%>">
+                                                                            <%=property[value]%>
+                                                                        </option>
+                                                                        <%}%>
+                                                                            <%m.items.forEach(item=>{%>
+                                                                                <option value="<%=item%>"
+                                                                                    style="color:#000;">
+                                                                                    <%=item%>
+                                                                                </option>
+                                                                                <%})%>
+                                                            </select>
                                                         </div>
                                                     </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="propertyRent">Rent Per Month/Bed in (INR)
-                                                                :</label>
-                                                            <input type="text" class="span2" data-slider-min="500"
-                                                                data-slider-max="10000" data-slider-step="10"
-                                                                data-slider-value="[<%=editing?property.rent:'1000,5000'%>]"
-                                                                id="min-baths" name="propertyRent"
-                                                                value="<%=editing?property.rent:'1000,5000'%>"><br />
-                                                            <b class="pull-left color">500</b>
-                                                            <b class="pull-right color">10000</b>
+                                                    <% }) %>
+                                                        <div class="col-sm-12 padding-top-15">
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label for="seats">Total Seats Available
+                                                                        :</label>
+                                                                    <input type="text" name="seats" id="seats"
+                                                                        class="form-control"
+                                                                        value="<%=editing?property.seats:''%>"
+                                                                        placeholder="No Of Seats " required>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label for="rent">Rent Per Month/Bed in
+                                                                        (INR)
+                                                                        :</label>
+                                                                    <input type="text" class="span2"
+                                                                        data-slider-min="500" data-slider-max="10000"
+                                                                        data-slider-step="10"
+                                                                        data-slider-value="[<%=editing?property.rent:'1000,5000'%>]"
+                                                                        id="min-baths" name="rent"
+                                                                        value="<%=editing?property.rent:'1000,5000'%>"><br />
+                                                                    <b class="pull-left color">500</b>
+                                                                    <b class="pull-right color">10000</b>
+                                                                </div>
+                                                            </div>
+                                                            <!-- <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label for="propertyBathrooms">No Of Bathrooms
+                                                                        :</label>
+                                                                    <input type="text" name="propertyBathrooms"
+                                                                        id="propertyBathrooms"
+                                                                        value="<%=editing?property.bathrooms:''%>">
+                                                                </div>
+                                                            </div> -->
+                                                            <div class="col-sm-3">
+                                                                <div class="form-group">
+                                                                    <label for="area">Area in (sq Feet)
+                                                                        :</label>
+                                                                    <input type="text" name="area" id="area"
+                                                                        class="form-control"
+                                                                        value="<%=editing?property.area:''%>" required>
+                                                                </div>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="propertyBathrooms">No Of Bathrooms :</label>
-                                                            <input type="text" class="span2" data-slider-min="0"
-                                                                data-slider-max="20" data-slider-step="1" id="min-bed"
-                                                                value="<%=editing?property.bathrooms:'8'%>"
-                                                                data-slider-value="<%=editing?property.bathrooms:'8'%>"
-                                                                name="propertyBathrooms"><br />
-                                                            <b class="pull-left color">1</b>
-                                                            <b class="pull-right color">20</b>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-sm-3">
-                                                        <div class="form-group">
-                                                            <label for="propertyArea">Area in (sq Feet) :</label>
-                                                            <input type="text" class="span2" value="<%=editing?property.area:'500'%>"
-                                                                data-slider-min="100" data-slider-max="5000"
-                                                                data-slider-step="10"
-                                                                data-slider-value="<%=editing?property.area:'500'%>" id="property-geo"
-                                                                name="propertyArea"><br />
-                                                            <b class="pull-left color">100 (sq feet)</b>
-                                                            <b class="pull-right color">5000 (sq feet)</b>
-                                                        </div>
-                                                    </div>
-                                                </div>
                                             </div>
                                         </div>
                                         <!--  End step 2 -->
-
-
-                                        <div class="tab-pane" id="step3">
-                                            <h4 class="info-text"> Finished and submit </h4>
-                                            <div class="row">
-                                                <div class="col-sm-12">
-                                                    <div class="">
-                                                        <p>
-                                                            <label><strong>Terms and Conditions</strong></label>
-                                                            By accessing or using Rohini PG services, such as
-                                                            posting your property advertisement with your personal
-                                                            information on our website you agree to the
-                                                            collection, use and disclosure of your personal information
-                                                            in the legal proper manner
-                                                        </p>
-
-                                                        <div class="checkbox">
-                                                            <label>
-                                                                <input type="checkbox" checked id="term" name="terms" />
-                                                                <strong>Accept termes and
-                                                                    conditions.</strong>
-                                                            </label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!--  End step 4 -->
-
                                     </div>
                                     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                                     <%if(editing){%>
-                                        <input type="hidden" name="propId" value="<%=property._id%>">
+                                        <input type="hidden" name="propId" value="<%=propId%>">
                                         <%}%>
                                             <div class="wizard-footer">
                                                 <div class="pull-right">
@@ -705,9 +260,6 @@
             <script src="/assets/js/wizard.js"></script>
             <script src="/assets/js/main.js"></script>
             <script>
-
-
-
                 // const fileInputs = document.querySelectorAll('.wizard-picture');
 
                 // const readUrl = (input) => {

@@ -32,11 +32,11 @@
                         <div class="search-form wow pulse">
                             <form action="/search" method="post" class=" form-inline">
                                 <div class="col-md-12">
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="">Keywords</label>
                                         <input type="text" class="form-control" name="keywords" placeholder="Key word">
                                     </div>
-                                    <div class="col-md-3">
+                                    <div class="col-md-4">
                                         <label for="">State:</label>
                                         <select name="propertyState" class="selectpicker" data-live-search="true"
                                             data-live-search-style="begins" title="Select your city">
@@ -78,32 +78,21 @@
                                             <option>Puducherry</option>
                                         </select>
                                     </div>
-                                    <div class="col-md-3">
-                                        <label for="">Available for:</label>
-                                        <select id="propertyAvailableFor" name="propertyAvailableFor"
-                                            class="selectpicker show-tick form-control">
-                                            <%master.availability.forEach(m=>{%>
-                                                <option value="<%=m%>">
-                                                    <%=m%>
-                                                </option>
-                                                <%})%>
-
-
-                                        </select>
-                                    </div>
-                                    <div class="col-md-3">
-                                        <label for="">Occupancy:</label>
-                                        <select id="propertyOccupancy" name="propertyOccupancy"
-                                            class="selectpicker show-tick form-control">
-                                            <%master.occupancy.forEach(m=>{%>
-                                                <option value="<%=m%>">
-                                                    <%=m%>
-                                                </option>
-                                                <%})%>
-
-
-                                        </select>
-                                    </div>
+                                    <%master.forEach(m=>{%>
+                                        <div class="col-md-4">
+                                            <label for="<%=m.name%>" class="text-capitalize">
+                                                <%=m.name%>:
+                                            </label>
+                                            <select id="<%=m.name%>" name="<%=m.name%>"
+                                                class="selectpicker show-tick form-control">
+                                                <%m.items.forEach(item=>{%>
+                                                    <option value="<%=item%>">
+                                                        <%=item%>
+                                                    </option>
+                                                    <%})%>
+                                            </select>
+                                        </div>
+                                        <%})%>
                                 </div>
                                 <div class="col-md-12 text-center">
                                     <div class="search-row">
@@ -127,8 +116,8 @@
                                                     :</label>
                                                 <input type="text" class="span2" data-slider-min="1"
                                                     data-slider-max="50" data-slider-step="1"
-                                                    data-slider-value="<%='15'%>" id="price-range" name="propertySeats"
-                                                    value="<%='15'%>"><br />
+                                                    data-slider-value="[<%='1,15'%>]" id="price-range"
+                                                    name="propertySeats" value="<%='1,15'%>"><br />
                                                 <b class="pull-left color">1</b>
                                                 <b class="pull-right color">50</b>
                                             </div>
@@ -179,18 +168,18 @@
                                 <div class="col-sm-6 col-md-3 p0">
                                     <div class="box-two proerty-item">
                                         <div class="item-thumb">
-                                            <a href="/property/<%=property._id%>"><img
-                                                    src="/<%=property.pgImages.defaults[0]%>"></a>
+                                            <a href="/property/<%=property._id%>"> <img
+                                                    src="data:image/<%=property.pgImages[0].contentType%>;base64,<%=property.pgImages[0].data.toString('base64')%>"></a>
                                         </div>
                                         <div class="item-entry overflow">
                                             <h5><a href="/property/<%=property._id%>">
-                                                    <%=property.title%>
+                                                    <%=property.pgDetails.title%>
                                                 </a></h5>
                                             <div class="dot-hr"></div>
                                             <span class="pull-left"><b>Area :</b>
-                                                <%=property.area%> in (Sq Feet)
+                                                <%=property.pgDetails.area%> in (Sq Feet)
                                             </span>
-                                            <span class="proerty-price pull-right">₹<%=property.rent%></span>
+                                            <span class="proerty-price pull-right">₹<%=property.pgDetails.rent%></span>
                                         </div>
                                     </div>
                                 </div>

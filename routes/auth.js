@@ -5,27 +5,13 @@ const User = require('../models/user');
 const express = require('express');
 const passport = require('passport');
 const { check, body } = require('express-validator');
-const { getSignup, postSignup } = require('../controllers/auth/signup');
-const {
-  getLogin,
-  postLogin,
-  googleLogin,
-  logout,
-} = require('../controllers/auth/login');
-const {
-  getVerifyUser,
-  postVerifyUser,
-  resendOtp,
-} = require('../controllers/auth/verify');
-const {
-  getNewPassword,
-  getReset,
-  postNewPassword,
-  postReset,
-} = require('../controllers/auth/reset');
+const signup = require('../controllers/auth/signup');
+const login = require('../controllers/auth/login');
+const verify = require('../controllers/auth/verify');
+const reset = require('../controllers/auth/reset');
 const { isNotAuth, isAuth } = require('../middleware/is-auth');
 
-// passportConfig
+// Passport Configuration
 const googleStrategy = require('../middleware/passport');
 
 // Initializing Router
@@ -48,11 +34,11 @@ router.get(
   '/auth/google/callback',
   isNotAuth,
   passport.authenticate('google', { failureRedirect: '/login' }),
-  googleLogin
+  login.googleLogin
 );
 
 // ---------------  Sign UP  ---------------
-router.get('/signup', isNotAuth, getSignup);
+router.get('/signup', isNotAuth, signup.getSignup);
 router.post(
   '/signup',
   isNotAuth,
@@ -92,16 +78,16 @@ router.post(
       .trim()
       .isLength({ min: 8 }),
   ],
-  postSignup
+  signup.postSignup
 );
 
 // ---------------  Verify User  ---------------
-router.get('/verify/:token', isNotAuth, getVerifyUser);
-router.post('/verify', isNotAuth, postVerifyUser);
-router.get('/resend-otp/:userId', isNotAuth, resendOtp);
+router.get('/verify/:token', isNotAuth, verify.getVerifyUser);
+router.post('/verify', isNotAuth, verify.postVerifyUser);
+router.get('/resend-otp/:userId', isNotAuth, verify.resendOtp);
 
 // ---------------  Login  ---------------
-router.get('/login', isNotAuth, getLogin);
+router.get('/login', isNotAuth, login.getLogin);
 router.post(
   '/login',
   isNotAuth,
@@ -111,17 +97,17 @@ router.post(
       .isLength({ min: 10, max: 10 }),
     body('password', 'Password has to be valid.').trim().isLength({ min: 8 }),
   ],
-  postLogin
+  login.postLogin
 );
 
 // ---------------  Logout  ---------------
-router.post('/logout', isAuth, logout);
-router.get('/logout', isAuth, logout);
+router.post('/logout', isAuth, login.logout);
+router.get('/logout', isAuth, login.logout);
 
 // ---------------  Reset Password  ---------------
-router.get('/reset', isNotAuth, getReset);
-router.post('/reset', isNotAuth, postReset);
-router.get('/new-password/:userId', isNotAuth, getNewPassword);
-router.post('/new-password', isNotAuth, postNewPassword);
+router.get('/reset', isNotAuth, reset.getReset);
+router.post('/reset', isNotAuth, reset.postReset);
+router.get('/new-password/:userId', isNotAuth, reset.getNewPassword);
+router.post('/new-password', isNotAuth, reset.postNewPassword);
 
 module.exports = router;

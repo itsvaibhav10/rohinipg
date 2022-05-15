@@ -3,7 +3,7 @@ const Property = require('../models/property');
 
 // ---------------   Module Imports  ---------------
 const express = require('express');
-const property = require('../controllers/property');
+const property = require('../controllers/property/property');
 
 const { isAuth } = require('../middleware/is-auth');
 
@@ -23,11 +23,16 @@ router.get(
   isAuth,
   property.getAddPropertyImagesCategory
 );
-router.post('/add-property-images', isAuth, property.postAddPropertyImagesCategory);
-router.get('/delete-property-image/:propId', isAuth,property.deletePropertyImages);
-
-// ----------  Delete Property Routes  ----------
-router.post('/delete-property', isAuth, property.deleteProperty);
+router.post(
+  '/add-property-images',
+  isAuth,
+  property.postAddPropertyImagesCategory
+);
+router.post(
+  '/delete-property-image',
+  isAuth,
+  property.deletePropertyImages
+);
 
 // ----------  Manage Property Routes  ----------
 router.get('/manage-properties', isAuth, property.getProperties);
@@ -35,5 +40,8 @@ router.get('/manage-property/:propId', isAuth, property.manageProperty);
 
 // ----------  View Property Routes  ----------
 router.get('/property/:propId', isAuth, property.viewProperty);
+
+// ----------  Packages Routes  ----------
+router.get('/pricing', property.getPackage);
 
 module.exports = router;

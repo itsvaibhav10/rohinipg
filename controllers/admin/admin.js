@@ -4,17 +4,11 @@ const User = require('../../models/user');
 
 // ---------------  Admin Home Routes  ---------------
 exports.adminHome = async (req, res) => {
-  try {
-    return res.redirect('/admin/enquiries');
-    res.render('admin/index', {
-      path: '/admin/index',
-      pageTitle: 'Admin Panel',
-    });
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
+  return res.redirect('/admin/enquiries');
+  res.render('admin/index', {
+    path: '/admin/index',
+    pageTitle: 'Admin Panel',
+  });
 };
 
-exports.getEnquiry = async (req, res, next) => {};
+exports.getEnquiry = async (req, res, ) => {};

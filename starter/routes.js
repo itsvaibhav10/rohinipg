@@ -3,8 +3,16 @@ const User = require('../models/user');
 const csrf = require('csurf');
 const flash = require('connect-flash');
 
+// ---------------   Admin Routes Import  ---------------
+const adminRoutes = require('../routes/admin/admin');
+const adminEnquiryRoutes = require('../routes/admin/enquiry');
+const adminMasterRoutes = require('../routes/admin/master');
+const adminNotificaionRoutes = require('../routes/admin/notification');
+const adminPackageRoutes = require('../routes/admin/package');
+const adminPropertyRoutes = require('../routes/admin/property');
+const adminUserRoutes = require('../routes/admin/user');
+
 // ---------------   Routes Import  ---------------
-const adminRoutes = require('../routes/admin');
 const authRoutes = require('../routes/auth');
 const propertyRoutes = require('../routes/property');
 const userRoutes = require('../routes/user');
@@ -18,48 +26,37 @@ module.exports = (app) => {
 
   // Setup logged in User Globally
   app.use(async (req, res, next) => {
-    try {
-      if (!req.session.user) return next();
-      let user = await User.findById(req.session.user._id);
-      if (!user) return next();
-      req.user = user;
-      next();
-    } catch (err) {
-      next(new Error(err));
-    }
+    if (!req.session.user) return next();
+    let user = await User.findById(req.session.user._id);
+    if (!user) return next();
+    req.user = user;
+    next();
   });
 
   // Passing Arguments to all Views
   app.use((req, res, next) => {
-    try {
-      res.locals.isAuthenticated = req.session.isLoggedIn;
-      res.locals.csrfToken = req.csrfToken();
-      res.locals.user = req.user;
-      next();
-    } catch (err) {
-      const error = new Error(err);
-      error.httpStatusCode = 500;
-      return next(error);
-    }
+    res.locals.isAuthenticated = req.session.isLoggedIn;
+    res.locals.csrfToken = req.csrfToken();
+    res.locals.user = req.user;
+    next();
   });
 
-  // Routes Set
-  // app.use('/property', propertyRoutes);
-  app.use('/admin', adminRoutes);
+  // User Routes
   app.use(homeRoutes, authRoutes, propertyRoutes, userRoutes);
 
-  // Error Routes
-  app.get('/500', errorController.get500);
-  app.use(errorController.get404);
+  // Admin Routes
+  app.use(
+    '/admin',
+    adminRoutes,
+    adminEnquiryRoutes,
+    adminMasterRoutes,
+    adminNotificaionRoutes,
+    adminPackageRoutes,
+    adminPropertyRoutes,
+    adminUserRoutes
+  );
 
-  // Error Controller
-  app.use((err, req, res) => {
-    // console.error(err.stack);
-    res.status(500).render('500', {
-      pageTitle: 'Error!',
-      path: '/500',
-      error: err,
-      isAuthenticated: req.session ? req.session.isLoggedIn : false,
-    });
-  });
+  // Error Routes
+  app.use(errorController.get404);
+  app.use(errorController.get500);
 };

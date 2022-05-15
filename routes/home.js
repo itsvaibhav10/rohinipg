@@ -1,7 +1,7 @@
 // ---------------   Module Imports  ---------------
 const express = require('express');
 const home = require('../controllers/home');
-const package = require('../controllers/package');
+
 const { isAuth } = require('../middleware/is-auth');
 
 // Initializing Router
@@ -18,7 +18,6 @@ router.post('/search', home.postProperties);
 // ----------  Enquiry Routes  ----------
 router.post('/enquiry', isAuth, home.enquiry);
 
-// ----------  Packages Routes  ----------
-router.get('/pricing', package.getPackage);
+
 
 module.exports = router;

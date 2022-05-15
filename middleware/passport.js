@@ -21,20 +21,13 @@ module.exports = function (req, res, next) {
           doj: Date.now(),
           cart: { items: [] },
         });
-
-        try {
-          let user = await User.findOne({ email: profile.emails[0].value });
-          if (user) {
-            done(null, user);
-          } else {
-            user = await User.create(newUser);
-            const result = await Notification.create({ userId: user._id });            
-            done(null, user);
-          }
-        } catch (err) {
-          const error = new Error(err);
-          error.httpStatusCode = 500;
-          return next(error);
+        let user = await User.findOne({ email: profile.emails[0].value });
+        if (user) {
+          done(null, user);
+        } else {
+          user = await User.create(newUser);
+          const result = await Notification.create({ userId: user._id });
+          done(null, user);
         }
       }
     )

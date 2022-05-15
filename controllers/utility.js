@@ -40,24 +40,12 @@ exports.sendOtp = async (userId) => {
     authorization:
       'NDnBsWtr5VEFAGoUT6xlzegIi9qkby0ZX7faj3Ov8SY2JQmu14rBvipAjykPVeq2UtbD7lfHoOSJQ4dR',
     route: 'v3',
-    sender_id: 'Cghpet',
+    sender_id: 'FTWSMS',
     message: `Hey! ${result.firstName} Your Otp: ${result.otp} only valid for 5 min`,
     language: 'english',
-    numbers: result.mobile,
+    numbers: `+91${result.mobile}`,
     flash: '0',
   });
-  // Setup SMS Service Provider
-  // const otpQuery = stringify({
-  //   uname: 'itsvaibhav',
-  //   password: '1qazxsw2@',
-  //   sender: 'vmrohi',
-  //   receiver: mobile,
-  //   route: 'TA',
-  //   msgtype: 1,
-  //   sms: `Hey! ${name} Your Otp: ${otp} only valid for 5 min`,
-  // });
-  // const otpURL = `http://manage.staticking.net/index.php/smsapi/httpapi/?${otpQuery}`;
-  // return console.log(otpURL);
   const fast2smsUrl = `https://www.fast2sms.com/dev/bulkV2/?${fast2sms}`;
   console.log(fast2smsUrl);
   return fetch(fast2smsUrl).then((res) => res);

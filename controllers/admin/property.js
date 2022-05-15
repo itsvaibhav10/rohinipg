@@ -5,77 +5,63 @@ const Property = require('../../models/property');
 // ---------------   Utility  ---------------
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
-const { delSession } = require('../utility');
+const { deleteFiles } = require('../utility');
 
-exports.getProperties = async (req, res, next) => {
-  try {
-    const properties = await Property.find().lean();
-    res.render('admin/propertyTable', {
-      properties: properties,
-      pageTitle: 'Properties Table',
-    });
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
+exports.getProperties = async (req, res) => {
+  const properties = await Property.find().lean();
+  res.render('admin/propertyTable', {
+    properties: properties,
+    pageTitle: 'Properties Table',
+  });
 };
 
-exports.delProperty = async (req, res, next) => {
-  try {
-    const propId = req.params.propId;
-    const property = await Property.findById(propId).lean();
-    if (!property) throw new Error('User Not Found');
-    await Property.deleteOne({ _id: propId });
-    return res.redirect('/admin/users');
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
+exports.delProperty = async (req, res) => {
+  const propId = req.params.propId;
+  const property = await Property.findById(propId).lean();
+  if (!property) throw Error('User Not Found');
+  const images = property.pgImages.map((p) => p.path);
+  deleteFiles(images);
+  await Property.deleteOne({ _id: propId });
+  return res.redirect('/admin/users');
 };
 
-exports.verifyProperty = async (req, res, next) => {
-  try {
-    const propId = req.params.propId;
-    const property = await Property.findById(propId, {
-      isVerified: true,
-      userId: true,
-    });
-    if (!property) throw new Error('Property Not Found');
-    const user = await User.findById(property.userId, { typeOfUser: true });
-    if (user.typeOfUser !== 'provider') {
-      user.typeOfUser = 'provider';
-    }
-    if (property.isVerified === false) {
-      property.isVerified = true;
-    } else {
-      property.isVerified = false;
-      property.isActive = false;
-    }
-    await property.save();
-    await user.save();
-    return res.redirect(`/admin/properties`);
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
+exports.verifyProperty = async (req, res) => {
+  const propId = req.params.propId;
+
+  const property = await Property.findById(propId, {
+    isVerified: true,
+    userId: true,
+    verifiedBy: true,
+  });
+
+  if (!property) throw Error('Property Not Found');
+
+  if (property.isVerified === false) {
+    property.isVerified = true;
+    property.verifiedBy = req.user._id;
+  } else {
+    property.isVerified = false;
   }
+  await property.save();
+  return res.redirect(`/admin/properties`);
 };
 
-exports.activateProperty = async (req, res, next) => {
-  try {
-    const propId = req.params.propId;
-    const property = await Property.findById(propId);
-    if (!property) throw new Error('Property Not Found');
-    if (!property.isVerified) return res.redirect(`/admin/properties`);
-    if (property.isActive === false) property.isActive = true;
-    else property.isActive = false;
-    await property.save();
-    return res.redirect(`/admin/properties`);
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
+exports.activateProperty = async (req, res) => {
+  const propId = req.params.propId;
+  const property = await Property.findById(propId, {
+    isActive: true,
+    userId: true,
+  });
+
+  if (!property) throw Error('Property Not Found');
+
+  // Convert User to Provider
+  const user = await User.findById(property.userId, { typeOfUser: true });
+  if (user.typeOfUser !== 'provider') user.typeOfUser = 'provider';
+
+  // Activating Property
+  if (property.isActive === false) property.isActive = true;
+  else property.isActive = false;
+  await property.save();
+  return res.redirect(`/admin/properties`);
 };

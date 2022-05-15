@@ -10,9 +10,13 @@ exports.isAuth = (req, res, next) => {
   next();
 };
 
-exports.isAuthAdmin = (req, res, next) => {
-  req.session.url = req.url;
-  if (!req.session.isLoggedIn) return res.redirect('/login');
+exports.isProvider = () => {
+  if (!req.user.typeOfUser.lowerCase() === 'provider')
+    return res.redirect('/login');
+  next();
+};
+
+exports.isAdmin = (req, res, next) => {
   if (!req.user.isAdmin) return res.redirect('/home');
   next();
 };

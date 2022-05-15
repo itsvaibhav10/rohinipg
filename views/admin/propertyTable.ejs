@@ -99,20 +99,20 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <%=p.title%>
+                                    <%=p.pgDetails.title%>
                                 </td>
                                 <td>
-                                    <%=`${p.houseNo} ${p.street}`%>
+                                    <%=`${p.pgDetails.houseNo} ${p.pgDetails.street}`%>
                                 </td>
                                 <td>
-                                    <%=p.state%>
+                                    <%=p.pgDetails.state%>
                                 </td>
                                 <td>
-                                    <%=p.pincode%>
+                                    <%=p.pgDetails.pincode%>
                                 </td>
 
                                 <td>
-                                    <%=p['provider type']%>
+                                    <%=p.pgDetails['provider type']%>
                                 </td>
                                 <td>
                                     <%=p.isVerified?'Yes':'No'%>
@@ -121,16 +121,16 @@
                                     <%=p.isActive?'Yes':'No'%>
                                 </td>
                                 <td>
-                                    <%=p.area%>
+                                    <%=p.pgDetails.area%>
                                 </td>
                                 <td>
-                                    <%=p.deposit%>
+                                    <%=p.pgDetails.deposit%>
                                 </td>
                                 <td>
-                                    <%=p.rent%>
+                                    <%=p.pgDetails.rent%>
                                 </td>
                                 <td>
-                                    <%=p.seats%>
+                                    <%=p.pgDetails.seats%>
                                 </td>
                             </tr>
                             <%})%>

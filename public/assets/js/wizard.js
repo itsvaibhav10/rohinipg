@@ -84,13 +84,13 @@ $(document).ready(function () {
 function validateFirstStep() {
   $('.wizard-card form').validate({
     rules: {
-      propertyTitle: { required: true, minlength: 10 },
-      propertyDesc: { required: true, minlength: 25 },
-      propertyAddress1: { required: true },
-      propertyAddress2: { required: true },
-      propertyCity: { required: true },
-      propertyState: { required: true },
-      propertyPincode: { required: true, minlength: 6, maxlength: 6 },
+      title: { required: true, minlength: 10 },
+      description: { required: true, minlength: 25 },
+      houseNo: { required: true },
+      street: { required: true },
+      city: { required: true },
+      state: { required: true },
+      pincode: { required: true },
 
       /*  other possible input validations
              ,username: {˝
@@ -212,7 +212,6 @@ function validateLastStep() {
   }
   return true;
 }
-
 
 //Function to show image before upload
 // function readURL(input) {

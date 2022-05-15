@@ -1,45 +1,62 @@
 const Master = require('../../models/master');
 
-exports.getMasters = async (req, res, next) => {
-  const master = await Master.findOne({}, { _id: false, __v: false }).lean();
-  if (!master) {
-    await Master.create({});
-  }
-  res.render('admin/masters', { pageTitle: 'Manage Masters', master: master });
-};
-
-exports.addMaster = async (req, res, next) => {
-  const newMaster = req.body.newMaster;
-  let master = await Master.findOne();
-  master = { ...master, [newMaster]: [] }
-  const result = await master.save();
-  res.redirect('/admin/masters');
-};
-
-exports.getMaster = async (req, res, next) => {
-  const category = req.query.category;
-  const master = await Master.findOne().lean();
-  res.render('admin/master', {
-    pageTitle: category,
-    master: master[category],
-    category,
+exports.readMasters = async (req, res) => {
+  const type = req.params.type;
+  const masters = await Master.find({ type }).lean();
+  res.render('admin/masters', {
+    pageTitle: `Manage ${type} Masters`,
+    masters,
+    type,
   });
 };
 
-exports.addMasterItem = async (req, res, next) => {
-  const category = req.body.category;
-  const master = await Master.findOne();
-  const item = req.body.item;
-  master[category].push(item);
-  await master.save();
-  res.redirect(`/admin/master?category=${category}`);
+exports.createMaster = async (req, res) => {
+  const name = req.body.name;
+  const type = req.body.type;
+  const master = await Master.create({ name, type });
+  res.redirect(`/admin/master/${master._id}`);
 };
 
-exports.delMasterItem = async (req, res, next) => {
-  const category = req.query.category;
-  const idx = req.query.idx;
-  const master = await Master.findOne();
-  master[category].splice(idx, 1);
+exports.readMaster = async (req, res) => {
+  const masterId = req.params.masterId;
+  const master = await Master.findById(masterId);
+  res.render('admin/master', {
+    pageTitle: master.name,
+    master: master,
+  });
+};
+
+exports.updateMaster = async (req, res) => {
+  const masterId = req.body.masterId;
+  const name = req.body.name;
+  const type = req.body.type;
+  const master = await Master.findById(masterId);
+  master.name = name;
+  master.type = type;
   await master.save();
-  res.redirect(`/admin/master?category=${category}`);
+  res.redirect(`/admin/master/${masterId}`);
+};
+
+exports.delMaster = async (req, res) => {
+  const masterId = req.params.masterId;
+  await Master.deleteOne({ _id: masterId });
+  res.redirect(`/admin/masters`);
+};
+
+exports.addMasterItem = async (req, res) => {
+  const masterId = req.body.masterId;
+  const item = req.body.item;
+  const master = await Master.findById(masterId);
+  master.items.push(item);
+  await master.save();
+  res.redirect(`/admin/master/${masterId}`);
+};
+
+exports.delMasterItem = async (req, res) => {
+  const masterId = req.params.masterId;
+  const idx = req.query.idx;
+  const master = await Master.findById(masterId);
+  master.items.splice(idx, 1);
+  await master.save();
+  res.redirect(`/admin/master/${masterId}`);
 };

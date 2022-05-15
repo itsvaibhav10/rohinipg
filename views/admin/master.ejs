@@ -53,38 +53,39 @@
 </head>
 
 <%- include('./include/header.ejs')%>
-<div class="container">
-    <div class="text-center mb-15">
-        <button type="button" class="btn btn-block btn-primary text-capitalize" data-toggle="modal"
-            data-target="#modal-default">
-            <i class="fas fa-plus-circle fa-lg"></i> Add New
-        </button>
+    <div class="">
+        <h3 class="text-capitalize text-center mb-50">
+            <%=master.name%> Items
+        </h3>
 
-    </div>
-        <ul class="list-group">
-            <%master.forEach((item,idx)=>{%>
-                <li class="list-group-item btn  btn-block btn-dark">
-                    <a href="" class="text-white">
-                        <%=item%>̵
-                    </a>
-                    | <a href="/admin/del-masterItem?category=<%=category%>&idx=<%=idx%>"><i
-                            class="fas fa-trash text-danger fa-lg"></i></a>
-                </li>̵
+        <div class="row">
+            <div class="col-sm-12 col-md-2 mb-2">
+                <button type="button" class="btn btn-block btn-danger text-capitalize" data-toggle="modal"
+                    data-target="#modal-default">
+                    <i class="fas fa-plus-circle fa-lg"></i> Add New Item
+                </button>
+            </div>
+            <%master.items.forEach((item,idx)=>{%>
+                <div class="col-sm-12 col-md-2 mb-2">
+                    <button type="button" class="btn btn-block btn-success text-capitalize">
+                        <%=item%> | <a href="/admin/del-masterItem/<%=master._id%>?idx=<%=idx%>"><i
+                                    class="fas fa-trash text-danger fa-lg"></i></a>
+                    </button>
 
+                </div>
                 <%})%>
-
-        </ul>
+        </div>
     </div>
 
 
     <%- include('./include/footer.ejs')%>
         <div class="modal fade" id="modal-default">
-            <form role="form" class="form-element" action="/admin/masterItem" method="post">
+            <form role="form" class="form-element" action="/admin/add-masterItem" method="post">
 
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h4 class="modal-title text-capitalize">Add Item To <%=category%>
+                            <h4 class="modal-title text-capitalize">Add Item To <%=master.name%>
                             </h4>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">&times;</span></button>
@@ -92,11 +93,11 @@
                         <div class="modal-body">
 
                             <div class="form-group">
-                                <label for="item">Item</label>
+                                <label for="item">Item Name</label>
                                 <input type="text" class="form-control" id="item" name="item"
-                                    placeholder="Enter <%=category%> Item">
+                                    placeholder="Enter <%=master.name%> Item">
                             </div>
-                            <input type="hidden" name="category" value="<%=category%>">
+                            <input type="hidden" name="masterId" value="<%=master._id%>">
                             <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                         </div>
                         <div class="modal-footer">

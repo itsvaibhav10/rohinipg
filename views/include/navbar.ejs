@@ -11,7 +11,7 @@
             <div class="col-md-5 col-sm-8  col-xs-12">
                 <div class="header-half header-call">
                     <p>
-                        <span><i class="pe-7s-call"></i> +91 9711850892</span>
+                        <span><i class="pe-7s-call"></i> (+91)9811670005</span>
                         <span><i class="pe-7s-mail"></i> rohinipgdelhi@gmail.com</span>
                     </p>
                 </div>
@@ -40,7 +40,8 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="/"><img src="/assets/img/logo.png" alt="" style="height: 50px; width: 50px;"></a>
+            <a class="navbar-brand" href="/"><img src="/assets/img/logo.jpeg" alt=""
+                    style="height: 50px; width: 250px;"></a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -48,13 +49,13 @@
             <div class="button navbar-right">
                 <%if(!isAuthenticated){%>
                     <button class="navbar-btn nav-button wow bounceInRight login" onclick="location='/login'"
-                        data-wow-delay="0.4s">Login</button>
+                        data-wow-delay="0.4s"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
                     <button class="navbar-btn nav-button wow fadeInRight" onclick="location='/signup'"
-                        data-wow-delay="0.5s">Signup</button>
+                        data-wow-delay="0.5s"><i class="fa-solid fa-user-plus"></i> Signup</button>
                     <%}else{%>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                            <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.4s">Logout</button>
+                            <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.4s"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                         </form>
                         <%}%>
             </div>
@@ -65,32 +66,24 @@
                 <li class="dropdown ymm-sw " data-wow-delay="0.1s">
                     <a href="/search" class="" data-delay="200">Properties </a>
                 </li>
-                <li class="dropdown ymm-sw " data-wow-delay="0.1s">
-                    <a href="/pricing" class="" data-delay="200">Pricing </a>
-                </li>
                 <li class="dropdown ymm-sw" data-wow-delay="0.1s">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
                         data-delay="200">Hi, <%=user?user.firstName:'User'%> <b class="caret"></b></a>
                     <ul class="dropdown-menu navbar-nav">
+                        <%if(user){%>
+                            <%if(user.isAdmin){%>
+                                <li><a href="/admin">Go To Dashboard</a></li>
+                                <%}%>
+                                    <li>
+                                        <a href="/manage-properties">Manage Property</a>
+                                    </li>
+                                    <%}%>
                         <li>
                             <a href="/add-property">Post New Property</a>
                         </li>
-                        <%if(user){%>
-                            <li>
-                                <a href="/manage-properties">Manage Property</a>
-                            </li>
-                            <%}%>
                     </ul>
 
                 </li>
-                <!-- <%if(user){%>
-                <li class="dropdown ymm-sw " data-wow-delay="0.1s">
-                    <a href="/user-profile" class="" data-delay="200">Profile </a>                
-                </li>
-                <%}%> -->
-                <%if(user && user.isAdmin){%>
-                    <li class="wow fadeInDown" data-wow-delay="0.4s"><a href="/admin">Switch Admin</a></li>
-                    <%}%>
             </ul>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->

@@ -1,3 +1,4 @@
 /node_modules
-/uploads
 /property website
+.env
+/uploads

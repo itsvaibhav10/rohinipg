@@ -1,5 +1,5 @@
 // ---------------   Models  ---------------
-const User = require('../models/user');
+// const User = require('../models/user');
 
 // ---------------   Module Imports  ---------------
 const express = require('express');
@@ -9,6 +9,7 @@ const { isAuth } = require('../middleware/is-auth');
 // Initializing Router
 const router = express.Router();
 
+// ---------------  User Profile  ---------------
 router.get('/user-profile', isAuth, user.profile);
 
 module.exports = router;

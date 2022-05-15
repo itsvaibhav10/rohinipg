@@ -65,12 +65,19 @@
                                 <div class="d-grid mt-50">
                                     <%pgImages.forEach((i,idx)=>{%>
                                         <div class="text-center">
-                                            <img src="/<%=i%>" alt="" class="box">
+                                            <img src="data:image/<%=i.contentType%>;base64,
+                                                                 <%=i.data.toString('base64')%>" class="box">
                                             <br>
                                             <%if(pgImages.length>1){%>
-                                                <a
-                                                    href="/delete-property-image/<%=propId%>?category=<%=category%>&idx=<%=idx%>"><i
-                                                        class="fa fa-times-circle-o fa-3x text-danger"></i></a>
+                                                <form action="/delete-property-image/" method="post">
+                                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                    <input type="hidden" name="propId" value="<%=propId%>">
+                                                    <input type="hidden" name="imgId" value="<%=i._id%>">
+                                                    <input type="hidden" name="category" value="<%=i.category%>">
+                                                    <button type="submit" class="btn "><i
+                                                            class="fa fa-times-circle-o fa-3x text-danger"></i></button>
+                                                </form>
+
                                                 <%}%>
                                         </div>
                                         <%})%>

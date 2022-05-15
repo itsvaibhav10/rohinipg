@@ -5,17 +5,17 @@
     <body>
         <%- include('../include/navbar'); %>
 
-            <div class="page-head">
+            <!-- <div class="page-head">
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
                             <h1 class="page-title">
-                                <%=property['title']%>
+                                <%=property.pgDetails['title']%>
                             </h1>
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <!-- End page header -->
 
             <!-- property area -->
@@ -29,12 +29,13 @@
                                 <div class="light-slide-item">
                                     <div class="clearfix">
                                         <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
-                                            <%property['pgImages'].defaults.forEach(pic=>{%>
-                                                <li data-thumb="/<%=pic%>">
-                                                    <img src="/<%=pic%>" />
+                                            <%property['pgImages'].forEach(i=>{%>
+                                                <li
+                                                    data-thumb="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
+                                                    <img
+                                                        src="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
                                                 </li>
                                                 <%})%>
-
                                         </ul>
                                     </div>
                                 </div>
@@ -43,7 +44,7 @@
                             <div class="single-property-wrapper">
                                 <div class="single-property-header">
                                     <h1 class="property-title pull-left">
-                                        <%=property.title%>
+                                        <%=property.pgDetails.title%>
                                     </h1>
                                 </div>
 
@@ -55,7 +56,7 @@
                                         </span>
                                         <span class="property-info-entry">
                                             <span class="property-info-label">Rent</span>
-                                            <span class="property-info-value">₹<%=property.rent%></span>
+                                            <span class="property-info-value">₹<%=property.pgDetails.rent%></span>
                                         </span>
                                     </div>
 
@@ -66,7 +67,7 @@
                                         <span class="property-info-entry">
                                             <span class="property-info-label">Area</span>
                                             <span class="property-info-value">
-                                                <%=property.area%><b class="property-info-unit">Sq Ft</b>
+                                                <%=property.pgDetails.area%><b class="property-info-unit">Sq Ft</b>
                                             </span>
                                         </span>
                                     </div>
@@ -78,7 +79,7 @@
                                         <span class="property-info-entry">
                                             <span class="property-info-label">Seats</span>
                                             <span class="property-info-value">
-                                                <%=property['seats']%>
+                                                <%=property.pgDetails['seats']%>
                                             </span>
                                         </span>
                                     </div>
@@ -90,7 +91,7 @@
                                         <span class="property-info-entry">
                                             <span class="property-info-label">Parking</span>
                                             <span class="property-info-value">
-                                                <%=property.parking%>
+                                                <%=property.pgDetails.parking%>
                                             </span>
                                         </span>
                                     </div>
@@ -101,7 +102,7 @@
                                     <h4 class="s-property-title">Description</h4>
                                     <div class="s-property-content">
                                         <p>
-                                            <%=property['description']%>
+                                            <%=property.pgDetails['description']%>
                                         </p>
                                     </div>
                                 </div>
@@ -112,71 +113,20 @@
                                     <h4 class="s-property-title">Amenities</h4>
 
                                     <ul class="additional-details-list clearfix">
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Food/Meals</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['meals']%>
-                                            </span>
-                                        </li>
-
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">occupancy</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['occupancy']%>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Parking</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['parking']%>
-                                            </span>
-                                        </li>
-
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Laundry</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['laundry']%>
-                                            </span>
-                                        </li>
-
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Door Timings</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['door timings']%>
-                                            </span>
-                                        </li>
-
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Safety</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['safety']%>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Water Supply</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['water supply']%>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Water Type</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['water type']%>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Hot Water</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['hot water']%>
-                                            </span>
-                                        </li>
-                                        <li>
-                                            <span class="col-xs-6 col-sm-4 col-md-4 add-d-title">Deposit</span>
-                                            <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry">
-                                                <%=property['deposit']%>
-                                            </span>
-                                        </li>
-
+                                        <%for(const key in property.pgDetails){%>
+                                            <% if(key==='title' || key==='description' ||key==='houseNo'
+                                                ||key==='street' ||key==='city' ||key==='state' ||key==='pincode'
+                                                ||key==='_csrf'||key==='rent'||key==='area'||key==='seats' )continue;%>
+                                                <li>
+                                                    <span
+                                                        class="col-xs-6 col-sm-4 col-md-4 add-d-title text-capitalize">
+                                                        <%=key%>
+                                                    </span>
+                                                    <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry text-capitalize">
+                                                        <%=property.pgDetails[key]%>
+                                                    </span>
+                                                </li>
+                                                <%}%>
                                     </ul>
                                 </div>
                                 <!-- End additional-details area  -->
@@ -195,7 +145,7 @@
 
                                 </div> -->
                                 <!-- End features area  -->
-                                <%if(property.video){%>
+                                <%if(property.pgDetails.video){%>
 
                                     <div class="section property-video">
                                         <h4 class="s-property-title">Property Video</h4>
@@ -245,12 +195,13 @@
                                         <div class="inner-wrapper">
                                             <div class="clear">
                                                 <div class="col-xs-4 col-sm-4">
-                                                    <%if(property.isVerified){%>
+                                                    <%if(property.pgDetails.isVerified){%>
                                                         <i class="fa-regular fa-circle-check fa-4x"
                                                             style="color: #00B6A9;"></i> <br>
                                                         <span>Verified</span>
                                                         <%}else{%>
-                                                            <i class="fa-solid fa-circle-exclamation fa-4x" style="color: #CF224F;"></i> <br>
+                                                            <i class="fa-solid fa-circle-exclamation fa-4x"
+                                                                style="color: #CF224F;"></i> <br>
                                                             <span>Not Verified</span>
                                                             <%}%>
                                                 </div>
@@ -359,7 +310,7 @@
                                     </div>
                                 </div>
 
-                                <div class="panel panel-default sidebar-menu wow fadeInRight animated">
+                                <!-- <div class="panel panel-default sidebar-menu wow fadeInRight animated">
                                     <div class="panel-heading">
                                         <h3 class="panel-title">Smart search</h3>
                                     </div>
@@ -528,7 +479,7 @@
                                             </fieldset>
                                         </form>
                                     </div>
-                                </div>
+                                </div> -->
 
                             </aside>
                         </div>
@@ -567,7 +518,7 @@
                                     <ul class="footer-menu">
                                         <li><a href="properties.html">Properties</a> </li>
                                         <li><a href="#">Services</a> </li>
-                                        <li><a href="submit-property.html">Submit property </a></li>
+                                        <li><a href="submit-property.pgDetails.html">Submit property </a></li>
                                         <li><a href="contact.html">Contact us</a></li>
                                         <li><a href="faq.html">fqa</a> </li>
                                         <li><a href="faq.html">Terms </a> </li>
@@ -731,7 +682,7 @@
                 const enquiry = document.getElementById('enquiry')
                 enquiry.addEventListener('click', () => {
                     const userId = "<%=user._id%>"
-                    const propId = "<%=property._id%>"
+                    const propId = "<%=property.pgDetails._id%>"
                     const _csrf = "<%=csrfToken%>"
                     const errAlert = document.querySelector('.alert.alert-danger')
                     const successAlert = document.querySelector('.alert.alert-success')

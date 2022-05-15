@@ -2,7 +2,7 @@
     <style>
         .d-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
             place-content: center center;
         }
@@ -16,7 +16,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
-                            <h1 class="page-title">Manage Property</h1>
+                            <h4 class="page-title"><b>Title :</b>
+                                <%=property.pgDetails.title%>
+                            </h4>
+                            <h4><b> Address :</b>
+                                <%=`${property.pgDetails['houseNo']}, ${property.pgDetails['street']},
+                                    ${property.pgDetails['city']}, ${property.pgDetails['state']},
+                                    ${property.pgDetails['pincode']}`%>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -26,21 +33,39 @@
             <!-- property area -->
             <div class="content-area " style="background-color: #FFF;">
                 <div class="container">
+                    <!-- <br>
+                    <h4 class="text-capitalize"><b>Title :</b> 
+                        <%=property.pgDetails.title%>
+                    </h4>
+                    <h4><b> Address :</b>
+                        <%=`${property.pgDetails['houseNo']}, ${property.pgDetails['street']},
+                            ${property.pgDetails['city']}, ${property.pgDetails['state']},
+                            ${property.pgDetails['pincode']}`%>
+                    </h4> -->
                     <div class="d-grid" style="margin-top: 5rem;">
                         <div class="text-center" style="border: 2px solid #000;">
                             <div class="h3" style="height: 150px; width: 100%;">
-                                PG Details
+                                Manage Property Details
                             </div>
                             <div class="bg-light text-center" style="height: 50px; width: 100%;">
-                                <a href="/edit-property/<%=propId%>" class="btn btn-primary">Change Details</a>
+                                <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage Details</a>
                             </div>
                         </div>
                         <div class="text-center" style="border: 2px solid #000;">
                             <div class="h3" style="height: 150px; width: 100%;">
-                                PG Images
+                                Manage Property Images
                             </div>
                             <div class="text-center" style="height: 50px; width: 100%;">
-                                <a href="/property-images/<%=propId%>" class="btn btn-primary">Add Images</a>
+                                <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images</a>
+                            </div>
+                        </div>
+                        <div class="text-center" style="border: 2px solid #000;">
+                            <div class="h3" style="height: 150px; width: 100%;">
+                                Manage Property Rooms
+                            </div>
+                            <div class="bg-light text-center" style="height: 50px; width: 100%;">
+                                <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage
+                                    Rooms</a>
                             </div>
                         </div>
                     </div>

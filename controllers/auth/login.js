@@ -7,7 +7,7 @@ const { validationResult } = require('express-validator');
 const { urltracker } = require('../utility');
 
 // ---------------   User Login Operations  ---------------
-exports.getLogin = (req, res, next) => {
+exports.getLogin = (req, res) => {
   let message = req.flash('error');
   if (message.length > 0) {
     message = message[0];
@@ -25,61 +25,55 @@ exports.getLogin = (req, res, next) => {
   });
 };
 
-exports.postLogin = async (req, res, next) => {
-  try {
-    const mobile = req.body.mobile;
-    const password = req.body.password;
-    const errors = validationResult(req);
+exports.postLogin = async (req, res) => {
+  const mobile = req.body.mobile;
+  const password = req.body.password;
+  const errors = validationResult(req);
 
-    const sendData = {
-      path: '/login',
-      pageTitle: 'Login',
-      oldInput: { mobile, password },
-    };
+  const sendData = {
+    path: '/login',
+    pageTitle: 'Login',
+    oldInput: { mobile, password },
+  };
 
-    if (!errors.isEmpty()) {
+  if (!errors.isEmpty()) {
+    return res.status(422).render('auth/login', {
+      ...sendData,
+      errorMessage: errors.array()[0].msg,
+    });
+  }
+  const user = await User.findOne({ mobile });
+  if (!user) {
+    return res.status(422).render('auth/login', {
+      errorMessage: 'User Not Found Please Check Entered Email',
+      ...sendData,
+    });
+  } else {
+    if (user.mobileVerify !== true) {
       return res.status(422).render('auth/login', {
-        ...sendData,
-        errorMessage: errors.array()[0].msg,
-      });
-    }
-    const user = await User.findOne({ mobile });
-    if (!user) {
-      return res.status(422).render('auth/login', {
-        errorMessage: 'User Not Found Please Check Entered Email',
+        errorMessage: 'Not Verified',
         ...sendData,
       });
     } else {
-      if (user.mobileVerify !== true) {
-        return res.status(422).render('auth/login', {
-          errorMessage: 'Not Verified',
-          ...sendData,
-        });
-      } else {
-        const doMatch = await bcrypt.compare(password, user.password);
-        if (doMatch) {
-          req.session.isLoggedIn = true;
-          req.session.user = user;
-          return req.session.save((err) => {
-            const url =
-              req.session && req.session.url ? req.session.url : '/home';
-            return res.redirect(url);
-          });
-        }
-        return res.status(422).render('auth/login', {
-          errorMessage: 'Invalid Password.',
-          ...sendData,
+      const doMatch = await bcrypt.compare(password, user.password);
+      if (doMatch) {
+        req.session.isLoggedIn = true;
+        req.session.user = user;
+        return req.session.save((err) => {
+          const url =
+            req.session && req.session.url ? req.session.url : '/home';
+          return res.redirect(url);
         });
       }
+      return res.status(422).render('auth/login', {
+        errorMessage: 'Invalid Password.',
+        ...sendData,
+      });
     }
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
   }
 };
 
-exports.googleLogin = (req, res, next) => {
+exports.googleLogin = (req, res) => {
   if (req.user) {
     const user = req.user;
     req.session.isLoggedIn = true;
@@ -93,16 +87,9 @@ exports.googleLogin = (req, res, next) => {
 };
 
 // ---------------   Logout User Function  ---------------
-exports.logout = async (req, res, next) => {
-  try {
-    req.session.destroy((err) => {
-      const url = req.session && req.session.url ? req.session.url : '/home';
-      return res.redirect(url);
-      res.redirect('/home');
-    });
-  } catch (err) {
-    const error = new Error(err);
-    error.httpStatusCode = 500;
-    return next(error);
-  }
+exports.logout = async (req, res) => {
+  req.session.destroy((err) => {
+    const url = req.session && req.session.url ? req.session.url : '/home';
+    return res.redirect(url);
+  });
 };
