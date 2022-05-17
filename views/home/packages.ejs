@@ -202,21 +202,86 @@
                         <h3>
                             <%=p.name%><span>₹<%=p.price%></span>
                         </h3>
-                        <a class="signup" href="">Purchase Now</a>
+                        <button class="signup razorpay-payment-button" value="<%=p._id%>">Purchase Now</button>
                         <ul>
-                            <li>Upload Upto <b>
+                            <li>Post upto <b>
                                     <%=p.propertyLimit%>
                                 </b> Properties</li>
                             <li><b>
                                     <%=p.validity%>
                                 </b> Months Validity</li>
-                            <li>Get <b>Contact details</b> of Customers </li>
+                            <%if(p.mail){%>
+                                <li> <i class="fa-solid fa-check-double fa-lg"></i> <b>Contact details</b> of Viewers on
+                                    <b>Email</b>
+                                </li>
+                                <%}else{%>
+                                    <li>
+                                        <i class="fa-solid fa-circle-xmark fa-lg"></i> <b>Contact details</b> of
+                                        Viewers on <b>Email</b>
+                                    </li>
+                                    <%}%>
+
+                                        <%if(p.msg){%>
+                                            <li> <i class="fa-solid fa-check-double fa-lg"></i> <b>Contact details</b>
+                                                of Viewers on
+                                                <b>SMS</b>
+                                            </li>
+                                            <%}else{%>
+                                                <li>
+                                                    <i class="fa-solid fa-circle-xmark fa-lg"></i> <b>Contact
+                                                        details</b> of
+                                                    Viewers on <b>SMS</b>
+                                                </li>
+                                                <%}%>
                         </ul>
                     </div>
                     <%})%>
 
             </div>
             <%- include('../include/footer'); %>
+                <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+                <script>
+                    const btns = document.querySelectorAll('.signup.razorpay-payment-button')
+                    for (const btn of btns) {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            const packageId = btn.value;
+                            fetch(`/checkout/${packageId}`).then(res => res.json()).then(result => {
+                                console.log(result);
+                                var options = {
+                                    "key": "rzp_test_W40l4s7BgCKcw5",
+                                    "amount": result.totalPrice * 100,
+                                    "currency": "INR",
+                                    "name": "RohiniGirlsPG",
+                                    "description": "Enlight Your future",
+                                    // "image": "https://gradeprime.com/UI_2.0/img/logo.png",
+                                    "order_id": result.orderId,
+                                    "handler": (response) => {
+                                        console.log(response);
+                                        // const data = {
+                                        //     response, _csrf: "<%=csrfToken%>"
+                                        // }
+                                        // fetch('/checkout/success', {
+                                        //     method: 'POST',
+                                        //     headers: { 'Content-type': 'application/json' },
+                                        //     body: JSON.stringify(data)
+                                        // }).then(res => res.json()).then(data => {
+                                        //     location = '/orders'
+                                        // })
+                                    },
+                                    "theme": {
+                                        "color": "#f75454"
+                                    }
+                                };
+                                var rzp1 = new Razorpay(options);
+                                rzp1.on('payment.failed', (response) => {
+                                    console.log(response);
+                                });
+                                rzp1.open();
+                            })
+                        })
+                    }
+                </script>
     </body>
 
     </html>

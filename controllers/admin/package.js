@@ -97,10 +97,13 @@ exports.getEditPackage = async (req, res) => {
 
 exports.postEditPackage = async (req, res) => {
   const packageId = req.body.packageId;
+  const type = req.body.type;
   const name = req.body.name;
   const validity = req.body.validity;
   const price = req.body.price;
   const propertyLimit = req.body.propertyLimit;
+  const mail = req.body.mail ? true : false;
+  const msg = req.body.msg ? true : false;
   const errors = validationResult(req);
   const package = await Package.findById(packageId);
   if (!package) return res.redirect('/admin');
@@ -119,6 +122,8 @@ exports.postEditPackage = async (req, res) => {
   package.validity = validity;
   package.price = price;
   package.propertyLimit = propertyLimit;
+  package.mail= mail;
+  package.msg= msg;
   await package.save();
   res.redirect('/admin/packages');
 };

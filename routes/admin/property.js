@@ -11,7 +11,7 @@ const router = express.Router();
 router.get('/properties', isAuth, isAdmin, property.getProperties);
 
 // ----------  Delete Property  ----------
-router.post('/delete-property', isAuth, isAdmin, property.delProperty);
+router.get('/delete-property/:propId', isAuth, isAdmin, property.delProperty);
 
 // ----------  Verify Property  ----------
 router.get(

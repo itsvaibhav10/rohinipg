@@ -6,9 +6,12 @@ const Room = require('../../models/room');
 // ----------  Room Management  ----------
 exports.manageRoom = async (req, res) => {
   const propId = req.params.propId;
-  const property = await Property.findById(propId)
+  const property = await Property.findById(propId, {
+    pgDetails: true,
+    rooms: true,
+  })
     .lean()
-    .populate(rooms)
+    .populate('rooms')
     .exec();
   res.send(property);
 };

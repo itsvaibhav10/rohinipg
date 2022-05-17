@@ -4,7 +4,22 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
             gap: 2rem;
-            place-content: center center;
+            /* place-content: center center; */
+            place-items: center center;
+        }
+
+        .box {
+            height: 300px;
+            width: 300px;
+            background-color: #fefefe;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: center;
+            font-size: 3rem;
+            text-transform: capitalize;
+            text-align: center;
+            border: 2px solid #000;
         }
     </style>
     </head>
@@ -32,44 +47,55 @@
 
             <!-- property area -->
             <div class="content-area " style="background-color: #FFF;">
-                <div class="container">
-                    <!-- <br>
-                    <h4 class="text-capitalize"><b>Title :</b> 
-                        <%=property.pgDetails.title%>
-                    </h4>
-                    <h4><b> Address :</b>
-                        <%=`${property.pgDetails['houseNo']}, ${property.pgDetails['street']},
-                            ${property.pgDetails['city']}, ${property.pgDetails['state']},
-                            ${property.pgDetails['pincode']}`%>
-                    </h4> -->
-                    <div class="d-grid" style="margin-top: 5rem;">
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                Manage Property Details
-                            </div>
-                            <div class="bg-light text-center" style="height: 50px; width: 100%;">
+                <%if(property.views.length>0){%>
+                    <div class="container">
+                        <br>
+                        <h3><b>Property Views</b></h3>
+                        <div class="d-grid" style="margin-top: 5rem;">
+                            <div class="box">
+                                <div class="h3">Property Details </div>
                                 <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage Details</a>
                             </div>
-                        </div>
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                Manage Property Images
-                            </div>
-                            <div class="text-center" style="height: 50px; width: 100%;">
-                                <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images</a>
-                            </div>
-                        </div>
-                        <div class="text-center" style="border: 2px solid #000;">
-                            <div class="h3" style="height: 150px; width: 100%;">
-                                Manage Property Rooms
-                            </div>
-                            <div class="bg-light text-center" style="height: 50px; width: 100%;">
-                                <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage
-                                    Rooms</a>
+                            <div class="box">
+                                <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
+                                <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images </a>
                             </div>
                         </div>
                     </div>
-                </div>
+                    <div class="dot-hr"></div>
+                    <%}%>
+                        <div class="container">
+                            <br>
+                            <h3><b>Manage Your Property</b></h3>
+                            <div class="d-grid" style="margin-top: 5rem;">
+                                <div class="box">
+                                    <div class="h3">Property Details </div>
+                                    <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage
+                                        Details</a>
+                                </div>
+                                <div class="box">
+                                    <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
+                                    <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="dot-hr"></div>
+                        <div class="container">
+                            <br>
+                            <h3> <b>Manage Rooms</b> <span class="pull-right"><a href="" class="btn btn-danger"><i
+                                            class="fa-solid fa-plus fa-lg"></i> Add Room</a></span></h3>
+                            <div class="d-grid" style="margin-top: 5rem;">
+                                <%property.rooms.forEach(room=>{%>
+                                    <div class="box">
+                                        <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
+                                        <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage
+                                            Images
+                                        </a>
+                                    </div>
+                                    <% })%>
+                            </div>
+                        </div>
             </div>
 
             <!-- Footer area-->

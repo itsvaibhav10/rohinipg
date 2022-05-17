@@ -15,6 +15,7 @@ const adminUserRoutes = require('../routes/admin/user');
 // ---------------   Routes Import  ---------------
 const authRoutes = require('../routes/auth');
 const propertyRoutes = require('../routes/property');
+const roomRoutes = require('../routes/room');
 const userRoutes = require('../routes/user');
 const homeRoutes = require('../routes/home');
 const errorController = require('../controllers/error');
@@ -42,7 +43,7 @@ module.exports = (app) => {
   });
 
   // User Routes
-  app.use(homeRoutes, authRoutes, propertyRoutes, userRoutes);
+  app.use(homeRoutes, authRoutes, propertyRoutes, roomRoutes, userRoutes);
 
   // Admin Routes
   app.use(

@@ -74,12 +74,17 @@
                                                     <br>
                                                     <div class="dealer-action text-center"
                                                         style="background-color: #eeeeee;">
-                                                        <a href="/manage-property/<%=property['_id']%>"
+                                                        <a href="/manage-property/<%=property._id%>"
                                                             class="button">Manage</a>
+                                                        <a href="/edit-property/<%=property._id%>"
+                                                            class="button">Edit</a>
+                                                        <a href="/property-images/<%=property._id%>"
+                                                            class="button">Photos</a>
+                                                        <a href="/manage-room/<%=property._id%>"
+                                                            class="button">Rooms</a>
                                                         <!-- <a href="#" class="button delete_user_car">Deactivate</a> -->
-                                                        <a href="property/<%=property['_id']%>" class="button">View</a>
+                                                        <a href="/property/<%=property['_id']%>" class="button">View</a>
                                                     </div>
-
                                                 </div>
                                             </div>
                                         </div>

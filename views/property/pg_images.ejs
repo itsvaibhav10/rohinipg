@@ -2,19 +2,22 @@
     <style>
         .d-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, 250px);
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
             gap: 2rem;
+            place-content: center center;
         }
 
         .box {
-            height: 250px;
-            width: 250px;
+            height: 200px;
+            width: 200px;
             background-color: #fefefe;
             display: flex;
             justify-content: center;
             align-items: center;
             font-size: 3rem;
             text-transform: capitalize;
+            text-align: center;
+            border: 2px solid #000;
         }
     </style>
     </head>
@@ -26,7 +29,14 @@
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
-                            <h1 class="page-title">Let's Show Off Your Property</h1>
+                            <h4 class="page-title"><b>Title :</b>
+                                <%=property.pgDetails.title%>
+                            </h4>
+                            <h4><b> Address :</b>
+                                <%=`${property.pgDetails['houseNo']}, ${property.pgDetails['street']},
+                                    ${property.pgDetails['city']}, ${property.pgDetails['state']},
+                                    ${property.pgDetails['pincode']}`%>
+                            </h4>
                         </div>
                     </div>
                 </div>
@@ -38,13 +48,24 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-md-12 pr-30 padding-top-40 properties-page user-properties">
+                            <h3 class="text-center">Manage Images Here By Choosing Any Category Below</h3>
                             <div class="section">
                                 <div class="page-subheader sorting pl0 pr-10">
                                 </div>
                             </div>
                             <div class="section">
                                 <div class="d-grid">
-                                    <a href="/add-property-images/<%=property._id%>?category=<%=key%>" class="box"> </a>
+                                    <a href="/add-property-images/<%=property._id%>?category=kitchen" class="box">
+                                        Kitchen Images</a>
+                                    <a href="/add-property-images/<%=property._id%>?category=balcony" class="box">Balcony Images </a>
+                                    <a href="/add-property-images/<%=property._id%>?category=exterior" class="box">Exterior Images </a>
+                                    <a href="/add-property-images/<%=property._id%>?category=commonArea" class="box">Common Area
+                                    </a>
+                                    <a href="/add-property-images/<%=property._id%>?category=bathroom" class="box">Bathroom Images </a>
+                                </div>
+                                <div class="text-center mt-50" style="margin-top:5rem;">
+                                    <a href="/manage-property/<%=property._id%>" class="btn btn-danger"><i class="fa-solid fa-arrow-left-long fa-lg"></i> Go
+                                        Back</a>
                                 </div>
                             </div>
                         </div>

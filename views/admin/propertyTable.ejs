@@ -35,8 +35,9 @@
     	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     	<![endif]-->
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
-        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.css"
+        integrity="sha512-1hsteeq9xTM5CX6NsXiJu3Y/g+tj+IIwtZMtTisemEv3hx+S9ngaW4nryrNcPM4xGzINcKbwUJtojslX2KG+DQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="/admin/css/additionalCss.css">
 </head>
 
@@ -77,23 +78,29 @@
                                             title="View Details"><i class="far fa-eye"></i></a>
                                         <a href="/edit-property/<%=p._id%>" class="btn btn-yellow btn-sm mb-1"
                                             title="Edit Details"><i class="far fa-edit"></i></a>
+                                        <a href="/admin/delete-property/<%=p._id%>" class="btn btn-danger btn-sm mb-1"
+                                            title="Activate Property"><i class="fa-solid fa-trash fa-lg"></i></a>
                                         <%if(p.isVerified){%>
-                                            <a href="/admin/verify-property/<%=p._id%>" class="btn btn-danger btn-sm mb-1"
-                                                title="Verify Property"><i class="fas fa-check-double"></i></a>
+                                            <a href="/admin/verify-property/<%=p._id%>"
+                                                class="btn btn-success btn-sm mb-1" title="Verify Property"><i
+                                                    class="fa-regular fa-circle-check fa-lg"></i></a>
                                             <%}else{%>
                                                 <a href="/admin/verify-property/<%=p._id%>"
-                                                    class="btn btn-success btn-sm mb-1" title="Verify Property"><i
-                                                        class="fas fa-check-double"></i></a>
+                                                    class="btn btn-danger btn-sm mb-1" title="Verify Property"><i
+                                                        class="fa-solid fa-circle-xmark fa-lg"></i></a>
                                                 <%}%>
                                                     <%if(p.isActive){%>
                                                         <a href="/admin/activate-property/<%=p._id%>"
-                                                            class="btn btn-danger btn-sm mb-1"
-                                                            title="Activate Property"><i class="fas fa-chart-line"></i></a>
+                                                            class="btn btn-success btn-sm mb-1"
+                                                            title="Activate Property"><i
+                                                                class="fa-solid fa-lock-open"></i></a>
                                                         <%}else{%>
                                                             <a href="/admin/activate-property/<%=p._id%>"
-                                                                class="btn btn-success btn-sm mb-1"
-                                                                title="Activate Property"><i class="fas fa-chart-line"></i></a>
+                                                                class="btn btn-danger btn-sm mb-1"
+                                                                title="Activate Property"><i
+                                                                    class="fa-solid fa-lock"></i></a>
                                                             <%}%>
+
 
 
                                     </div>

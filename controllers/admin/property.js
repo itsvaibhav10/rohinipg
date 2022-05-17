@@ -1,6 +1,7 @@
 // ---------------   Models  ---------------
 const User = require('../../models/user');
 const Property = require('../../models/property');
+const Room = require('../../models/room');
 
 // ---------------   Utility  ---------------
 const bcrypt = require('bcryptjs');
@@ -18,11 +19,10 @@ exports.getProperties = async (req, res) => {
 exports.delProperty = async (req, res) => {
   const propId = req.params.propId;
   const property = await Property.findById(propId).lean();
-  if (!property) throw Error('User Not Found');
-  const images = property.pgImages.map((p) => p.path);
-  deleteFiles(images);
+  if (!property) throw Error('Property Not Found');
+  if (property.rooms.length > 0) await Room.deleteMany({ _id: property.rooms });
   await Property.deleteOne({ _id: propId });
-  return res.redirect('/admin/users');
+  return res.redirect('/admin/properties');
 };
 
 exports.verifyProperty = async (req, res) => {

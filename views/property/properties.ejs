@@ -117,15 +117,14 @@
                                                         :</label>
                                                     <input type="text" class="span2" data-slider-min="1"
                                                         data-slider-max="50" data-slider-step="1"
-                                                        data-slider-value="<%=oldInput.propertySeats?oldInput.propertySeats:'15'%>"
+                                                        data-slider-value="[<%=oldInput.propertySeats?oldInput.propertySeats:'1,15'%>]"
                                                         id="price-range" name="propertySeats"
-                                                        value="<%=oldInput.propertySeats?oldInput.propertySeats:'15'%>"><br />
+                                                        value="[<%=oldInput.propertySeats?oldInput.propertySeats:'1,15'%>]"><br />
                                                     <b class="pull-left color">1</b>
                                                     <b class="pull-right color">50</b>
                                                 </div>
                                             </div>
                                             <!-- End of  -->
-
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="propertyArea">Area in (sq Feet) :</label>
@@ -152,70 +151,37 @@
                         </div>
                         <%if(properties && properties.length> 0){%>
                             <div class="col-md-12 clear">
-                                <!-- <div class="col-xs-10 page-subheader sorting pl0">
-                                <ul class="sort-by-list">
-                                    <li class="active">
-                                        <a href="javascript:void(0);" class="order_by_date" data-orderby="property_date"
-                                            data-order="ASC">
-                                            Property Date <i class="fa fa-sort-amount-asc"></i>
-                                        </a>
-                                    </li>
-                                    <li class="">
-                                        <a href="javascript:void(0);" class="order_by_price"
-                                            data-orderby="property_price" data-order="DESC">
-                                            Property Price <i class="fa fa-sort-numeric-desc"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-
-                                <div class="items-per-page">
-                                    <label for="items_per_page"><b>Property per page :</b></label>
-                                    <div class="sel">
-                                        <select id="items_per_page" name="per_page">
-                                            <option value="3">3</option>
-                                            <option value="6">6</option>
-                                            <option value="9">9</option>
-                                            <option selected="selected" value="12">12</option>
-                                            <option value="15">15</option>
-                                            <option value="30">30</option>
-                                            <option value="45">45</option>
-                                            <option value="60">60</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div> -->
-
                                 <div class=" layout-switcher">
                                     <a class="layout-list" href="javascript:void(0);"> <i class="fa fa-th-list"></i>
                                     </a>
                                     <a class="layout-grid active" href="javascript:void(0);"> <i class="fa fa-th"></i>
                                     </a>
                                 </div>
-                                <!--/ .layout-switcher-->
                             </div>
 
 
                             <div class="col-md-12 clear ">
                                 <div id="list-type" class="proerty-th">
                                     <%properties.forEach(property=>{%>
-                                    <div class="col-sm-6 col-md-3 p0">
-                                        <div class="box-two proerty-item">
-                                            <div class="item-thumb">
-                                                <a href="/property/<%=property._id%>"> <img
-                                                        src="data:image/<%=property.pgImages[0].contentType%>;base64,<%=property.pgImages[0].data.toString('base64')%>"></a>
-                                            </div>
-                                            <div class="item-entry overflow">
-                                                <h5><a href="/property/<%=property._id%>">
-                                                        <%=property.pgDetails.title%>
-                                                    </a></h5>
-                                                <div class="dot-hr"></div>
-                                                <span class="pull-left"><b>Area :</b>
-                                                    <%=property.pgDetails.area%> in (Sq Feet)
-                                                </span>
-                                                <span class="proerty-price pull-right">₹<%=property.pgDetails.rent%></span>
+                                        <div class="col-sm-6 col-md-3 p0">
+                                            <div class="box-two proerty-item">
+                                                <div class="item-thumb">
+                                                    <a href="/property/<%=property._id%>"> <img
+                                                            src="data:image/<%=property.pgImages[0].contentType%>;base64,<%=property.pgImages[0].data.toString('base64')%>"></a>
+                                                </div>
+                                                <div class="item-entry overflow">
+                                                    <h5><a href="/property/<%=property._id%>">
+                                                            <%=property.pgDetails.title%>
+                                                        </a></h5>
+                                                    <div class="dot-hr"></div>
+                                                    <span class="pull-left"><b>Area :</b>
+                                                        <%=property.pgDetails.area%> in (Sq Feet)
+                                                    </span>
+                                                    <span class="proerty-price pull-right">₹<%=property.pgDetails.rent%>
+                                                    </span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
                                         <%})%>
                                 </div>
                             </div>
@@ -312,8 +278,6 @@
                                                     nulla ...</p>
                                             </div>
                                         </li>
-
-
                                     </ul>
                                 </div>
                             </div>
@@ -324,7 +288,6 @@
                                     <p>Lorem ipsum dolor sit amet, nulla suscipit similique quisquam molestias. Vel
                                         unde,
                                         blanditiis.</p>
-
                                     <form>
                                         <div class="input-group">
                                             <input class="form-control" type="text" placeholder="E-mail ... ">

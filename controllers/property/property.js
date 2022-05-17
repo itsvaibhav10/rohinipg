@@ -35,6 +35,26 @@ const getContact = async (propId) => {
 
 // ----------  Add Property Details  ----------
 exports.getAddPropertyDetails = async (req, res) => {
+  // Check Package Limit with Property
+  if (req.user.packageId) {
+    const package = await Package.findById(req.user.packageId).lean();
+    const properties = await Property.find({ userId: req.user._id })
+      .lean()
+      .count();
+    if (properties >= package.propertyLimit) return res.redirect('/pricing');
+  }
+
+  // Add Free Package for First Time USER
+  if (!req.user.packageId) {
+    console.log('not Package');
+    const package = await Package.findOne({
+      name: 'free',
+      type: 'provider',
+    }).lean();
+    req.user.packageId = package._id;
+    await req.user.save();
+  }
+
   const master = await Master.find({ type: 'property' }).lean();
   res.render('property/add_property', {
     pageTitle: 'Add Property',
@@ -50,6 +70,10 @@ exports.postAddPropertyDetails = async (req, res) => {
     pgDetails: { ...req.body, _csrf: undefined },
   };
   const result = await Property.create(newProperty);
+  const { packageId: package } = await User.findById(req.user._id)
+    .populate('packageId')
+    .exec();
+  if (package.name === 'free') return res.redirect('/pricing');
   res.redirect(`/manage-property/${result._id}`);
 };
 
@@ -90,7 +114,7 @@ exports.getPropertyImages = async (req, res) => {
   const propId = req.params.propId;
   const property = await getPropertyInfo(propId, req.user);
   res.render('property/pg_images', {
-    pageTitle: property.title,
+    pageTitle: property.pgDetails.title,
     property,
   });
 };
@@ -99,15 +123,18 @@ exports.getAddPropertyImagesCategory = async (req, res) => {
   const propId = req.params.propId;
   const userId = req.user._id;
   const category = req.query.category;
-  if (!propId || !category) throw Error('Property Not Found');
+  const catArr = ['kitchen', 'exterior', 'balcony', 'commonArea', 'bathroom'];
+  const categoryIdx = catArr.findIndex((cat) => cat === category);
+  if (!propId || categoryIdx === -1) throw Error('Property Not Found');
   const property = await Property.findOne(
     { _id: propId, userId },
     { pgImages: true }
   );
   if (!property) throw Error('Property Not Found');
+  const pgImages = property.pgImages.filter((i) => i.category === category);
   res.render('property/category_image', {
     pageTitle: category,
-    pgImages: property.pgImages,
+    pgImages: pgImages,
     propId,
     category,
   });
@@ -197,6 +224,7 @@ exports.getProperties = async (req, res) => {
 };
 
 exports.manageProperty = async (req, res) => {
+  // return res.redirect('/manage-properties');
   const propId = req.params.propId;
   const property = await Property.findOne({
     _id: propId,
@@ -211,7 +239,7 @@ exports.manageProperty = async (req, res) => {
 
 // ----------  Get All Package  ----------
 exports.getPackage = async (req, res) => {
-  const packages = await Package.find({ isActive: true });
+  const packages = await Package.find({ isActive: true,type:'provider' });
   res.render('home/packages', {
     pageTitle: `Packages`,
     packages,

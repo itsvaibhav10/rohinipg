@@ -58,6 +58,22 @@
         <%}%>
             <form action="/admin/<%=editing?'edit-package':'add-package'%>" method="post">
                 <div class="form-group">
+                    <label for="validity">For (Type)</label>
+                    <select name="type" id="type" class="form-control" required>
+                        <%if(editing){%>
+                            <option value="<%=oldInput.type%>">
+                                <%=oldInput.type%>
+                            </option>
+                            <%}%>
+                                <option value="provider">
+                                    Provider
+                                </option>
+                                <option value="tenant">
+                                    Tenant
+                                </option>
+                    </select>
+                </div>
+                <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter ..."
                         value="<%= oldInput.name%>">
@@ -67,7 +83,7 @@
                     <select name="validity" id="validity" class="form-control" value="<%= oldInput.validity%>">
                         <%if(editing){%>
                             <option value="<%=oldInput.validity%>">
-                                <%=oldInput.validity%> Months
+                                <%=oldInput.validity%> Month
                             </option>
                             <%}%>
                                 <%for(let i=1; i<=12; i++){%>
@@ -86,6 +102,16 @@
                     <label for="propertyLimit">Property Limit</label>
                     <input type="number" name="propertyLimit" id="propertyLimit" class="form-control"
                         placeholder="Enter ..." value="<%= oldInput.propertyLimit%>">
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="mail" id="mail" class="form-control" <%=oldInput.mail?'checked':''%>/>
+                    <label for="mail">Email Feature</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="checkbox" name="msg" id="msg" class="form-control" <%=oldInput.msg?'checked':''%>/>
+                    <label for="msg">SMS Feature</label>
                 </div>
                 <input type="hidden" name="_csrf" value="<%= csrfToken %>">
                 <%if(editing){%>
