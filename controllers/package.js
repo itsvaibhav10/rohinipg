@@ -1,13 +1,18 @@
+// ---------------   Models  ---------------
 const Package = require('../models/package');
 const Order = require('../models/order');
+const Property = require('../models/property');
+
+// ---------------   Module Imports  ---------------
 const Razorpay = require('razorpay');
 const instance = new Razorpay({
   key_id: process.env.rzpKeyId,
   key_secret: process.env.rzpSecKey,
 });
 
+// ----------  Get All Package  ----------
 exports.getPackage = async (req, res) => {
-  const packages = await Package.find({ isActive: true });
+  const packages = await Package.find({ isActive: true, type: 'provider' });
   res.render('home/packages', {
     pageTitle: `Packages`,
     packages,
@@ -18,11 +23,9 @@ exports.createOrder = async (req, res) => {
   const packageId = req.params.packageId;
   const package = await Package.findById(packageId);
   if (!package) throw Error('Package Not Found');
-  req.user.packageId = packageId;
-  await req.user.save();
-  const totalPrice = package.price;
+
   const options = {
-    amount: totalPrice * 100,
+    amount: package.price * 100,
     currency: 'INR',
     payment_capture: '1',
   };
@@ -31,7 +34,8 @@ exports.createOrder = async (req, res) => {
   return res.send({
     success: true,
     orderId: order.id,
-    totalPrice: totalPrice,
+    totalPrice: package.price,
+    packageId,
   });
 };
 
@@ -44,4 +48,13 @@ exports.purchasePackage = async (req, res) => {
     userId: req.user._id,
     razorpay: req.body.razorpay,
   });
+  req.user.packageId = packageId;
+  await req.user.save();
+  const properties = await Property.find({ userId: req.user._id });
+  if (properties.length > 0) {
+    properties.forEach(async (p) => {
+      p.priority = package.priority;
+      await p.save();
+    });
+  }
 };

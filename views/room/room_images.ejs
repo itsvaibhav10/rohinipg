@@ -23,8 +23,9 @@
                 <div class="container">
                     <div class="row">
                         <div class="page-head-content">
-                            <h1 class="page-title">
-                                <%=category%> Images List
+                            <h1 class="page-title"><b>
+                                    <%=roomDetails.title%> Images
+                                </b>
                             </h1>
                         </div>
                     </div>
@@ -39,12 +40,42 @@
 
                         <div class="col-md-12 pr-30 padding-top-40 properties-page user-properties">
                             <div class="section">
-                                <form action="/add-property-images" method="post" enctype="multipart/form-data"
+                                <h3 class="text-uppercase">
+                                    <%=roomDetails.title%> Images
+                                </h3>
+                                <br>
+                                <div class="d-grid mt-50">
+                                    <%roomImages.forEach((i,)=>{%>
+                                        <div class="text-center">
+                                            <img src="data:image/<%=i.contentType%>;base64,
+                                                                                                 <%=i.data.toString('base64')%>"
+                                                class="box">
+                                            <br>
+                                            <%if(roomImages.length>1){%>
+                                                <form action="/delete-room-image" method="post">
+                                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                                                    <input type="hidden" name="roomId" value="<%=roomId%>">
+                                                    <input type="hidden" name="idx" value="<%=idx%>">
+                                                    <input type="hidden" name="propId" value="<%=propId%>">
+                                                    <input type="hidden" name="imgId" value="<%=i._id%>">
+                                                    <button type="submit" class="btn "><i
+                                                            class="fa fa-times-circle-o fa-2x text-danger"></i></button>
+                                                </form>
+
+                                                <%}%>
+                                        </div>
+                                        <%})%>
+                                </div>
+                                <br>
+                                <div class="dot-hr"></div>
+                                <div class="p-5"></div>
+                                <form action="/add-room-images" method="post" enctype="multipart/form-data"
                                     class="text-center">
-                                    <h3 class="text-uppercase">Add <%=category%> Images</h3>
+
                                     <div class="form-group">
                                         <label for=""><b>Add Images</b></label>
-                                        <input type="file" class="wizard-picture form-control" multiple name="pg_images"  accept="image/png,image/jpg,image/jpeg">
+                                        <input type="file" class="wizard-picture form-control" multiple name="pg_images"
+                                            accept="image/png,image/jpg,image/jpeg">
                                     </div>
                                     <div class="picture-container">
                                         <div class="picture">
@@ -55,40 +86,20 @@
                                         </div>
                                     </div>
                                     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                                    <input type="hidden" name="category" value="<%=category%>">
+                                    <input type="hidden" name="roomId" value="<%=roomId%>">
+                                    <input type="hidden" name="idx" value="<%=idx%>">
                                     <input type="hidden" name="propId" value="<%=propId%>">
                                     <div class="text-center">
                                         <button type="submit" disabled class="btn btn-default "><i
                                                 class="fa-solid fa-plus fa-lg"></i> Add
                                             Images</button>
+
                                     </div>
                                 </form>
-                                <br>
-                                <div class="dot-hr"></div>
-                                <div class="p-5"></div>
-                                <div class="d-grid mt-50">
-                                    <%pgImages.forEach((i,idx)=>{%>
-                                        <div class="text-center">
-                                            <img src="data:image/<%=i.contentType%>;base64,
-                                                                 <%=i.data.toString('base64')%>" class="box">
-                                            <br>
-                                            <%if(pgImages.length>1){%>
-                                                <form action="/delete-property-image/" method="post">
-                                                    <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                                                    <input type="hidden" name="propId" value="<%=propId%>">
-                                                    <input type="hidden" name="imgId" value="<%=i._id%>">
-                                                    <input type="hidden" name="category" value="<%=i.category%>">
-                                                    <button type="submit" class="btn "><i
-                                                            class="fa fa-times-circle-o fa-2x text-danger"></i></button>
-                                                </form>
 
-                                                <%}%>
-                                        </div>
-                                        <%})%>
-                                </div>
                             </div>
                             <div class="text-center mt-50" style="margin-top:5rem;">
-                                <a href="/property-images/<%=propId%>" class="btn btn-danger"><i
+                                <a href="/manage-property/<%=propId%>" class="btn btn-danger"><i
                                         class="fa-solid fa-arrow-left-long fa-lg"></i> Go Back</a>
                             </div>
 

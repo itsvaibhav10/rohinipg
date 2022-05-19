@@ -60,6 +60,7 @@
                             <th>Active</th>
                             <th>Type</th>
                             <th>Validity</th>
+                            <th>Priority</th>
                             <th>Price</th>
                             <th>Limit</th>
                             <th>Email Service</th>
@@ -98,9 +99,12 @@
                                 <td class="text-capitalize">
                                     <%=u.type%>
                                 </td>
-                                
+
                                 <td class="text-capitalize">
                                     <%=u.validity%> month
+                                </td>
+                                <td class="text-capitalize">
+                                    <%=u.priority%>
                                 </td>
                                 <td class="text-capitalize">
                                     ₹<%=u.price%>

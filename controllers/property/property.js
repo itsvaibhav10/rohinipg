@@ -1,15 +1,12 @@
-// ----------  Modules Import  ----------
+// ---------------   Models  ---------------
 const Property = require('../../models/property');
 const User = require('../../models/user');
 const Master = require('../../models/master');
 const Package = require('../../models/package');
-const { deleteFile } = require('../utility');
-const { readFileSync } = require('fs');
 
-const getPropertyInfo = async (propId, user) => {
-  if (user.isAdmin) return await Property.findById(propId).lean();
-  else return await Property.findOne({ _id: propId, userId: user._id }).lean();
-};
+// ----------  Modules Import  ----------
+const { deleteFile, sendMail } = require('../utility');
+const { readFileSync } = require('fs');
 
 const getContact = async (propId) => {
   const property = await Property.findById(propId, {
@@ -36,7 +33,7 @@ const getContact = async (propId) => {
 // ----------  Add Property Details  ----------
 exports.getAddPropertyDetails = async (req, res) => {
   // Check Package Limit with Property
-  if (req.user.packageId) {
+  if (req.user.packageId && req.user.isAdmin !== true) {
     const package = await Package.findById(req.user.packageId).lean();
     const properties = await Property.find({ userId: req.user._id })
       .lean()
@@ -45,8 +42,7 @@ exports.getAddPropertyDetails = async (req, res) => {
   }
 
   // Add Free Package for First Time USER
-  if (!req.user.packageId) {
-    console.log('not Package');
+  if (!req.user.packageId && req.user.isAdmin !== true) {
     const package = await Package.findOne({
       name: 'free',
       type: 'provider',
@@ -65,14 +61,17 @@ exports.getAddPropertyDetails = async (req, res) => {
 };
 
 exports.postAddPropertyDetails = async (req, res) => {
-  const newProperty = {
-    userId: req.user['_id'],
-    pgDetails: { ...req.body, _csrf: undefined },
-  };
-  const result = await Property.create(newProperty);
   const { packageId: package } = await User.findById(req.user._id)
     .populate('packageId')
     .exec();
+
+  const newProperty = {
+    userId: req.user['_id'],
+    pgDetails: { ...req.body, _csrf: undefined },
+    priority: package.priority,
+  };
+
+  const result = await Property.create(newProperty);
   if (package.name === 'free') return res.redirect('/pricing');
   res.redirect(`/manage-property/${result._id}`);
 };
@@ -112,7 +111,10 @@ exports.postEditPropertyDetails = async (req, res) => {
 // ----------  Add Property Images  ----------
 exports.getPropertyImages = async (req, res) => {
   const propId = req.params.propId;
-  const property = await getPropertyInfo(propId, req.user);
+  let property;
+  if (req.user.isAdmin) property = await Property.findById(propId).lean();
+  else
+    property = await Property.findOne({ _id: propId, userId: user._id }).lean();
   res.render('property/pg_images', {
     pageTitle: property.pgDetails.title,
     property,
@@ -202,11 +204,20 @@ exports.viewProperty = async (req, res) => {
       (userId) => userId.toString() === req.user._id.toString()
     );
     if (userIndex === -1) {
+      // Implement Package Features To Provider
+      const { packageId: package } = await User.findById(req.user._id)
+        .populate('packageId')
+        .exec();
+
+      if (package.mail) {
+      }
+      if (package.sms) {
+      }
       property.views.push(req.user._id);
       await property.save();
     }
   }
-
+  console.log(property.views);
   res.render('property/view_property', {
     pageTitle: property.pgDetails['title'],
     property,
@@ -224,12 +235,15 @@ exports.getProperties = async (req, res) => {
 };
 
 exports.manageProperty = async (req, res) => {
-  // return res.redirect('/manage-properties');
   const propId = req.params.propId;
   const property = await Property.findOne({
     _id: propId,
     userId: req.user._id,
-  }).lean();
+  })
+    .lean()
+    .populate('rooms')
+    .exec();
+
   if (!property) throw Error('Property Not Found');
   res.render('property/manage_property', {
     pageTitle: 'Manage Property',
@@ -239,7 +253,7 @@ exports.manageProperty = async (req, res) => {
 
 // ----------  Get All Package  ----------
 exports.getPackage = async (req, res) => {
-  const packages = await Package.find({ isActive: true,type:'provider' });
+  const packages = await Package.find({ isActive: true, type: 'provider' });
   res.render('home/packages', {
     pageTitle: `Packages`,
     packages,

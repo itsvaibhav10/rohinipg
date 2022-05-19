@@ -73,11 +73,13 @@
                                 </option>
                     </select>
                 </div>
+
                 <div class="form-group">
                     <label for="name">Name</label>
                     <input type="text" name="name" id="name" class="form-control" placeholder="Enter ..."
                         value="<%= oldInput.name%>">
                 </div>
+
                 <div class="form-group">
                     <label for="validity">Validity</label>
                     <select name="validity" id="validity" class="form-control" value="<%= oldInput.validity%>">
@@ -89,6 +91,21 @@
                                 <%for(let i=1; i<=12; i++){%>
                                     <option value="<%=+i%>">
                                         <%=i%> Months
+                                    </option>
+                                    <%}%>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="priority">Property Priority</label>
+                    <select name="priority" id="priority" class="form-control" required>
+                        <%if(editing){%>
+                            <option value="<%=oldInput.priority%>">
+                                <%=oldInput.priority%>
+                            </option>
+                            <%}%>
+                                <%for(let i=1; i<=5; i++){%>
+                                    <option value="<%=+i%>">
+                                        <%=i%>
                                     </option>
                                     <%}%>
                     </select>

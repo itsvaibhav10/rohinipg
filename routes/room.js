@@ -11,30 +11,14 @@ const { isAuth } = require('../middleware/is-auth');
 const router = express.Router();
 
 // ----------  Room Details Routes  ----------
-router.get('/add-room', isAuth, property.getAddPropertyDetails);
-router.post('/add-room', isAuth, property.postAddPropertyDetails);
-router.get('/edit-property/:roomId', isAuth, property.getEditPropertyDetails);
-router.post('/edit-property', isAuth, property.postEditPropertyDetails);
+router.get('/add-room/:propId', isAuth, room.getAddRoom);
+router.post('/add-room', isAuth, room.postAddRoom);
+router.get('/edit-room/:propId', isAuth, room.getEditRoom);
+router.post('/edit-room', isAuth, room.postEditRoom);
 
 // ----------  Room Images Routes  ----------
-router.get('/room-images/:roomId', isAuth, property.getPropertyImages);
-router.get(
-  '/add-room-images/:roomId',
-  isAuth,
-  property.getAddPropertyImagesCategory
-);
-router.post(
-  '/add-room-images',
-  isAuth,
-  property.postAddPropertyImagesCategory
-);
-router.post('/delete-room-image', isAuth, property.deletePropertyImages);
-
-// ----------  Manage Room Routes  ----------
-router.get('/manage-room/:propId', isAuth, room.manageRoom);
-
-// ----------  View Room Routes  ----------
-router.get('/room/:propId', isAuth, property.viewProperty);
-
+router.get('/add-room-images/:propId', isAuth, room.getAddRoomImages);
+router.post('/add-room-images/', isAuth, room.postAddRoomImages);
+router.post('/delete-room-image', isAuth, room.delRoomImages);
 
 module.exports = router;

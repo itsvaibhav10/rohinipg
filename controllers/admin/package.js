@@ -58,6 +58,7 @@ exports.postAddNewPackage = async (req, res) => {
   const propertyLimit = req.body.propertyLimit;
   const mail = req.body.mail ? true : false;
   const msg = req.body.msg ? true : false;
+  const priority = +req.body.priority
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -67,18 +68,18 @@ exports.postAddNewPackage = async (req, res) => {
       errMsg: errors.array()[0].msg,
       editing: false,
     });
-  } else {
-    await Package.create({
-      type,
-      name,
-      validity,
-      price,
-      propertyLimit,
-      mail,
-      msg,
-    });
-    res.redirect('/admin/packages');
   }
+  await Package.create({
+    type,
+    name,
+    validity,
+    price,
+    propertyLimit,
+    mail,
+    msg,
+    priority
+  });
+  res.redirect('/admin/packages');
 };
 
 exports.getEditPackage = async (req, res) => {
@@ -104,9 +105,9 @@ exports.postEditPackage = async (req, res) => {
   const propertyLimit = req.body.propertyLimit;
   const mail = req.body.mail ? true : false;
   const msg = req.body.msg ? true : false;
+  const priority = +req.body.priority
+
   const errors = validationResult(req);
-  const package = await Package.findById(packageId);
-  if (!package) return res.redirect('/admin');
   if (!errors.isEmpty()) {
     return res.status(404).render('admin/manage_package', {
       pageTitle: 'Edit Package',
@@ -118,12 +119,17 @@ exports.postEditPackage = async (req, res) => {
       editing: true,
     });
   }
+  const package = await Package.findById(packageId);
+  if (!package) return res.redirect('/admin');
+
   package.name = name;
   package.validity = validity;
   package.price = price;
   package.propertyLimit = propertyLimit;
-  package.mail= mail;
-  package.msg= msg;
+  package.mail = mail;
+  package.msg = msg;
+  package.priority = priority
+  
   await package.save();
   res.redirect('/admin/packages');
 };

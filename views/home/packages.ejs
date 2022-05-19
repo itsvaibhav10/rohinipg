@@ -258,16 +258,18 @@
                                     "order_id": result.orderId,
                                     "handler": (response) => {
                                         console.log(response);
-                                        // const data = {
-                                        //     response, _csrf: "<%=csrfToken%>"
-                                        // }
-                                        // fetch('/checkout/success', {
-                                        //     method: 'POST',
-                                        //     headers: { 'Content-type': 'application/json' },
-                                        //     body: JSON.stringify(data)
-                                        // }).then(res => res.json()).then(data => {
-                                        //     location = '/orders'
-                                        // })
+                                        const data = {
+                                            razorpay: response,
+                                            _csrf: "<%=csrfToken%>",
+                                            packageId: result.packageId,
+                                        }
+                                        fetch('/checkout', {
+                                            method: 'POST',
+                                            headers: { 'Content-type': 'application/json' },
+                                            body: JSON.stringify(data)
+                                        }).then(res => res.json()).then(data => {
+                                            location = '/orders'
+                                        })
                                     },
                                     "theme": {
                                         "color": "#f75454"

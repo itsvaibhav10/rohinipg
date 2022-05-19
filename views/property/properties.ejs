@@ -27,54 +27,48 @@
                                         <div class="col-md-4">
                                             <label for="">Keywords</label>
                                             <input type="text" class="form-control" name="keywords"
-                                                placeholder="Key word"
-                                                value="<%=oldInput.keywords?oldInput.keywords:''%>">
+                                                placeholder="Key word" value="<%=oldInput.keywords%>">
                                         </div>
                                         <div class="col-md-4">
                                             <label for="">State:</label>
                                             <select name="propertyState" class="selectpicker" data-live-search="true"
                                                 data-live-search-style="begins" title="Select your city">
-                                                <%if(oldInput.propertyState){%>
-                                                    <option value="<%=oldInput.propertyState%>" selected>
-                                                        <%=oldInput.propertyState%>
-                                                    </option>
-                                                    <%}%>
-                                                        <option>Andhra Pradesh</option>
-                                                        <option>Arunachal Pradesh</option>
-                                                        <option>Assam</option>
-                                                        <option>Andaman and Nicobar Islands</option>
-                                                        <option>Bihar</option>
-                                                        <option>Chandigarh</option>
-                                                        <option>Chhattisgarh</option>
-                                                        <option>Dadra and Nagar Haveli and Daman and Diu
-                                                        </option>
-                                                        <option>Delhi</option>
-                                                        <option>Goa</option>
-                                                        <option>Gujrat</option>
-                                                        <option>Haryana</option>
-                                                        <option>Himachal Pradesh</option>
-                                                        <option>Jharkhand</option>
-                                                        <option>kerela</option>
-                                                        <option>Madhya pradesh</option>
-                                                        <option>Maharastra</option>
-                                                        <option>Manipur</option>
-                                                        <option>Meghalaya</option>
-                                                        <option>Mizoram</option>
-                                                        <option>Nagaland</option>
-                                                        <option>Odisha</option>
-                                                        <option>Punjab</option>
-                                                        <option>Rajasthan</option>
-                                                        <option>Sikkim</option>
-                                                        <option>Tamil Nadu</option>
-                                                        <option>Telangana</option>
-                                                        <option>Tripura</option>
-                                                        <option>Uttar Pradesh</option>
-                                                        <option>Uttarakhand</option>
-                                                        <option>West Bengal</option>
-                                                        <option>Jammu and Kashmir</option>
-                                                        <option>Ladakh</option>
-                                                        <option>Lakshadweep</option>
-                                                        <option>Puducherry</option>
+                                                <option>Andhra Pradesh</option>
+                                                <option>Arunachal Pradesh</option>
+                                                <option>Assam</option>
+                                                <option>Andaman and Nicobar Islands</option>
+                                                <option>Bihar</option>
+                                                <option>Chandigarh</option>
+                                                <option>Chhattisgarh</option>
+                                                <option>Dadra and Nagar Haveli and Daman and Diu
+                                                </option>
+                                                <option>Delhi</option>
+                                                <option>Goa</option>
+                                                <option>Gujrat</option>
+                                                <option>Haryana</option>
+                                                <option>Himachal Pradesh</option>
+                                                <option>Jharkhand</option>
+                                                <option>kerela</option>
+                                                <option>Madhya pradesh</option>
+                                                <option>Maharastra</option>
+                                                <option>Manipur</option>
+                                                <option>Meghalaya</option>
+                                                <option>Mizoram</option>
+                                                <option>Nagaland</option>
+                                                <option>Odisha</option>
+                                                <option>Punjab</option>
+                                                <option>Rajasthan</option>
+                                                <option>Sikkim</option>
+                                                <option>Tamil Nadu</option>
+                                                <option>Telangana</option>
+                                                <option>Tripura</option>
+                                                <option>Uttar Pradesh</option>
+                                                <option>Uttarakhand</option>
+                                                <option>West Bengal</option>
+                                                <option>Jammu and Kashmir</option>
+                                                <option>Ladakh</option>
+                                                <option>Lakshadweep</option>
+                                                <option>Puducherry</option>
                                             </select>
                                         </div>
                                         <%master.forEach(m=>{%>
@@ -93,7 +87,6 @@
                                             </div>
                                             <%})%>
                                     </div>
-
                                     <div class="col-md-12 text-center">
                                         <div class="search-row">
                                             <div class="col-sm-4">
@@ -102,9 +95,9 @@
                                                         :</label>
                                                     <input type="text" class="span2" data-slider-min="500"
                                                         data-slider-max="10000" data-slider-step="10"
-                                                        data-slider-value="[<%=oldInput.propertyRent?oldInput.propertyRent:'1000,5000'%>]"
+                                                        data-slider-value="[<%=oldInput['propertyRent']?oldInput['propertyRent']:'1000,5000'%>]"
                                                         id="min-baths" name="propertyRent"
-                                                        value="<%=oldInput.propertyRent?oldInput.propertyRent:'1000,5000'%>"><br />
+                                                        value="<%=oldInput['propertyRent']?oldInput['propertyRent']:'1000,5000'%>"><br />
                                                     <b class="pull-left color">500</b>
                                                     <b class="pull-right color">10000</b>
                                                 </div>
@@ -117,22 +110,23 @@
                                                         :</label>
                                                     <input type="text" class="span2" data-slider-min="1"
                                                         data-slider-max="50" data-slider-step="1"
-                                                        data-slider-value="[<%=oldInput.propertySeats?oldInput.propertySeats:'1,15'%>]"
+                                                        data-slider-value="[<%=oldInput['propertySeats']?oldInput['propertySeats']:'1,15'%>]"
                                                         id="price-range" name="propertySeats"
-                                                        value="[<%=oldInput.propertySeats?oldInput.propertySeats:'1,15'%>]"><br />
+                                                        value="<%=oldInput['propertySeats']?oldInput['propertySeats']:'1,15'%>"><br />
                                                     <b class="pull-left color">1</b>
                                                     <b class="pull-right color">50</b>
                                                 </div>
                                             </div>
                                             <!-- End of  -->
+
                                             <div class="col-sm-4">
                                                 <div class="form-group">
                                                     <label for="propertyArea">Area in (sq Feet) :</label>
                                                     <input type="text" class="span2"
-                                                        value="<%=oldInput.propertyArea?oldInput.propertyArea:'500,2500'%>"
+                                                        value="<%=oldInput['propertyArea']?oldInput['propertyArea']:'500,2500'%>"
                                                         data-slider-min="100" data-slider-max="5000"
                                                         data-slider-step="10"
-                                                        data-slider-value="[<%=oldInput.propertyArea?oldInput.propertyArea:'500,2500'%>]"
+                                                        data-slider-value="[<%=oldInput['propertyArea']?oldInput['propertyArea']:'500,2500'%>]"
                                                         id="property-geo" name="propertyArea"><br />
                                                     <b class="pull-left color">100 (sq feet)</b>
                                                     <b class="pull-right color">5000 (sq feet)</b>

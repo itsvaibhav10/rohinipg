@@ -28,11 +28,7 @@ router.post(
   isAuth,
   property.postAddPropertyImagesCategory
 );
-router.post(
-  '/delete-property-image',
-  isAuth,
-  property.deletePropertyImages
-);
+router.post('/delete-property-image', isAuth, property.deletePropertyImages);
 
 // ----------  Manage Property Routes  ----------
 router.get('/manage-properties', isAuth, property.getProperties);
@@ -40,8 +36,5 @@ router.get('/manage-property/:propId', isAuth, property.manageProperty);
 
 // ----------  View Property Routes  ----------
 router.get('/property/:propId', isAuth, property.viewProperty);
-
-// ----------  Packages Routes  ----------
-router.get('/pricing', property.getPackage);
 
 module.exports = router;

@@ -19,7 +19,8 @@ router.post('/search', home.postProperties);
 router.post('/enquiry', isAuth, home.enquiry);
 
 // ----------  Package Routes  ----------
+router.get('/pricing', isAuth, package.getPackage);
 router.get('/checkout/:packageId', isAuth, package.createOrder);
-router.post('/checkout/success', isAuth, package.purchasePackage);
+router.post('/checkout', isAuth, package.purchasePackage);
 
 module.exports = router;

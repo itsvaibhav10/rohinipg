@@ -11,15 +11,16 @@
         .box {
             height: 300px;
             width: 300px;
-            background-color: #fefefe;
+            background-color: #fbfbfb;
             display: flex;
             flex-direction: column;
             justify-content: space-around;
-            align-items: center;
-            font-size: 3rem;
+            align-items: stretch;
+            font-size: 2.5rem;
             text-transform: capitalize;
             text-align: center;
             border: 2px solid #000;
+            box-shadow: 2px 2px 2px rgba(red, green, blue, 0.3);
         }
     </style>
     </head>
@@ -47,6 +48,8 @@
 
             <!-- property area -->
             <div class="content-area " style="background-color: #FFF;">
+
+                <!-- Property Views  -->
                 <%if(property.views.length>0){%>
                     <div class="container">
                         <br>
@@ -64,32 +67,43 @@
                     </div>
                     <div class="dot-hr"></div>
                     <%}%>
+
+                        <!-- Manage Property  -->
                         <div class="container">
                             <br>
                             <h3><b>Manage Your Property</b></h3>
                             <div class="d-grid" style="margin-top: 5rem;">
                                 <div class="box">
-                                    <div class="h3">Property Details </div>
+                                    <div class="h3"><b>Property Details</b> </div>
                                     <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage
                                         Details</a>
                                 </div>
                                 <div class="box">
-                                    <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
+                                    <div class="h3"><b>Property Images</b>(<%=property.pgImages.length%>) </div>
                                     <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images
                                     </a>
                                 </div>
                             </div>
                         </div>
                         <div class="dot-hr"></div>
+
+                        <!-- Manage Property Rooms  -->
                         <div class="container">
                             <br>
-                            <h3> <b>Manage Rooms</b> <span class="pull-right"><a href="" class="btn btn-danger"><i
-                                            class="fa-solid fa-plus fa-lg"></i> Add Room</a></span></h3>
+                            <h3> <b>Manage Rooms</b> <span class="pull-right"><a href="/add-room/<%=property._id%>"
+                                        class="btn btn-danger"><i class="fa-solid fa-plus fa-lg"></i> Add
+                                        Room</a></span></h3>
                             <div class="d-grid" style="margin-top: 5rem;">
-                                <%property.rooms.forEach(room=>{%>
+                                <%property.rooms.forEach((room,idx)=>{%>
                                     <div class="box">
-                                        <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
-                                        <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage
+                                        <div class="h3"><b>
+                                                <%=room.roomDetails.title%>
+                                            </b> </div>
+                                        <a href="/edit-room/<%=property._id%>?idx=<%=idx%>"
+                                            class="btn btn-primary ">Manage
+                                            Details
+                                        </a>
+                                        <a href="/add-room-images/<%=property._id%>?idx=<%=idx%>" class="btn btn-primary ">Manage
                                             Images
                                         </a>
                                     </div>

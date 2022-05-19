@@ -13,6 +13,7 @@ const packageSchema = new Schema(
     enrolled: { type: Number, default: 0 },
     msg: { type: Boolean, default: false },
     mail: { type: Boolean, default: false },
+    priority: { type: Number, default: 5 }
   },
   { timestamps: true }
 );

@@ -26,6 +26,7 @@ const propertySchema = new Schema(
     isActive: { type: Boolean, default: false },
     progress: { type: Number, default: 50 },
     rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
+    priority: { type: Number, default: 5 }
   },
   { timestamps: true }
 );

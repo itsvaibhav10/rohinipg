@@ -11,11 +11,13 @@
                     <div class="clearfix">
                         <div class="wizard-container">
                             <div class="wizard-card ct-wizard-orange" id="wizardProperty">
-                                <form action="<%=editing?'/edit-property':'/add-property'%>" method="post"
+                                <form action="<%=editing?'/edit-room':'/add-room'%>" method="post"
                                     enctype="multipart/form-data">
                                     <div class="wizard-header">
                                         <h3>
-                                            <b>Add Room</b> To YOUR PROPERTY <br>
+                                            <b>
+                                                <%=editing?'Edit Room':'Add Room'%>
+                                            </b> To YOUR PROPERTY <br>
                                         </h3>
                                     </div>
 
@@ -27,15 +29,14 @@
 
 
                                         <div class="tab-pane" id="step1">
-                                            <h4 class="info-text"> How much your Property is Beautiful ? </h4>
+                                            <h4 class="info-text"> How much your Room is Beautiful ? </h4>
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <div class="form-group">
                                                         <label for="title">Title
                                                             <small>(required)</small></label>
                                                         <input name="title" id="title" type="text" class="form-control"
-                                                            placeholder="Super villa ..." value="<%=room.title%>"
-                                                            required>
+                                                            placeholder="Room Title" value="<%=room.title%>" required>
                                                     </div>
                                                 </div>
                                                 <% master.forEach(m=> { %>
@@ -69,7 +70,7 @@
                                                                     (INR)
                                                                     :</label>
                                                                 <input name="rent" id="rent" type="text"
-                                                                    class="form-control" placeholder="Super villa ..."
+                                                                    class="form-control" placeholder="Room Rent "
                                                                     value="<%=room.rent%>" required>
                                                             </div>
                                                         </div>
@@ -77,9 +78,10 @@
                                         </div>
                                         <!--  End step 2 -->
                                     </div>
+                                    <input type="hidden" name="propId" value="<%=propId%>">
                                     <input type="hidden" name="_csrf" value="<%=csrfToken%>">
                                     <%if(editing){%>
-                                        <input type="hidden" name="propId" value="<%=propId%>">
+                                        <input type="hidden" name="roomId" value="<%=roomId%>">
                                         <%}%>
                                             <div class="wizard-footer">
                                                 <div class="pull-right">

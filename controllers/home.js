@@ -1,3 +1,4 @@
+// ---------------   Models  ---------------
 const Property = require('../models/property');
 const User = require('../models/user');
 const Enquiry = require('../models/enquiry');
@@ -43,26 +44,28 @@ exports.getProperties = async (req, res) => {
 exports.postProperties = async (req, res) => {
   const keywords = req.body.keywords;
   const propertyState = req.body.propertyState;
-  const propertyAvailableFor = req.body.propertyAvailableFor;
-  const propertyOccupancy = req.body.propertyOccupancy;
+  const propertyAvailableFor = req.body.availability;
   const propertyRent = req.body.propertyRent;
+  const rentMin = propertyRent.split(',')[0];
+  const rentMax = propertyRent.split(',')[1];
   const propertySeats = req.body.propertySeats;
-  const areaMax = req.body.propertyArea.split(',')[1];
-  const areaMin = req.body.propertyArea.split(',')[0];
-
+  const seatsMin = propertySeats.split(',')[0];
+  const seatsMax = propertySeats.split(',')[1];
+  const propertyArea = req.body.propertyArea;
+  const areaMax = propertyArea.split(',')[1];
+  const areaMin = propertyArea.split(',')[0];
   // Pagintion per Page 10 Items
   const ITEM_PER_PAGE = 10;
   const page = +req.query.page || 1;
-
   const properties = await Property.find({
-    isActive: true,    
-    state: propertyState,
-    seats: { $gte: propertySeats },
-    availability: propertyAvailableFor,
-    occupancy: propertyOccupancy,
-    area: { $lte: areaMax },
-    area: { $gte: areaMin },
-    title: { $regex: '.*' + keywords + '.*' },
+    isActive: true,
+    'pgDetails.state': propertyState,
+    'pgDetails.availability': propertyAvailableFor,
+    'pgDetails.area': { $lte: areaMax },
+    'pgDetails.area': { $gte: areaMin },
+    'pgDetails.seats': { $lte: seatsMax },
+    'pgDetails.seats': { $gte: seatsMin },
+    'pgDetails.title': { $regex: '.*' + keywords + '.*' },
   })
     .skip((page - 1) * ITEM_PER_PAGE)
     .limit(ITEM_PER_PAGE)
@@ -70,9 +73,23 @@ exports.postProperties = async (req, res) => {
 
   const totalItems = properties.length;
 
-   const master = await Master.find({
-     name: ['availability'],
-   }).lean();
+  const result = properties
+    .filter((p) => {
+      const propertyRent = p.pgDetails.rent.split(',');
+      const searchRent = req.body.propertyRent.split(',');
+      if (
+        +propertyRent[0] >= +searchRent[0] ||
+        +propertyRent[0] <= +searchRent[1]
+      )
+        return p;
+    })
+    .sort((a, b) => a.priority - b.priority);
+
+  console.log(result);
+
+  const master = await Master.find({
+    name: ['availability'],
+  }).lean();
   res.render('property/properties', {
     pageTitle: 'Properties',
     properties,
