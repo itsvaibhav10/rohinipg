@@ -9,8 +9,8 @@
         }
 
         .box {
-            height: 300px;
-            width: 300px;
+            height: 250px;
+            width: 250px;
             background-color: #fbfbfb;
             display: flex;
             flex-direction: column;
@@ -22,6 +22,24 @@
             border: 2px solid #000;
             box-shadow: 2px 2px 2px rgba(red, green, blue, 0.3);
         }
+
+        .rectangle {
+            height: 150px;
+            width: 300px;
+            background-color: #fbfbfb;
+            display: flex;
+            color: #000;
+            flex-direction: column;
+            justify-content: space-around;
+            align-items: stretch;
+            font-size: 2.5rem;
+            text-transform: capitalize;
+            text-align: center;
+            border: 5px  #000 double;
+            box-shadow: 2px 2px 2px rgba(red, green, blue, 0.3);
+            margin-bottom: 3rem;
+        }
+
     </style>
     </head>
 
@@ -55,14 +73,17 @@
                         <br>
                         <h3><b>Property Views</b></h3>
                         <div class="d-grid" style="margin-top: 5rem;">
-                            <div class="box">
-                                <div class="h3">Property Details </div>
-                                <a href="/edit-property/<%=property._id%>" class="btn btn-primary">Manage Details</a>
-                            </div>
-                            <div class="box">
-                                <div class="h3">Property Images(<%=property.pgImages.length%>) </div>
-                                <a href="/property-images/<%=property._id%>" class="btn btn-primary ">Manage Images </a>
-                            </div>
+                            <%property.views.forEach(v=>{%>
+                                <div class="rectangle">
+                                    <div class="h3 text-capitalize">
+                                        <%=v.firstName%>
+                                            <%=v.lastName%>
+                                    </div>
+                                    <b>
+                                        <%=v.mobile%>
+                                    </b>
+                                </div>
+                                <%})%>
                         </div>
                     </div>
                     <div class="dot-hr"></div>
@@ -103,7 +124,8 @@
                                             class="btn btn-primary ">Manage
                                             Details
                                         </a>
-                                        <a href="/add-room-images/<%=property._id%>?idx=<%=idx%>" class="btn btn-primary ">Manage
+                                        <a href="/add-room-images/<%=property._id%>?idx=<%=idx%>"
+                                            class="btn btn-primary ">Manage
                                             Images
                                         </a>
                                     </div>

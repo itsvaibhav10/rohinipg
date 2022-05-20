@@ -29,26 +29,32 @@ exports.sendMail = (from, to, subject, content) => {
   console.log('email Send');
 };
 
+const sendSms = (msg, mobile) => {
+  const fast2sms = stringify({
+    authorization:
+      'NDnBsWtr5VEFAGoUT6xlzegIi9qkby0ZX7faj3Ov8SY2JQmu14rBvipAjykPVeq2UtbD7lfHoOSJQ4dR',
+    route: 'v3',
+    sender_id: 'FTWSMS',
+    message: msg,
+    language: 'english',
+    numbers: `+91${mobile}`,
+    flash: '0',
+  });
+  const fast2smsUrl = `https://www.fast2sms.com/dev/bulkV2/?${fast2sms}`;
+  console.log(fast2smsUrl);
+  return fetch(fast2smsUrl).then((res) => res);
+};
+
 // Send OTP to User
 exports.sendOtp = async (userId) => {
   const user = await User.findById(userId);
   user.otp = generateOTP();
   user.otpExpiry = Date.now() + 300000; //5 min Validity
   const result = await user.save();
-
-  const fast2sms = stringify({
-    authorization:
-      'NDnBsWtr5VEFAGoUT6xlzegIi9qkby0ZX7faj3Ov8SY2JQmu14rBvipAjykPVeq2UtbD7lfHoOSJQ4dR',
-    route: 'v3',
-    sender_id: 'FTWSMS',
-    message: `Hey! ${result.firstName} Your Otp: ${result.otp} only valid for 5 min`,
-    language: 'english',
-    numbers: `+91${result.mobile}`,
-    flash: '0',
-  });
-  const fast2smsUrl = `https://www.fast2sms.com/dev/bulkV2/?${fast2sms}`;
-  console.log(fast2smsUrl);
-  return fetch(fast2smsUrl).then((res) => res);
+  sendSms(
+    `Hey! ${result.firstName} Your Otp: ${result.otp} only valid for 5 min`,
+    result.mobile
+  );
 };
 
 /*   Delete Single File */

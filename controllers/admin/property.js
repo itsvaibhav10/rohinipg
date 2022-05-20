@@ -58,7 +58,8 @@ exports.activateProperty = async (req, res) => {
   // Convert User to Provider
   const user = await User.findById(property.userId, { typeOfUser: true });
   if (user.typeOfUser !== 'provider') user.typeOfUser = 'provider';
-
+  await user.save();
+  
   // Activating Property
   if (property.isActive === false) property.isActive = true;
   else property.isActive = false;

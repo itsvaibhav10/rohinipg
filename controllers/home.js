@@ -85,7 +85,6 @@ exports.postProperties = async (req, res) => {
     })
     .sort((a, b) => a.priority - b.priority);
 
-  console.log(result);
 
   const master = await Master.find({
     name: ['availability'],

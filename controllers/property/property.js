@@ -209,15 +209,14 @@ exports.viewProperty = async (req, res) => {
         .populate('packageId')
         .exec();
 
-      if (package.mail) {
-      }
-      if (package.sms) {
-      }
+      // if (package.mail) {
+      // }
+      // if (package.sms) {
+      // }
       property.views.push(req.user._id);
       await property.save();
     }
   }
-  console.log(property.views);
   res.render('property/view_property', {
     pageTitle: property.pgDetails['title'],
     property,
@@ -236,14 +235,17 @@ exports.getProperties = async (req, res) => {
 
 exports.manageProperty = async (req, res) => {
   const propId = req.params.propId;
-  const property = await Property.findOne({
-    _id: propId,
-    userId: req.user._id,
-  })
-    .lean()
-    .populate('rooms')
-    .exec();
+  let query = { _id: propId, userId: req.user._id };
+  if (req.user.isAdmin) delete query.userId;
 
+  const property = await Property.findOne(query)
+    .lean()
+    .populate({ path: 'rooms', select: 'roomDetails.title' })
+    .populate({
+      path: 'views',
+      select: 'firstName lastName mobile',
+    })
+    .exec();
   if (!property) throw Error('Property Not Found');
   res.render('property/manage_property', {
     pageTitle: 'Manage Property',
