@@ -14,7 +14,6 @@ exports.getVerifyUser = async (req, res) => {
     errorMessage: '',
     userId: user._id,
     mobile: user.mobile.slice(-4),
-    otp: user.otp,
   });
 };
 
