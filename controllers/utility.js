@@ -32,12 +32,12 @@ exports.sendMail = (from, to, subject, content) => {
 const sendSms = (msg, mobile) => {
   const fast2sms = stringify({
     authorization:
-      'NDnBsWtr5VEFAGoUT6xlzegIi9qkby0ZX7faj3Ov8SY2JQmu14rBvipAjykPVeq2UtbD7lfHoOSJQ4dR',
+      'brk1v5yPoxAXBzTiwN8eaER4mHKVQqYlfCULSg02jZhOcFdtJWTOe2XR9DYwZiG8jMt47kK5VruamWFz',
     route: 'v3',
     sender_id: 'FTWSMS',
     message: msg,
     language: 'english',
-    numbers: `+91${mobile}`,
+    numbers: `${mobile}`,
     flash: '0',
   });
   const fast2smsUrl = `https://www.fast2sms.com/dev/bulkV2/?${fast2sms}`;
