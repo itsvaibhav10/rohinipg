@@ -4,7 +4,7 @@ const User = require('../../models/user');
 // ---------------   Module Imports  ---------------
 const bcrypt = require('bcryptjs');
 const { validationResult } = require('express-validator');
-const { urltracker } = require('../utility');
+const { urltracker, isPackageExpired } = require('../utility');
 
 // ---------------   User Login Operations  ---------------
 exports.getLogin = (req, res) => {
@@ -59,7 +59,11 @@ exports.postLogin = async (req, res) => {
       if (doMatch) {
         req.session.isLoggedIn = true;
         req.session.user = user;
-        return req.session.save((err) => {
+        if (user.typeOfUser === 'provider') {
+          const result = await isPackageExpired(user._id);
+          console.log(result);
+        }
+        return req.session.save(async (err) => {
           const url =
             req.session && req.session.url ? req.session.url : '/home';
           return res.redirect(url);

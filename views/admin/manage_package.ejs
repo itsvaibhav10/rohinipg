@@ -50,7 +50,8 @@
 </head>
 
 <%- include('./include/header.ejs')%>
-
+<h3 class="text-capitalize text-center"><%=editing?'Update':'Add New'%>   <%=type%> Package</h3>
+<hr>
     <%if(errMsg){%>
         <div class="alert alert-danger">
             <%=errMsg%>
@@ -58,11 +59,11 @@
         <%}%>
             <form action="/admin/<%=editing?'edit-package':'add-package'%>" method="post">
                 <div class="form-group">
-                    <label for="validity">For (Type)</label>
-                    <select name="type" id="type" class="form-control" required>
+                    <label for="customerType">For</label>
+                    <select name="customerType" id="customerType" class="form-control" required>
                         <%if(editing){%>
-                            <option value="<%=oldInput.type%>">
-                                <%=oldInput.type%>
+                            <option value="<%=oldInput.customerType%>">
+                                <%=oldInput.customerType%>
                             </option>
                             <%}%>
                                 <option value="provider">
@@ -73,6 +74,7 @@
                                 </option>
                     </select>
                 </div>
+
 
                 <div class="form-group">
                     <label for="name">Name</label>
@@ -85,59 +87,65 @@
                     <select name="validity" id="validity" class="form-control" value="<%= oldInput.validity%>">
                         <%if(editing){%>
                             <option value="<%=oldInput.validity%>">
-                                <%=oldInput.validity%> Month
+                                <%=oldInput.validity%> days
                             </option>
                             <%}%>
-                                <%for(let i=1; i<=12; i++){%>
-                                    <option value="<%=+i%>">
-                                        <%=i%> Months
+                                <%for(let i=1; i<=6; i++){%>
+                                    <option value="<%=+(30 * i)%>">
+                                        <%=30 * i%> days
                                     </option>
                                     <%}%>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="priority">Property Priority</label>
-                    <select name="priority" id="priority" class="form-control" required>
-                        <%if(editing){%>
-                            <option value="<%=oldInput.priority%>">
-                                <%=oldInput.priority%>
-                            </option>
-                            <%}%>
-                                <%for(let i=1; i<=5; i++){%>
-                                    <option value="<%=+i%>">
-                                        <%=i%>
-                                    </option>
-                                    <%}%>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="price">Price</label>
-                    <input type="number" name="price" id="price" class="form-control" placeholder="Enter ..."
-                        value="<%= oldInput.price%>">
-                </div>
-                <div class="form-group">
-                    <label for="propertyLimit">Property Limit</label>
-                    <input type="number" name="propertyLimit" id="propertyLimit" class="form-control"
-                        placeholder="Enter ..." value="<%= oldInput.propertyLimit%>">
-                </div>
-
-                <div class="form-group">
-                    <input type="checkbox" name="mail" id="mail" class="form-control" <%=oldInput.mail?'checked':''%>/>
-                    <label for="mail">Email Feature</label>
-                </div>
-
-                <div class="form-group">
-                    <input type="checkbox" name="msg" id="msg" class="form-control" <%=oldInput.msg?'checked':''%>/>
-                    <label for="msg">SMS Feature</label>
-                </div>
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-                <%if(editing){%>
-                    <input type="hidden" name="packageId" value="<%= oldInput._id %>">
+                <%if(type==='membership'){%>
+                    <div class="form-group">
+                        <label for="priority">Property Priority (Low to High)</label>
+                        <select name="priority" id="priority" class="form-control" required>
+                            <%if(editing){%>
+                                <option value="<%=oldInput.priority%>">
+                                    <%=oldInput.priority%>
+                                </option>
+                                <%}%>
+                                    <%for(let i=5; i>=1; i--){%>
+                                        <option value="<%=+i%>">
+                                            <%=i%>
+                                        </option>
+                                        <%}%>
+                        </select>
+                    </div>
                     <%}%>
-                        <button type="submit" class="btn btn-success">
-                            <%= !editing ? 'Add' :'Update'%> Package
-                        </button>
-                        <a href="/admin/packages" class="btn btn-danger">Cancel</a>
+                        <div class="form-group">
+                            <label for="price">Price (₹)</label>
+                            <input type="number" name="price" id="price" class="form-control" placeholder="Enter ..."
+                                value="<%= oldInput.price%>">
+                        </div>
+                        <div class="form-group">
+                            <label for="discountedPrice">Discounted Price (₹)</label>
+                            <input type="number" name="discountedPrice" id="discountedPrice" class="form-control"
+                                placeholder="Enter ..." value="<%= oldInput.discountedPrice%>">
+                        </div>
+                        <%if(type==='membership'){%>
+                            <div class="form-group">
+                                <label for="propertyLimit">Property Limit</label>
+                                <input type="number" name="propertyLimit" id="propertyLimit" class="form-control"
+                                    placeholder="Enter ..." value="<%= oldInput.propertyLimit%>">
+                            </div>
+                            <%}else{%>
+                                <div class="form-group">
+                                    <label for="credits">Credits</label>
+                                    <input type="number" name="credits" id="credits" class="form-control"
+                                        placeholder="Enter ..." value="<%= oldInput.credits%>">
+                                </div>
+                                <%}%>
+                                    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+                                    <input type="hidden" name="type" value="<%= type %>">
+                                    <%if(editing){%>
+                                        <input type="hidden" name="packageId" value="<%= oldInput._id %>">
+                                        <%}%>
+                                            <button type="submit" class="btn btn-success">
+                                                <%= !editing ? 'Add' :'Update'%> Package
+                                            </button>
+                                            <a href="/admin/packages" class="btn btn-danger">Cancel</a>
             </form>
             <%- include('./include/footer.ejs')%>
 

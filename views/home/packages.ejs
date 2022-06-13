@@ -196,11 +196,13 @@
                     </div>
                 </div>
             </div>
+            <h3 class="text-capitalize text-center pl-5">Membership Packages</h3>
             <div id="pricing-table" class="clear">
-                <%packages.forEach(p=>{%>
+
+                <%membership.forEach(p=>{%>
                     <div class="plan">
-                        <h3>
-                            <%=p.name%><span>₹<%=p.price%></span>
+                        <h3 class="text-capitalize">
+                            <%=p.name%> Package<span>₹<%=p.discountedPrice%></span>
                         </h3>
                         <button class="signup razorpay-payment-button" value="<%=p._id%>">Purchase Now</button>
                         <ul>
@@ -209,35 +211,40 @@
                                 </b> Properties</li>
                             <li><b>
                                     <%=p.validity%>
-                                </b> Months Validity</li>
-                            <%if(p.mail){%>
-                                <li> <i class="fa-solid fa-check-double fa-lg"></i> <b>Contact details</b> of Viewers on
-                                    <b>Email</b>
-                                </li>
-                                <%}else{%>
-                                    <li>
-                                        <i class="fa-solid fa-circle-xmark fa-lg"></i> <b>Contact details</b> of
-                                        Viewers on <b>Email</b>
-                                    </li>
-                                    <%}%>
-
-                                        <%if(p.msg){%>
-                                            <li> <i class="fa-solid fa-check-double fa-lg"></i> <b>Contact details</b>
-                                                of Viewers on
-                                                <b>SMS</b>
-                                            </li>
-                                            <%}else{%>
-                                                <li>
-                                                    <i class="fa-solid fa-circle-xmark fa-lg"></i> <b>Contact
-                                                        details</b> of
-                                                    Viewers on <b>SMS</b>
-                                                </li>
-                                                <%}%>
+                                </b> days Validity</li>
+                            <li>Get Tenant<b>
+                                    Contact Details
+                                </b></li>
                         </ul>
                     </div>
                     <%})%>
-
             </div>
+
+<hr>
+            <div id="pricing-table" class="clear">
+                <%credits.forEach(p=>{%>
+                    <div class="plan">
+                        <h3 class="text-capitalize">
+                            <%=p.name%> Package<span>₹<%=p.discountedPrice%></span>
+                        </h3>
+                        <button class="signup razorpay-payment-button" value="<%=p._id%>">Purchase Now</button>
+                        <ul>
+                            <li>Get upto <b>
+                                    <%=p.credits%>
+                                </b>Credits for tenant info on Mobile</li>
+                            <li><b>
+                                    <%=p.validity%>
+                                </b> days Validity</li>
+
+                        </ul>
+                    </div>
+                    <%})%>
+            </div>
+
+
+
+
+
             <%- include('../include/footer'); %>
                 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
                 <script>
@@ -268,7 +275,9 @@
                                             headers: { 'Content-type': 'application/json' },
                                             body: JSON.stringify(data)
                                         }).then(res => res.json()).then(data => {
-                                            location = '/orders'
+                                            console.log(data);
+                                            alert(data)
+                                            location = data.url
                                         })
                                     },
                                     "theme": {

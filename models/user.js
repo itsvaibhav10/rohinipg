@@ -22,6 +22,7 @@ const userSchema = new Schema(
     counter: { type: Number, default: 0 },
     limit: { type: Number, default: 0 },
     packageId: { type: Schema.Types.ObjectId, ref: 'Package' },
+    notifications: [],
     activationToken: String,
     otp: String,
     otpExpiry: String,

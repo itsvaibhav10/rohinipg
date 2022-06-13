@@ -4,13 +4,11 @@ const Schema = mongoose.Schema;
 
 const notificationSchema = new Schema(
   {
-    userId: {
-      type: Schema.Types.ObjectId,
-      ref: 'User',
-      required: true,
-    },
-    notifications: { type: Array, default: [] },
-    active: { type: Boolean, default: false },
+    title: { type: String, required: true },
+    description: { type: String, required: true },
+    active: { type: Date, default: false },
+    expiry: { type: Date },
+    isExpired: { type: Boolean, default: false },
   },
   { timestamps: true }
 );

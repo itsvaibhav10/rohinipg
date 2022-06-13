@@ -1,20 +1,49 @@
-// ---------------   Models  ---------------
-const Property = require('../models/property');
-
 // ---------------   Module Imports  ---------------
 const express = require('express');
 const property = require('../controllers/property/property');
-
 const { isAuth } = require('../middleware/is-auth');
+const { body } = require('express-validator');
 
 // Initializing Router
 const router = express.Router();
 
-// ----------  Property Details Routes  ----------
+// ----------  Add Property Details Routes  ----------
 router.get('/add-property', isAuth, property.getAddPropertyDetails);
-router.post('/add-property', isAuth, property.postAddPropertyDetails);
+router.post(
+  '/add-property',
+  isAuth,
+  [
+    body('title', 'Title Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('description', 'Description Cant be Empty')
+      .trim()
+      .notEmpty()
+      .toLowerCase(),
+    body('houseNo', 'House No Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('street', 'Street Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('city', 'City Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('pincode', 'Pincode Cant be Empty').trim().notEmpty(),
+  ],
+  property.postAddPropertyDetails
+);
+
+// ----------  Edit Property Details Routes  ----------
 router.get('/edit-property/:propId', isAuth, property.getEditPropertyDetails);
-router.post('/edit-property', isAuth, property.postEditPropertyDetails);
+router.post(
+  '/edit-property',
+  isAuth,
+  [
+    body('title', 'Title Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('description', 'Description Cant be Empty')
+      .trim()
+      .notEmpty()
+      .toLowerCase(),
+    body('houseNo', 'House No Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('street', 'Street Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('city', 'City Cant be Empty').trim().notEmpty().toLowerCase(),
+    body('pincode', 'Pincode Cant be Empty').trim().notEmpty(),
+  ],
+  property.postEditPropertyDetails
+);
 
 // ----------  Property Images Routes  ----------
 router.get('/property-images/:propId', isAuth, property.getPropertyImages);

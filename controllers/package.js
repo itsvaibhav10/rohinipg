@@ -12,10 +12,18 @@ const instance = new Razorpay({
 
 // ----------  Get All Package  ----------
 exports.getPackage = async (req, res) => {
-  const packages = await Package.find({ isActive: true, type: 'provider' });
+  if (!req.user.isAdmin && req.user.packageId) return res.redirect('/home');
+  const packages = await Package.find({
+    isActive: true,
+    customerType: 'provider',
+  });
+  const membership = packages.filter((p) => p.type === 'membership');
+  const credits = packages.filter((p) => p.type === 'credits');
+
   res.render('home/packages', {
     pageTitle: `Packages`,
-    packages,
+    membership,
+    credits,
   });
 };
 
@@ -40,16 +48,22 @@ exports.createOrder = async (req, res) => {
 };
 
 exports.purchasePackage = async (req, res) => {
-  const packageId = req.body.PackageId;
+  const packageId = req.body.packageId;
   const package = await Package.findById(packageId);
   if (!package) throw Error('Package Not Found');
+
   await Order.create({
     packageId: packageId,
     userId: req.user._id,
     razorpay: req.body.razorpay,
   });
+
+  package.enrolled += 1;
+  await package.save();
+
   req.user.packageId = packageId;
   await req.user.save();
+
   const properties = await Property.find({ userId: req.user._id });
   if (properties.length > 0) {
     properties.forEach(async (p) => {
@@ -57,4 +71,6 @@ exports.purchasePackage = async (req, res) => {
       await p.save();
     });
   }
+
+  return res.json({ success: true, url: '/home' });
 };

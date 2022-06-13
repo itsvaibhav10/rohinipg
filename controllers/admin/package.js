@@ -8,10 +8,12 @@ const Order = require('../../models/order');
 const { validationResult } = require('express-validator');
 
 exports.getPackages = async (req, res) => {
-  const packages = await Package.find().lean();
+  const { type } = req.params;
+  const packages = await Package.find({ type }).lean();
   res.render('admin/packageTable', {
     packages: packages,
     pageTitle: 'Packages Table',
+    type,
   });
 };
 
@@ -42,23 +44,28 @@ exports.delPackage = async (req, res) => {
 };
 
 exports.getAddNewPackage = (req, res) => {
+  const { type } = req.params;
   res.render('admin/manage_package', {
     pageTitle: 'Add New Package',
     oldInput: '',
     errMsg: '',
     editing: false,
+    type,
   });
 };
 
 exports.postAddNewPackage = async (req, res) => {
-  const type = req.body.type;
-  const name = req.body.name;
-  const validity = req.body.validity;
-  const price = req.body.price;
-  const propertyLimit = req.body.propertyLimit;
-  const mail = req.body.mail ? true : false;
-  const msg = req.body.msg ? true : false;
-  const priority = +req.body.priority
+  const {
+    type,
+    customerType,
+    name,
+    validity,
+    price,
+    priority,
+    credits,
+    propertyLimit,
+    discountedPrice,
+  } = req.body;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -69,43 +76,48 @@ exports.postAddNewPackage = async (req, res) => {
       editing: false,
     });
   }
+
   await Package.create({
     type,
+    customerType,
     name,
     validity,
     price,
+    discountedPrice,
     propertyLimit,
-    mail,
-    msg,
-    priority
+    credits,
+    priority,
   });
-  res.redirect('/admin/packages');
+
+  res.redirect('/admin/packages/' + type);
 };
 
 exports.getEditPackage = async (req, res) => {
   const packageId = req.params.packageId;
   const package = await Package.findById(packageId).lean();
   if (!package) return res.redirect('/home');
-  else {
-    res.render('admin/manage_package', {
-      pageTitle: 'Edit Package',
-      oldInput: package,
-      errMsg: '',
-      editing: true,
-    });
-  }
+  res.render('admin/manage_package', {
+    pageTitle: 'Edit Package',
+    oldInput: package,
+    errMsg: '',
+    editing: true,
+    type: package.type,
+  });
 };
 
 exports.postEditPackage = async (req, res) => {
-  const packageId = req.body.packageId;
-  const type = req.body.type;
-  const name = req.body.name;
-  const validity = req.body.validity;
-  const price = req.body.price;
-  const propertyLimit = req.body.propertyLimit;
-  const mail = req.body.mail ? true : false;
-  const msg = req.body.msg ? true : false;
-  const priority = +req.body.priority
+  const {
+    type,
+    customerType,
+    name,
+    validity,
+    price,
+    priority,
+    credits,
+    propertyLimit,
+    discountedPrice,
+    packageId,
+  } = req.body;
 
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
@@ -122,24 +134,25 @@ exports.postEditPackage = async (req, res) => {
   const package = await Package.findById(packageId);
   if (!package) return res.redirect('/admin');
 
+  package.type = type;
+  package.customerType = customerType;
   package.name = name;
   package.validity = validity;
   package.price = price;
+  package.discountedPrice = discountedPrice;
   package.propertyLimit = propertyLimit;
-  package.mail = mail;
-  package.msg = msg;
-  package.priority = priority
-  
+  package.credits = credits;
+  package.priority = priority;
   await package.save();
-  res.redirect('/admin/packages');
+  res.redirect('/admin/packages/' + type);
 };
 
 exports.activatePackage = async (req, res) => {
   const packageId = req.params.packageId;
-  const package = await Package.findById(packageId, { isActive: true });
+  const package = await Package.findById(packageId);
   if (!package) throw Error('Package Not Found');
   if (package.isActive === false) package.isActive = true;
   else package.isActive = false;
   await package.save();
-  res.redirect('/admin/packages');
+  res.redirect('/admin/packages/' + package.type);
 };

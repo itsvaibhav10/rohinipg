@@ -8,13 +8,13 @@ const { body, check } = require('express-validator');
 const router = express.Router();
 
 // ----------  Get All Packages  ----------
-router.get('/packages', isAuth, isAdmin, package.getPackages);
+router.get('/packages/:type', isAuth, isAdmin, package.getPackages);
 
 // ----------  Get Package  ----------
 router.get('/package/:packageId', isAuth, isAdmin, package.getPackage);
 
 // ----------  Add Package  ----------
-router.get('/add-package', isAuth, isAdmin, package.getAddNewPackage);
+router.get('/add-package/:type', isAuth, isAdmin, package.getAddNewPackage);
 router.post(
   '/add-package',
   isAuth,
@@ -23,10 +23,6 @@ router.post(
     body('name', 'Name Cant be Empty').not().isEmpty().trim(),
     body('validity', 'Please Select Validity Period').not().isEmpty().trim(),
     body('price', 'Please enter a Valid MRP for Package.')
-      .not()
-      .isEmpty()
-      .trim(),
-    body('propertyLimit', 'Please Enter Valid Limit for the Package')
       .not()
       .isEmpty()
       .trim(),
@@ -44,10 +40,6 @@ router.post(
     body('name', 'Name Cant be Empty').not().isEmpty().trim(),
     body('validity', 'Please Select Validity Period').not().isEmpty().trim(),
     body('price', 'Please enter a Valid MRP for Package.')
-      .not()
-      .isEmpty()
-      .trim(),
-    body('propertyLimit', 'Please Enter Valid Limit for the Package')
       .not()
       .isEmpty()
       .trim(),

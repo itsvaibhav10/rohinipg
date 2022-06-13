@@ -43,11 +43,13 @@
 <%- include('./include/header.ejs')%>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Packages Data Table</h3>
-            <div class="text-center"><a href="/admin/add-package" class="btn btn-primary"><i
+            <h3 class="box-title text-capitalize">
+                <%=type%> Packages
+            </h3>
+            <div class="text-center"><a href="/admin/add-package/<%=type%>" class="btn btn-primary text-capitalize"><i
                         class="far fa-plus-square"></i>
-                    Create New
-                    Package</a></div>
+                    Add New <%=type%>
+                        Package</a></div>
         </div>
         <!-- /.box-header -->
         <div class="box-body">
@@ -56,18 +58,21 @@
                     <thead>
                         <tr>
                             <th>Actions</th>
+                            <th>Customer Type</th>
                             <th>Name</th>
                             <th>Active</th>
-                            <th>Type</th>
                             <th>Validity</th>
-                            <th>Priority</th>
-                            <th>Price</th>
-                            <th>Limit</th>
-                            <th>Email Service</th>
-                            <th>SMS Service</th>
-                            <th>Enrolled</th>
-                            <th>Created At</th>
-                            <th>Updated At</th>
+                            <%if(type==='membership'){%>
+                                <th>Priority</th>
+                                <th>Limit</th>
+                                <%}else{%>
+                                    <th>Credits</th>
+                                    <%}%>
+                                        <th>Actual Price</th>
+                                        <th>Dicounted Price</th>
+                                        <th>Enrolled</th>
+                                        <th>Created At</th>
+                                        <th>Updated At</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -91,42 +96,45 @@
                                     </div>
                                 </td>
                                 <td class="text-capitalize">
+                                    <%=u.customerType%>
+                                </td>
+                                <td class="text-capitalize">
                                     <%=u.name%>
                                 </td>
                                 <td class="<%=u.isActive?'bg-danger':''%>">
                                     <%=u.isActive?'Active':'Not Active'%>
                                 </td>
-                                <td class="text-capitalize">
-                                    <%=u.type%>
-                                </td>
 
                                 <td class="text-capitalize">
-                                    <%=u.validity%> month
+                                    <%=u.validity%> days
                                 </td>
-                                <td class="text-capitalize">
-                                    <%=u.priority%>
-                                </td>
-                                <td class="text-capitalize">
-                                    ₹<%=u.price%>
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=u.propertyLimit%> Property
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=u.mail?'Yes':'NO'%>
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=u.msg?'Yes':'NO'%>
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=u.enrolled%>
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=`${u.createdAt.getDate()}-${u.createdAt.getMonth()+1}-${u.createdAt.getFullYear()}`%>
-                                </td>
-                                <td class="text-capitalize">
-                                    <%=`${u.updatedAt.getDate()}-${u.updatedAt.getMonth()+1}-${u.updatedAt.getFullYear()}`%>
-                                </td>
+                                <%if(type==='membership'){%>
+                                    <td class="text-capitalize">
+                                        <%=u.priority%>
+                                    </td>
+                                    <td class="text-capitalize">
+                                        <%=u.propertyLimit%> Property
+                                    </td>
+                                    <%}else{%>
+                                        <td class="text-capitalize">
+                                            <%=u.credits%> 
+                                        </td>
+                                        <%}%>
+                                            <td class="text-capitalize">
+                                                ₹<%=u.price%>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                ₹<%=u.discountedPrice%>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%=u.enrolled%>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%=`${u.createdAt.getDate()}-${u.createdAt.getMonth()+1}-${u.createdAt.getFullYear()}`%>
+                                            </td>
+                                            <td class="text-capitalize">
+                                                <%=`${u.updatedAt.getDate()}-${u.updatedAt.getMonth()+1}-${u.updatedAt.getFullYear()}`%>
+                                            </td>
                             </tr>
                             <%})%>
                     </tbody>
