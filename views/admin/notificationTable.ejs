@@ -43,8 +43,8 @@
 <%- include('./include/header.ejs')%>
     <div class="box">
         <div class="box-header with-border">
-            <h3 class="box-title">Users Data Table</h3>
-            <div class="text-center"><a href="/admin/add-notification" class="btn btn-primary"><i
+            <h3 class="box-title">Notification Data Table</h3>
+            <div class="text-center"><a href="/admin/create-notification" class="btn btn-primary"><i
                         class="far fa-plus-square"></i>
                     Create New
                     Notification</a></div>
@@ -65,14 +65,15 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <%notifications.forEach((n)=>{%>
+                        <% notifications.forEach((n)=>{ %>
                             <tr>
                                 <td class="text-center">
                                     <div class="btn-group">
-                                        <a href="/admin/notification/<%=n._id%>" class="btn btn-purple btn-sm mb-1"
-                                            title="View Details"><i class="far fa-eye"></i></a>
-                                        <a href="/admin/delete-user/<%=u._id%>" class="btn btn-danger btn-sm mb-1"
-                                            title="Delete User"><i class="fas fa-trash"></i></a>
+                                        <a href="/admin/send-notification/<%=n._id%>" class="btn btn-purple btn-sm mb-1"
+                                            title="Send Notification"><i class="fas fa-paper-plane"></i></a>
+                                        <a href="/admin/delete-notification/<%=n._id%>"
+                                            class="btn btn-danger btn-sm mb-1" title="Delete Notification"><i
+                                                class="fas fa-trash"></i></a>
                                     </div>
                                 </td>
                                 <td>
@@ -87,7 +88,6 @@
                                 <td>
                                     <%=`${n.expiry.getDate()}-${n.expiry.getMonth()+1}-${n.expiry.getFullYear()}`%>
                                 </td>
-
                                 <td>
                                     <%=n.isExpired%>
                                 </td>
@@ -95,7 +95,7 @@
                                     <%=`${n.createdAt.getDate()}-${n.createdAt.getMonth()+1}-${n.createdAt.getFullYear()}`%>
                                 </td>
                             </tr>
-                            <%})%>
+                            <% }) %>
                     </tbody>
                 </table>
             </div>

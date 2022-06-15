@@ -50,100 +50,115 @@
 </head>
 
 <%- include('./include/header.ejs')%>
-    <h3 class="text-capitalize text-center">
-        <%=editing?'Update':'Add New'%>
-            <%=type%> Notification
-    </h3>
-    <hr>
-    <%if(errMsg){%>
-        <div class="alert alert-danger">
-            <%=errMsg%>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">
+                <%=editing?'Update':'Add New'%>
+                    Notification
+            </h3>
         </div>
-        <%}%>
-            <form action="/admin/<%=editing?'edit-notification':'add-notification'%>" method="post">
-                <div class="form-group">
-                    <label for="title">Title</label>
-                    <input type="text" name="title" id="title" class="form-control" placeholder="Enter ..."
-                        value="<%= oldInput.title%>">
+        <!-- /.box-header -->
+        <div class="box-body">
+
+            <%if(errMsg){%>
+                <div class="alert alert-danger">
+                    <%=errMsg%>
                 </div>
+                <%}%>
 
-                <div class="form-group">
-                    <label for="description">Description</label>
-                    <input type="text" name="description" id="description" class="form-control" placeholder="Enter ..."
-                        value="<%= oldInput.description%>">
-                </div>
+                    <form action="/admin/<%=editing?'edit-notification':'create-notification'%>" method="post">
+                        <div class="form-group">
+                            <label for="title">Title</label>
+                            <input type="text" name="title" id="title" class="form-control" placeholder="Enter ..."
+                                value="<%= oldInput.title%>" required>
+                        </div>
 
-                <div class="form-group">
-                    <label for="active">Active Date</label>
-                    <input type="date" name="active" id="active" class="form-control" placeholder="Enter ..."
-                        value="<%= oldInput.active%>">
-                </div>
-                <div class="form-group">
-                    <label for="active">Active Date</label>
-                    <input type="date" name="active" id="active" class="form-control" placeholder="Enter ..."
-                        value="<%= oldInput.active%>">
-                </div>
+                        <div class="form-group">
+                            <label for="description">Description</label>
+                            <textarea name="description" id="description" rows="3" class="form-control" required>
+                                <%= oldInput.description%>
+                            </textarea>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group col-6">
+                                <label for="active">Active Date</label>
+                                <input type="date" name="active" id="active" class="form-control"
+                                    placeholder="Enter ..." value="<%= oldInput.active%>" required>
+                            </div>
+                            <div class="form-group col-6">
+                                <label for="active">Expiry Date</label>
+                                <input type="date" name="expiry" id="expiry" class="form-control"
+                                    placeholder="Enter ..." value="<%=oldInput.expiry%>" required>
+                            </div>
+                        </div>
+
+                        <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+
+                        <%if(editing){%>
+                            <input type="hidden" name="packageId" value="<%= oldInput._id %>">
+                            <%}%>
+                                <button type="submit" class="btn btn-success">
+                                    <%= !editing ? 'Add' :'Update'%> Notification
+                                </button>
+                                <a href="/admin/packages" class="btn btn-danger">Cancel</a>
+                    </form>
+        </div>
+    </div>
+    <%- include('./include/footer.ejs')%>
+
+        <!-- jQuery 3 -->
+        <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- popper -->
+        <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- SlimScroll -->
+        <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- FastClick -->
+        <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+        <!-- Superieur Admin App -->
+        <script src="/admin/js/template.js"></script>
+
+        <!-- Superieur Admin for demo purposes -->
+        <script src="/admin/js/demo.js"></script>
+
+        <!-- Bootstrap slider -->
+        <script src="/admin/assets/vendor_plugins/bootstrap-slider/bootstrap-slider.js"></script>
+
+        <!-- owlcarousel -->
+        <script src="/admin/assets/vendor_components/OwlCarousel2/dist/owl.carousel.js"></script>
+
+        <!-- flexslider -->
+        <script src="/admin/assets/vendor_components/flexslider/jquery.flexslider.js"></script>
+        <script src="/admin/js/pages/slider.js"></script>
+
+        <!-- steps  -->
+        <script src="/admin/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
+
+        <!-- validate  -->
+        <script src="/admin/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
+
+        <!-- Sweet-Alert  -->
+        <script src="/admin/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
+
+        <!-- wizard  -->
+        <script src="/admin/js/pages/steps.js"></script>
 
 
+        <script src="/js/utility.js"></script>
+        <script>
 
-                <input type="hidden" name="_csrf" value="<%= csrfToken %>">
+            const refactorDate = (date) => {
+                console.log(date);
+            }
 
-                <%if(editing){%>
-                    <input type="hidden" name="packageId" value="<%= oldInput._id %>">
-                    <%}%>
-                        <button type="submit" class="btn btn-success">
-                            <%= !editing ? 'Add' :'Update'%> Notification
-                        </button>
-                        <a href="/admin/packages" class="btn btn-danger">Cancel</a>
-            </form>
-            <%- include('./include/footer.ejs')%>
-
-                <!-- jQuery 3 -->
-                <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
-
-                <!-- popper -->
-                <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
-
-                <!-- Bootstrap 4.0-->
-                <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
-
-                <!-- SlimScroll -->
-                <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-
-                <!-- FastClick -->
-                <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
-
-                <!-- Superieur Admin App -->
-                <script src="/admin/js/template.js"></script>
-
-                <!-- Superieur Admin for demo purposes -->
-                <script src="/admin/js/demo.js"></script>
-
-                <!-- Bootstrap slider -->
-                <script src="/admin/assets/vendor_plugins/bootstrap-slider/bootstrap-slider.js"></script>
-
-                <!-- owlcarousel -->
-                <script src="/admin/assets/vendor_components/OwlCarousel2/dist/owl.carousel.js"></script>
-
-                <!-- flexslider -->
-                <script src="/admin/assets/vendor_components/flexslider/jquery.flexslider.js"></script>
-                <script src="/admin/js/pages/slider.js"></script>
-
-                <!-- steps  -->
-                <script src="/admin/assets/vendor_components/jquery-steps-master/build/jquery.steps.js"></script>
-
-                <!-- validate  -->
-                <script
-                    src="/admin/assets/vendor_components/jquery-validation-1.17.0/dist/jquery.validate.min.js"></script>
-
-                <!-- Sweet-Alert  -->
-                <script src="/admin/assets/vendor_components/sweetalert/sweetalert.min.js"></script>
-
-                <!-- wizard  -->
-                <script src="/admin/js/pages/steps.js"></script>
-
-
-                <script src="/js/utility.js"></script>
-                </body>
+        </script>
+        </body>
 
 </html>

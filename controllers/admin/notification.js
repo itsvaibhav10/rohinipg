@@ -1,24 +1,39 @@
 const Notification = require('../../models/notification');
 const User = require('../../models/user');
 const { validationResult } = require('express-validator');
+const { dateDifference } = require('../utility');
 
 // Creating Notification
 exports.getCreateNotification = (req, res) => {
   res.render('admin/manage_notification', {
     pageTitle: 'Add New Notification',
     editing: false,
-    oldInput: null,
+    errMsg: null,
+    oldInput: {},
   });
 };
 
 exports.postCreateNotification = async (req, res) => {
+  // res.json(req.body);
   const { title, description, active, expiry } = req.body;
   const errors = validationResult(req);
+  const validActiveDate = dateDifference(new Date(), active);
+  const validExpiryDate = dateDifference(active, expiry);
+
   const data = {
     pageTitle: 'Add New Notification',
     editing: false,
+    errMsg: null,
     oldInput: null,
   };
+
+  if (validActiveDate < -1 || validExpiryDate < 1) {
+    return res.render('admin/manage_notification', {
+      ...data,
+      oldInput: req.body,
+      errMsg: 'Please Select Valid Active and Expiry dates',
+    });
+  }
 
   if (!errors.isEmpty()) {
     return res.render('admin/manage_notification', {
@@ -100,29 +115,32 @@ exports.deleteNotification = async (req, res) => {
 };
 
 // Send Notification to selected Users
-
 exports.getSendNotification = async (req, res) => {
   const { notificationId } = req.params;
   const notification = await Notification.findById(notificationId).lean();
   if (!notification) throw Error('Notification Not Found');
 
-  const users = await User.find(
-    {},
-    { _id: true, firstName: true, lastName: true, typeOfUser: true }
-  ).lean();
-
   res.render('admin/send_notification', {
     pageTitle: 'Send Notification',
     notification,
-    users,
   });
 };
 
 exports.postSendNotification = async (req, res) => {
-  const { notificationId, usersId } = req.body;
+  const { notificationId, userType, paidType } = req.body;
   const notification = await Notification.findById(notificationId).lean();
   if (!notification) throw Error('Notification Not Found');
-  const users = await User.find({ _id: usersId });
+  const query =
+    userType === 'provider'
+      ? {
+          typeOfUser: 'provider',
+          packageId: { $exists: paidType === 'paid' ? true : false },
+        }
+      : {
+          typeOfUser: 'tenant',
+        };
+
+  const users = await User.find(query);
   users.forEach(async (u) => {
     const notificationIndex = u.notifications.findIndex(
       (n) => n === notificationId

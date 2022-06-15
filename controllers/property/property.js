@@ -174,7 +174,7 @@ exports.deletePropertyImages = async (req, res) => {
 // ----------  View Property  ----------
 exports.viewProperty = async (req, res) => {
   const propId = req.params.propId;
-  const property = await Property.findById(propId);
+  const property = await Property.findById(propId).populate('rooms').exec();
   const provider = await User.findById(property.userId).lean();
 
   // Adding to property views if current user is neither Admin nor Owner
@@ -235,5 +235,3 @@ exports.manageProperty = async (req, res) => {
     property,
   });
 };
-
-

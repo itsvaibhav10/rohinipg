@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="/images/favicon.ico">
+
+    <title>
+        <%=pageTitle%>
+    </title>
+    <link rel="icon" href="/admin/images/favicon.ico">
+    <!-- Bootstrap 4.0-->
+    <link rel="stylesheet" href="/admin/assets/vendor_components/bootstrap/dist/css/bootstrap.min.css">
+    <!-- Bootstrap extend-->
+    <link rel="stylesheet" href="/admin/css/bootstrap-extend.css">
+
+    <!-- Theme style -->
+    <link rel="stylesheet" href="/admin/css/master_style.css">
+
+    <!-- Superieur Admin skins -->
+    <link rel="stylesheet" href="/admin/css/skins/_all-skins.css">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+    	<script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    	<script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    	<![endif]-->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css"
+        integrity="sha256-h20CPZ0QyXlBuAw7A+KluUYx/3pK+c7lYEpqLTlxjYQ=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="/admin/css/additionalCss.css">
+</head>
+
+<%- include('./include/header.ejs')%>
+    <div class="box">
+        <div class="box-header with-border">
+            <h3 class="box-title">Notification Title:- <%=notification.title%>
+            </h3>
+        </div>
+        <!-- /.box-header -->
+        <div class="box-body">
+            <form action="/admin/send-notification" method="post">
+                <div class="form-group">
+                    <label for="userType">User Type</label>
+                    <select name="userType" id="userType" class="form-control" required>
+                        <option value="provider">provider</option>
+                        <option value="tenant">tenant</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="paidType">Paid Type</label>
+                    <select name="paidType" id="paidType" class="form-control">
+                        <option value="paid">paid</option>
+                        <option value="free">free</option>
+                    </select>
+                    <div class="form-control-feedback"><small>Note:- <code>Works For Provider Only</code>
+                        </small>
+                    </div>
+                </div>
+                <input type="hidden" name="notificationId" value="<%=notification._id%>">
+                <input type="hidden" name="_csrf" value="<%=csrfToken%>">
+                <button type="submit" class="btn btn-success"><i class="fas fa-paper-plane"></i> Send</button>
+                <button type="reset" class="btn btn-danger"> Cancel</button>
+            </form>
+        </div>
+    </div>
+
+
+    <%- include('./include/footer.ejs')%>
+        <!-- jQuery 3 -->
+        <script src="/admin/assets/vendor_components/jquery-3.3.1/jquery-3.3.1.js"></script>
+
+        <!-- popper -->
+        <script src="/admin/assets/vendor_components/popper/dist/popper.min.js"></script>
+
+        <!-- Bootstrap 4.0-->
+        <script src="/admin/assets/vendor_components/bootstrap/dist/js/bootstrap.min.js"></script>
+
+        <!-- SlimScroll -->
+        <script src="/admin/assets/vendor_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+
+        <!-- FastClick -->
+        <script src="/admin/assets/vendor_components/fastclick/lib/fastclick.js"></script>
+
+        <!-- Superieur Admin App -->
+        <script src="/admin/js/template.js"></script>
+
+        <!-- Superieur Admin for demo purposes -->
+        <script src="/admin/js/demo.js"></script>
+        </body>
+
+</html>

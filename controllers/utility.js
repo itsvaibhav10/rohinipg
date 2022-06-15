@@ -142,7 +142,10 @@ exports.isPackageExpired = async (userId) => {
   // Getting Package Details
   const package = await Package.findById(user.packageId).lean();
 
-  if (package.validity - dateDifference(lastOrder.createdAt) <= 0) {
+  if (
+    package.validity - this.dateDifference(lastOrder.createdAt, new Date()) <=
+    0
+  ) {
     const properties = await Property.find({ userId });
     properties.forEach(async (p) => {
       p.priority = 5;
@@ -156,10 +159,10 @@ exports.isPackageExpired = async (userId) => {
   return false;
 };
 
-const dateDifference = (startDate) => {
+exports.dateDifference = (startDate, endDate) => {
   // Calculating Date differences
   const date1 = new Date(startDate);
-  const date2 = new Date();
+  const date2 = new Date(endDate);
   const Difference_In_Time = date2.getTime() - date1.getTime();
   return Math.floor(Difference_In_Time / (1000 * 3600 * 24));
 };

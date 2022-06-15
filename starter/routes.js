@@ -31,6 +31,7 @@ module.exports = (app) => {
     let user = await User.findById(req.session.user._id);
     if (!user) return next();
     req.user = user;
+    req.user.notifications = user.notifications.filter((n) => !n.isExpired);
     next();
   });
 
