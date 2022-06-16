@@ -5,7 +5,7 @@ var cron = require('node-cron');
 
 module.exports = () => {
   // Package Expiry Job
-  schedule.scheduleJob(`* 20 * * *`, async () => {
+  schedule.scheduleJob(`0 20 * * *`, async () => {
     const providers = await User.find(
       {
         typeOfUser: 'provider',
@@ -23,12 +23,9 @@ module.exports = () => {
     });
   });
 
-  cron.schedule(
-    '0 0 */1 * * *',
-    () => {
-      const hour = new Date().getHours();
-      utility.sendSms(`current - ${hour}`, '9015238030');
-    },
-    { timezone: 'Asia/Kolkata' }
-  );
+  // Priority Property
+  schedule.scheduleJob(`0 * * * *`, () => {
+    const hour = new Date().getHours();
+    utility.sendSms(`SCHEDULE JOB - ${hour}`, '9015238030');
+  });
 };
