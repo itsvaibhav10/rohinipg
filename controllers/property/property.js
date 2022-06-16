@@ -29,7 +29,6 @@ const getContact = (provider) => {
 exports.getAddPropertyDetails = async (req, res) => {
   // Check Package Limit with Property
   const result = await isPackageValid(req.user._id);
-  console.log(result);
   if (!result) return res.redirect('/pricing');
 
   const master = await Master.find({ type: 'property' }).lean();
@@ -177,7 +176,6 @@ exports.viewProperty = async (req, res) => {
   const { propId } = req.params;
   const property = await Property.findById(propId).populate('rooms').exec();
   const provider = await User.findById(property.userId).lean();
-  console.log(property.rooms);
   // Adding to property views if current user is neither Admin nor Owner
   if (
     !req.user.isAdmin &&
@@ -226,7 +224,6 @@ exports.manageProperty = async (req, res) => {
     .exec();
 
   property.views.forEach((v) => {
-    console.log(v);
     v.mobile = maskMobile(v.mobile, req.user.packageId);
   });
 

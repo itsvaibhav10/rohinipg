@@ -1,6 +1,7 @@
 const User = require('../models/user');
 const schedule = require('node-schedule');
 const utility = require('./utility');
+var cron = require('node-cron');
 
 module.exports = () => {
   // Package Expiry Job
@@ -22,8 +23,12 @@ module.exports = () => {
     });
   });
 
-  schedule.scheduleJob(`0 */1 * * *`, async () => {
-    const hour = new Date().getHours();
-    utility.sendSms(`current - ${hour}`, '9015238030');
-  });
+  cron.schedule(
+    '0 0 */1 * * *',
+    () => {
+      const hour = new Date().getHours();
+      utility.sendSms(`current - ${hour}`, '9015238030');
+    },
+    { timezone: 'Asia/Kolkata' }
+  );
 };
