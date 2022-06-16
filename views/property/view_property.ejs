@@ -109,45 +109,84 @@
                                 <!-- End description area  -->
 
                                 <div class="section additional-details">
-
+                                    <!-- Property Amenities -->
                                     <h4 class="s-property-title">Amenities</h4>
 
                                     <ul class="additional-details-list clearfix">
                                         <%for(const key in property.pgDetails){%>
                                             <% if(key==='title' || key==='description' ||key==='houseNo'
                                                 ||key==='street' ||key==='city' ||key==='state' ||key==='pincode'
-                                                ||key==='_csrf'||key==='rent'||key==='area'||key==='seats' )continue;%>
+                                                ||key==='_csrf' ||key==='rent' ||key==='area' ||key==='seats'
+                                                )continue;%>
                                                 <li>
                                                     <span
                                                         class="col-xs-6 col-sm-4 col-md-4 add-d-title text-capitalize">
                                                         <%=key%>
                                                     </span>
-                                                    <span class="col-xs-6 col-sm-8 col-md-8 add-d-entry text-capitalize">
+                                                    <span
+                                                        class="col-xs-6 col-sm-8 col-md-8 add-d-entry text-capitalize">
                                                         <%=property.pgDetails[key]%>
                                                     </span>
                                                 </li>
                                                 <%}%>
                                     </ul>
-                                </div>
 
-                                <nav>
-                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <a class="nav-link active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab"
-                                            aria-controls="nav-home" aria-selected="true">Home</a>
-                                        <a class="nav-link" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab"
-                                            aria-controls="nav-profile" aria-selected="false">Profile</a>
-                                        <a class="nav-link" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab"
-                                            aria-controls="nav-contact" aria-selected="false">Contact</a>
-                                    </div>
-                                </nav>
-                                <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">...</div>
-                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">...</div>
-                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">...</div>
-                                </div>
-                                <!-- End additional-details area  -->
+                                    <!-- Property Rooms -->
+                                    <h4 class="s-property-title">Rooms Info</h4>
+                                    <% if(property.rooms && property.rooms.length>0){ %>
+                                        <nav>
+                                            <div class="nav nav-tabs" id="nav-tab" role="tablist">
+                                                <% property.rooms.forEach((r,idx)=>{%>
+                                                    <a class="text-capitalize nav-link <%= idx===0?'active':''%>"
+                                                        id="nav-<%=idx%>-tab" data-toggle="tab" href="#nav-<%=idx%>"
+                                                        role="tab" aria-controls="nav-<%=idx%>"
+                                                        aria-selected="<%= idx===0?'true':''%>">
+                                                        <%=r.roomDetails.title%>
+                                                    </a>
+                                                    <% })%>
+                                            </div>
+                                        </nav>
+                                        <div class="tab-content" id="nav-tabContent">
+                                            <% property.rooms.forEach((r,idx)=>{%>
+                                                <div class="tab-pane fade  <%= idx===0?'show active':''%>"
+                                                    id="nav-<%=idx%>" role="tabpanel"
+                                                    aria-labelledby="nav-<%=idx%>-tab">
 
-                                <!-- <div class="section property-features">
+                                                    <div class="light-slide-item">
+                                                        <div class="clearfix">
+                                                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                                                <%r.roomImages.forEach(i=>{%>
+                                                                    <li data-thumb="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
+                                                                        <img src="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
+                                                                    </li>
+                                                                    <%})%>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+
+                                                    <ul class="additional-details-list">
+                                                        <%for(const key in r.roomDetails){%>
+                                                            <li>
+                                                                <span
+                                                                    class="col-xs-6 col-sm-4 col-md-4 add-d-title text-capitalize">
+                                                                    <%=key%>
+                                                                </span>
+                                                                <span
+                                                                    class="col-xs-6 col-sm-8 col-md-8 add-d-entry text-capitalize">
+                                                                    <%=r.roomDetails[key]%>
+                                                                </span>
+                                                            </li>
+                                                            <%}%>
+                                                    </ul>
+                                                </div>
+                                                <%})%>
+                                        </div>
+                                </div>
+                                <%}%>
+                                    <!-- End additional-details area  -->
+
+                                    <!-- <div class="section property-features">
 
                                     <h4 class="s-property-title">Features</h4>
                                     <ul>
@@ -160,24 +199,24 @@
                                     </ul>
 
                                 </div> -->
-                                <!-- End features area  -->
-                                <%if(property.pgDetails.video){%>
+                                    <!-- End features area  -->
+                                    <%if(property.pgDetails.video){%>
 
-                                    <div class="section property-video">
-                                        <h4 class="s-property-title">Property Video</h4>
-                                        <div class="video-thumb">
-                                            <a class="video-popup" href="yout" title="Virtual Tour">
-                                                <img src="/assets/img/property-video.jpg"
-                                                    class="img-responsive wp-post-image" alt="Exterior">
-                                            </a>
+                                        <div class="section property-video">
+                                            <h4 class="s-property-title">Property Video</h4>
+                                            <div class="video-thumb">
+                                                <a class="video-popup" href="yout" title="Virtual Tour">
+                                                    <img src="/assets/img/property-video.jpg"
+                                                        class="img-responsive wp-post-image" alt="Exterior">
+                                                </a>
+                                            </div>
                                         </div>
-                                    </div>
-                                    <%}%>
-                                        <!-- End video area  -->
+                                        <%}%>
+                                            <!-- End video area  -->
 
 
 
-                                        <!-- <div class="section property-share">
+                                            <!-- <div class="section property-share">
                                             <h4 class="s-property-title">Share width your friends </h4>
                                             <div class="roperty-social">
                                                 <ul>
@@ -198,7 +237,7 @@
                                                 </ul>
                                             </div>
                                         </div> -->
-                                        <!-- End video area  -->
+                                            <!-- End video area  -->
 
                             </div>
                         </div>

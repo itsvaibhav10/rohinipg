@@ -5,12 +5,9 @@ const Master = require('../../models/master');
 const Package = require('../../models/package');
 
 // ----------  Modules Import  ----------
-const {
-  deleteFile,
-  isPackageValid,
-  sendSms,
-  maskMobile,
-} = require('../utility');
+const { deleteFile, isPackageValid, maskMobile } = require('../utility');
+const { sendTenantDetails } = require('../jobs');
+
 const { readFileSync } = require('fs');
 
 const getContact = (provider) => {
@@ -32,6 +29,7 @@ const getContact = (provider) => {
 exports.getAddPropertyDetails = async (req, res) => {
   // Check Package Limit with Property
   const result = await isPackageValid(req.user._id);
+  console.log(result);
   if (!result) return res.redirect('/pricing');
 
   const master = await Master.find({ type: 'property' }).lean();
@@ -97,7 +95,10 @@ exports.getPropertyImages = async (req, res) => {
   let property;
   if (req.user.isAdmin) property = await Property.findById(propId).lean();
   else
-    property = await Property.findOne({ _id: propId, userId: user._id }).lean();
+    property = await Property.findOne({
+      _id: propId,
+      userId: req.user._id,
+    }).lean();
   res.render('property/pg_images', {
     pageTitle: property.pgDetails.title,
     property,
@@ -173,10 +174,10 @@ exports.deletePropertyImages = async (req, res) => {
 
 // ----------  View Property  ----------
 exports.viewProperty = async (req, res) => {
-  const propId = req.params.propId;
+  const { propId } = req.params;
   const property = await Property.findById(propId).populate('rooms').exec();
   const provider = await User.findById(property.userId).lean();
-
+  console.log(property.rooms);
   // Adding to property views if current user is neither Admin nor Owner
   if (
     !req.user.isAdmin &&
@@ -187,11 +188,11 @@ exports.viewProperty = async (req, res) => {
       (userId) => userId.toString() === req.user._id.toString()
     );
     if (userIndex === -1) {
-      const mobile = maskMobile(req.user.mobile, provider.packageId);
-      const msg = `Hi ${provider.firstName}\n${req.user.firstName} ${req.user.lastName} with contact ${mobile}\njust seen your property title - ${property.pgDetails.title}`;
       property.views.push(req.user._id);
       await property.save();
-      sendSms(msg, provider.mobile);
+      const mobile = maskMobile(req.user.mobile, provider.packageId);
+      const msg = `Hi ${provider.firstName}\n${req.user.firstName} ${req.user.lastName} with contact ${mobile}\njust seen your property title - ${property.pgDetails.title}`;
+      await sendTenantDetails(provider.packageId, msg, provider.mobile);
     }
   }
   res.render('property/view_property', {

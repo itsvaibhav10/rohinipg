@@ -1,6 +1,7 @@
 const fs = require('fs');
 const fetch = require('node-fetch');
 const { stringify } = require('querystring');
+const schedule = require('node-schedule');
 const sgMail = require('@sendgrid/mail');
 sgMail.setApiKey(process.env.sendgridApi);
 
@@ -155,7 +156,6 @@ exports.isPackageExpired = async (userId) => {
     await user.save();
     return true;
   }
-
   return false;
 };
 
@@ -170,4 +170,32 @@ exports.dateDifference = (startDate, endDate) => {
 exports.maskMobile = (mobile, packageId) => {
   if (!packageId) return `*******${mobile.slice(-3)}`;
   else return mobile;
+};
+
+exports.sendTenantDetails = async (packageId, msg, mobile) => {
+  let packageName = '';
+  if (packageId) {
+    const { name } = await Package.findById(packageId).lean();
+    packageName = name;
+  }
+  const duration = 0;
+  switch (packageName) {
+    case 'silver':
+      duration = 20;
+      break;
+    case 'gold':
+      duration = 10;
+      break;
+    case 'diamond':
+      duration = 1;
+      break;
+    default:
+      duration = 60;
+  }
+  const min = new Date().getMinutes() + duration;
+  if (min > 60) min -= 60;
+  console.log(min);
+  schedule.scheduleJob(`${min} * * * *`, () => {
+    utility.sendSms(msg, mobile);
+  });
 };

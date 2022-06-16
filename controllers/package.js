@@ -12,7 +12,7 @@ const instance = new Razorpay({
 
 // ----------  Get All Package  ----------
 exports.getPackage = async (req, res) => {
-  if (!req.user.isAdmin && req.user.packageId) return res.redirect('/home');
+  // if (!req.user.isAdmin && req.user.packageId) return res.redirect('/home');
   const packages = await Package.find({
     isActive: true,
     customerType: 'provider',
