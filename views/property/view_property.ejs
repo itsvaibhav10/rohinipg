@@ -130,7 +130,9 @@
                                                 </li>
                                                 <%}%>
                                     </ul>
+                                </div>
 
+                                <div class="section additional-details">
                                     <!-- Property Rooms -->
                                     <h4 class="s-property-title">Rooms Info</h4>
                                     <% if(property.rooms && property.rooms.length>0){ %>
@@ -152,17 +154,20 @@
                                                     id="nav-<%=idx%>" role="tabpanel"
                                                     aria-labelledby="nav-<%=idx%>-tab">
 
-                                                    <div class="light-slide-item">
+                                                    <!-- <div class="light-slide-item">
                                                         <div class="clearfix">
-                                                            <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+                                                            <ul id="image-gallery"
+                                                                class="gallery list-unstyled cS-hidden">
                                                                 <%r.roomImages.forEach(i=>{%>
-                                                                    <li data-thumb="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
-                                                                        <img src="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
+                                                                    <li
+                                                                        data-thumb="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
+                                                                        <img
+                                                                            src="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
                                                                     </li>
                                                                     <%})%>
                                                             </ul>
                                                         </div>
-                                                    </div>
+                                                    </div> -->
 
 
                                                     <ul class="additional-details-list">

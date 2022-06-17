@@ -25,7 +25,7 @@ const getContact = (provider) => {
     return {
       firstName: 'Vishal',
       lastName: 'Bansal',
-      mobile: '9999999999',
+      mobile: '9811670005',
     };
 };
 
@@ -200,7 +200,7 @@ exports.viewProperty = async (req, res) => {
   res.render('property/view_property', {
     pageTitle: property.pgDetails['title'],
     property,
-    contact: getContact(provider.packageId),
+    contact: getContact(provider),
   });
 };
 

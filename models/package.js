@@ -6,7 +6,7 @@ const packageSchema = new Schema(
   {
     type: { type: String, required: true },
     customerType: { type: String, required: true },
-    name: { type: String, required: true, trim: true },
+    name: { type: String, required: true, trim: true, lowercase: true },
     isActive: { type: Boolean, default: false },
     validity: { type: Number, required: true },
     price: { type: Number, required: true },

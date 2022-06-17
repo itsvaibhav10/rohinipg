@@ -177,9 +177,12 @@ exports.maskMobile = (mobile, packageId) => {
 };
 
 exports.sendTenantDetails = async (provider, msg, mobile) => {
-  const { name } = await Package.findById(provider.packageId).lean();
-  packageName = name;
+  let packageName = 'free';
   let duration = 0;
+  if (provider.packageId) {
+    const { name } = await Package.findById(provider.packageId).lean();
+    packageName = name;
+  }
   switch (packageName) {
     case 'silver':
       duration = 20;
@@ -191,10 +194,10 @@ exports.sendTenantDetails = async (provider, msg, mobile) => {
       duration = 1;
       break;
     default:
-      duration = 60;
+      duration = 59;
   }
   if (provider.isAdmin) duration = 1;
-  const min = new Date().getMinutes() + duration;
+  let min = new Date().getMinutes() + duration;
   if (min > 60) min -= 60;
   schedule.scheduleJob('tenantDetails', `${min} * * * *`, () => {
     this.sendSms(msg, mobile);
