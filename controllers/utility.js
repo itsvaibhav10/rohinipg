@@ -10,7 +10,6 @@ const User = require('../models/user');
 const Package = require('../models/package');
 const Property = require('../models/property');
 const Order = require('../models/order');
-const property = require('../models/property');
 
 // Generate OTP
 const generateOTP = () => {
@@ -112,6 +111,11 @@ exports.isPackageValid = async (userId) => {
     }).lean();
     user.packageId = package._id;
     await user.save();
+    await Order.create({
+      packageId: package._id,
+      userId: userId,
+      razorpay: { payment: 'free' },
+    });
     return true;
   }
 
@@ -172,13 +176,10 @@ exports.maskMobile = (mobile, packageId) => {
   else return mobile;
 };
 
-exports.sendTenantDetails = async (packageId, msg, mobile) => {
-  let packageName = '';
-  if (packageId) {
-    const { name } = await Package.findById(packageId).lean();
-    packageName = name;
-  }
-  const duration = 0;
+exports.sendTenantDetails = async (provider, msg, mobile) => {
+  const { name } = await Package.findById(provider.packageId).lean();
+  packageName = name;
+  let duration = 0;
   switch (packageName) {
     case 'silver':
       duration = 20;
@@ -192,10 +193,26 @@ exports.sendTenantDetails = async (packageId, msg, mobile) => {
     default:
       duration = 60;
   }
+  if (provider.isAdmin) duration = 1;
   const min = new Date().getMinutes() + duration;
   if (min > 60) min -= 60;
-  console.log(min);
-  schedule.scheduleJob(`${min} * * * *`, () => {
-    utility.sendSms(msg, mobile);
+  schedule.scheduleJob('tenantDetails', `${min} * * * *`, () => {
+    this.sendSms(msg, mobile);
+    schedule.cancelJob('tenantDetails');
   });
+};
+
+/* Shuffle The Values in the Array */
+exports.shuffle = (array) => {
+  let currentIndex = array.length,
+    temporaryValue,
+    randomIndex;
+  while (0 !== currentIndex) {
+    randomIndex = Math.floor(Math.random() * currentIndex);
+    currentIndex -= 1;
+    temporaryValue = array[currentIndex];
+    array[currentIndex] = array[randomIndex];
+    array[randomIndex] = temporaryValue;
+  }
+  return array;
 };

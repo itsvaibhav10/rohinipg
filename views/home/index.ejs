@@ -32,14 +32,14 @@
                         <div class="search-form wow pulse">
                             <form action="/search" method="post" class=" form-inline">
                                 <div class="col-md-12">
-                                    <div class="col-md-4">
+                                    <!-- <div class="col-md-4">
                                         <label for="">Keywords</label>
                                         <input type="text" class="form-control" name="keywords" placeholder="Key word">
-                                    </div>
-                                    <div class="col-md-4">
+                                    </div> -->
+                                    <div class="col-md-6">
                                         <label for="">State:</label>
                                         <select name="propertyState" class="selectpicker" data-live-search="true"
-                                            data-live-search-style="begins" title="Select your city">
+                                            data-live-search-style="begins" title="Select your city" required>
                                             <option>Andhra Pradesh</option>
                                             <option>Arunachal Pradesh</option>
                                             <option>Assam</option>
@@ -79,12 +79,12 @@
                                         </select>
                                     </div>
                                     <%master.forEach(m=>{%>
-                                        <div class="col-md-4">
+                                        <div class="col-md-6">
                                             <label for="<%=m.name%>" class="text-capitalize">
                                                 <%=m.name%>:
                                             </label>
                                             <select id="<%=m.name%>" name="<%=m.name%>"
-                                                class="selectpicker show-tick form-control">
+                                                class="selectpicker show-tick form-control" required>
                                                 <%m.items.forEach(item=>{%>
                                                     <option value="<%=item%>">
                                                         <%=item%>

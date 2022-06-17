@@ -17,10 +17,10 @@ exports.getProperties = async (req, res) => {
 };
 
 exports.delProperty = async (req, res) => {
-  const propId = req.params.propId;
+  const { propId } = req.params;
   const property = await Property.findById(propId).lean();
   if (!property) throw Error('Property Not Found');
-  if (property.rooms.length > 0) await Room.deleteMany({ _id: property.rooms });
+  if (property.rooms.length > 0) await Room.deleteMany({ propId });
   await Property.deleteOne({ _id: propId });
   return res.redirect('/admin/properties');
 };
@@ -59,7 +59,7 @@ exports.activateProperty = async (req, res) => {
   const user = await User.findById(property.userId, { typeOfUser: true });
   if (user.typeOfUser !== 'provider') user.typeOfUser = 'provider';
   await user.save();
-  
+
   // Activating Property
   if (property.isActive === false) property.isActive = true;
   else property.isActive = false;

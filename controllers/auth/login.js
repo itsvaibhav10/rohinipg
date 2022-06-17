@@ -59,10 +59,6 @@ exports.postLogin = async (req, res) => {
       if (doMatch) {
         req.session.isLoggedIn = true;
         req.session.user = user;
-        if (user.typeOfUser === 'provider') {
-          const result = await isPackageExpired(user._id);
-          console.log(result);
-        }
         return req.session.save(async (err) => {
           const url =
             req.session && req.session.url ? req.session.url : '/home';

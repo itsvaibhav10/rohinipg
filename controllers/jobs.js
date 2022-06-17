@@ -1,11 +1,11 @@
 const User = require('../models/user');
+const Property = require('../models/property');
 const schedule = require('node-schedule');
 const utility = require('./utility');
-var cron = require('node-cron');
 
 module.exports = () => {
   // Package Expiry Job
-  schedule.scheduleJob(`0 20 * * *`, async () => {
+  schedule.scheduleJob('Package Expiry Job', `0 20 * * *`, async () => {
     const providers = await User.find(
       {
         typeOfUser: 'provider',
@@ -23,9 +23,17 @@ module.exports = () => {
     });
   });
 
-  // Priority Property
-  schedule.scheduleJob(`0 * * * *`, () => {
-    const hour = new Date().getHours();
-    utility.sendSms(`SCHEDULE JOB - ${hour}`, '9015238030');
+  // Property Priority
+  schedule.scheduleJob('Property Priority', `0 * * * *`, async () => {
+    const property = await Property.find(
+      { isActive: true },
+      { flexiPriority: true, priority: true }
+    );
+    const priority = property.map((p) => p.priority);
+    const flexiPriority = utility.shuffle(priority);
+    property.forEach(async (p, idx) => {
+      p.flexiPriority = flexiPriority[idx];
+      await p.save();
+    });
   });
 };

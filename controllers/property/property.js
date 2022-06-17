@@ -5,8 +5,12 @@ const Master = require('../../models/master');
 const Package = require('../../models/package');
 
 // ----------  Modules Import  ----------
-const { deleteFile, isPackageValid, maskMobile } = require('../utility');
-const { sendTenantDetails } = require('../jobs');
+const {
+  deleteFile,
+  isPackageValid,
+  maskMobile,
+  sendTenantDetails,
+} = require('../utility');
 
 const { readFileSync } = require('fs');
 
@@ -190,7 +194,7 @@ exports.viewProperty = async (req, res) => {
       await property.save();
       const mobile = maskMobile(req.user.mobile, provider.packageId);
       const msg = `Hi ${provider.firstName}\n${req.user.firstName} ${req.user.lastName} with contact ${mobile}\njust seen your property title - ${property.pgDetails.title}`;
-      await sendTenantDetails(provider.packageId, msg, provider.mobile);
+      await sendTenantDetails(provider, msg, provider.mobile);
     }
   }
   res.render('property/view_property', {

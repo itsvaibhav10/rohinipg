@@ -27,6 +27,7 @@ const propertySchema = new Schema(
     progress: { type: Number, default: 50 },
     rooms: [{ type: Schema.Types.ObjectId, ref: 'Room' }],
     priority: { type: Number, default: 5 },
+    flexiPriority: { type: Number, default: 5 },
   },
   { timestamps: true }
 );

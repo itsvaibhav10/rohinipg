@@ -9,7 +9,11 @@ exports.index = (req, res) => {
 };
 
 exports.home = async (req, res) => {
-  const properties = await Property.find({ isActive: true }).lean().limit(10);
+  const properties = await Property.find({ isActive: true })
+    .lean()
+    .limit(10)
+    .sort({ flexiPriority: 1 });
+
   const master = await Master.find({
     name: ['availability'],
   }).lean();
@@ -42,12 +46,8 @@ exports.getProperties = async (req, res) => {
 };
 
 exports.postProperties = async (req, res) => {
-  const keywords = req.body.keywords;
   const propertyState = req.body.propertyState;
   const propertyAvailableFor = req.body.availability;
-  const propertyRent = req.body.propertyRent;
-  const rentMin = propertyRent.split(',')[0];
-  const rentMax = propertyRent.split(',')[1];
   const propertySeats = req.body.propertySeats;
   const seatsMin = propertySeats.split(',')[0];
   const seatsMax = propertySeats.split(',')[1];
@@ -65,33 +65,27 @@ exports.postProperties = async (req, res) => {
     'pgDetails.area': { $gte: areaMin },
     'pgDetails.seats': { $lte: seatsMax },
     'pgDetails.seats': { $gte: seatsMin },
-    'pgDetails.title': { $regex: '.*' + keywords + '.*' },
   })
     .skip((page - 1) * ITEM_PER_PAGE)
     .limit(ITEM_PER_PAGE)
-    .lean();
+    .lean()
+    .sort({ flexiPriority: 1 });
 
   const totalItems = properties.length;
 
-  const result = properties
-    .filter((p) => {
-      const propertyRent = p.pgDetails.rent.split(',');
-      const searchRent = req.body.propertyRent.split(',');
-      if (
-        +propertyRent[0] >= +searchRent[0] ||
-        +propertyRent[0] <= +searchRent[1]
-      )
-        return p;
-    })
-    .sort((a, b) => a.priority - b.priority);
-
+  const finalProperties = properties.filter((p) => {
+    const propertyRent = p.pgDetails.rent.split(',');
+    const searchRent = req.body.propertyRent.split(',');
+    if (+propertyRent[1] >= +searchRent[0]) return p;
+  });
 
   const master = await Master.find({
     name: ['availability'],
   }).lean();
+
   res.render('property/properties', {
     pageTitle: 'Properties',
-    properties,
+    properties: finalProperties,
     master,
     currentPage: page,
     hasNextPage: ITEM_PER_PAGE * page < totalItems,

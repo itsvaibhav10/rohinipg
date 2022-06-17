@@ -33,7 +33,7 @@ exports.createOrder = async (req, res) => {
   if (!package) throw Error('Package Not Found');
 
   const options = {
-    amount: package.price * 100,
+    amount: package.discountedPrice * 100,
     currency: 'INR',
     payment_capture: '1',
   };
@@ -42,7 +42,7 @@ exports.createOrder = async (req, res) => {
   return res.send({
     success: true,
     orderId: order.id,
-    totalPrice: package.price,
+    totalPrice: package.discountedPrice,
     packageId,
   });
 };
