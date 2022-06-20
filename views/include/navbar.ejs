@@ -55,7 +55,8 @@
                     <%}else{%>
                         <form action="/logout" method="post">
                             <input type="hidden" name="_csrf" value="<%=csrfToken%>">
-                            <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.4s"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                            <button class="navbar-btn nav-button wow fadeInRight" data-wow-delay="0.4s"><i
+                                    class="fa-solid fa-right-from-bracket"></i> Logout</button>
                         </form>
                         <%}%>
             </div>
@@ -68,7 +69,14 @@
                 </li>
                 <li class="dropdown ymm-sw" data-wow-delay="0.1s">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" data-hover="dropdown"
-                        data-delay="200">Hi, <%=user?user.firstName:'User'%> <b class="caret"></b> <span class="badge"><%=user?user.notifications.length:'0'%></span></a>
+                        data-delay="200">Hi, <%=user?user.firstName:'User'%><b class="caret"></b>
+                            <%if(user&&user.notifications.length){%>
+                                <span class="badge">
+                                    <%=user.notifications.length%>
+                                </span>
+                                <%}%>
+
+                    </a>
                     <ul class="dropdown-menu navbar-nav">
                         <%if(user){%>
                             <%if(user.isAdmin){%>
@@ -78,9 +86,9 @@
                                         <a href="/manage-properties">Manage Property</a>
                                     </li>
                                     <%}%>
-                        <li>
-                            <a href="/add-property">Post New Property</a>
-                        </li>
+                                        <li>
+                                            <a href="/add-property">Post New Property</a>
+                                        </li>
                     </ul>
 
                 </li>
