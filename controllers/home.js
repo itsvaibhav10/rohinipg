@@ -9,11 +9,7 @@ exports.index = (req, res) => {
 };
 
 exports.home = async (req, res) => {
-  const properties = await Property.find({ isActive: true })
-    .lean()
-    .limit(10)
-    .sort({ flexiPriority: 1 });
-
+  const properties = await Property.find({ isActive: true }).lean().limit(10).sort({ createdAt: -1, flexiPriority: 1 });
   const master = await Master.find({
     name: ['availability'],
   }).lean();

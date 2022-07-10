@@ -171,7 +171,8 @@
                                                     <span class="pull-left"><b>Area :</b>
                                                         <%=property.pgDetails.area%> in (Sq Feet)
                                                     </span>
-                                                    <span class="proerty-price pull-right">₹<%=property.pgDetails.rent%>
+                                                    <span class="proerty-price pull-right">₹
+                                                        <%=property.pgDetails.rent.replace(',', '-' )%>
                                                     </span>
                                                 </div>
                                             </div>

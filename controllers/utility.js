@@ -177,32 +177,33 @@ exports.maskMobile = (mobile, packageId) => {
 };
 
 exports.sendTenantDetails = async (provider, msg, mobile) => {
-  let packageName = 'free';
-  let duration = 0;
+  let packageName = 'none';
+  let duration = -1;
+
   if (provider.packageId) {
-    const { name } = await Package.findById(provider.packageId).lean();
+    const { name } = await Package.findOne({ id: provider.packageId, type: 'membership' }).lean();
     packageName = name;
   }
+
   switch (packageName) {
-    case 'silver':
-      duration = 20;
-      break;
-    case 'gold':
-      duration = 10;
-      break;
-    case 'diamond':
-      duration = 1;
-      break;
-    default:
-      duration = 59;
+    case 'silver': duration = 10; break;
+    case 'gold': duration = 5; break;
+    case 'diamond': duration = 1; break;
+    case 'free': duration = 59; break;
   }
+
+  // If Provider Is Admin
   if (provider.isAdmin) duration = 1;
-  let min = new Date().getMinutes() + duration;
-  if (min > 60) min -= 60;
-  schedule.scheduleJob('tenantDetails', `${min} * * * *`, () => {
-    this.sendSms(msg, mobile);
-    schedule.cancelJob('tenantDetails');
-  });
+
+  // If Provider has Package Available
+  if (duration !== -1) {
+    let min = new Date().getMinutes() + duration;
+    if (min > 60) min -= 60;
+    schedule.scheduleJob('tenantDetails', `${min} * * * *`, () => {
+      this.sendSms(msg, mobile);
+      schedule.cancelJob('tenantDetails');
+    });
+  }
 };
 
 /* Shuffle The Values in the Array */

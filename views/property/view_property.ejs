@@ -57,7 +57,8 @@
                                         </span>
                                         <span class="property-info-entry">
                                             <span class="property-info-label">Rent</span>
-                                            <span class="property-info-value">₹<%=property.pgDetails.rent%></span>
+                                            <span class="property-info-value">₹
+                                                <%=property.pgDetails.rent.replace(',', '-' )%></span>
                                         </span>
                                     </div>
 
@@ -157,11 +158,12 @@
                                                     aria-labelledby="nav-<%=idx%>-tab">
                                                     <div class="row">
                                                         <div class="col-4">
-                                                            <div id="carouselExampleSlidesOnly<%=idx%>" class="carousel slide"
-                                                                data-ride="carousel">
+                                                            <div id="carouselExampleSlidesOnly<%=idx%>"
+                                                                class="carousel slide" data-ride="carousel">
                                                                 <div class="carousel-inner">
                                                                     <%r['roomImages'].forEach((i,index)=>{%>
-                                                                        <div class="carousel-item <%=index===0?'active':''%>">
+                                                                        <div
+                                                                            class="carousel-item <%=index===0?'active':''%>">
                                                                             <img
                                                                                 src="data:image/<%=i.contentType%>;base64,<%=i.data.toString('base64')%>">
                                                                         </div>
